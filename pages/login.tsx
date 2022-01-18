@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import Layout from '../components/Layout';
-import Menu from '../components/Menu';
+import Login from '../components/Login';
 
-const Home: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <Layout>
-        <Menu />
+        <Login />
     </Layout>
   )
 }
 
-export default Home
+export default LoginPage
