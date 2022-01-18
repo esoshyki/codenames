@@ -12,8 +12,20 @@ export interface IUserState {
     user: IUser | null,
     users: IUser[],
     loginError?: string;
-}
+};
+
+export interface IChatMessage {
+    message: string;
+    user: IUser,
+    id: number
+};
+
+export interface IChatState {
+    messages: IChatMessage[],
+    hidden: boolean
+};
 
 export interface IState {
     user: IUserState
-}
+    chat: IChatState
+};

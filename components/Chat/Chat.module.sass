@@ -1,0 +1,34 @@
+.chat__hidden, .chat__visible
+    position: fixed
+    width: 300px
+    height: 100vh
+    top: 0
+    transition: 0.3s ease-in
+
+.chat__hidden
+    right: -300px
+
+.chat__visible
+    right: 0px
+
+.chat__icon
+    position: absolute
+    top: 10px
+    right: 20px
+    width: 45px
+    height: 45px
+    background-image: url(/icons/chat.png)
+    background-size: cover
+    z-index: 1
+    &:hover
+        cursor: pointer
+        animation: roll 0.5s linear 0s infinite
+
+@keyframes roll
+    0%
+        transform: scale(1)
+    50%
+        transform: scale(0.95)
+    100%
+        transform: scale(1)       
+    

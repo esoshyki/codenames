@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import classes from './Layout.module.sass';
 import Head from 'next/head';
+import Chat from '../Chat';
 
 interface LayoutProps {
     children: ReactNode,
@@ -17,6 +18,8 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
+
+                <Chat />
                 {children}
             </main>
         </div>
