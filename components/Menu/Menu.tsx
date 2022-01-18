@@ -10,8 +10,6 @@ const Menu = () => {
 
     const user = useSelector((state: IState) => state.user.user);
 
-    console.log(user);
-
     return (
         <nav className={classes.menu}>
 

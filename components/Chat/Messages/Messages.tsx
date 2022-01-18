@@ -1,4 +1,5 @@
 import { IChatMessage } from "../../../store/types";
+import AddMessage from "../AddMessage";
 import classes from './Messages.module.sass';
 
 interface MessagesProps {
@@ -10,17 +11,21 @@ const Messages = ({ messages }: MessagesProps) => {
     return (
         <div className={classes.messages}>
 
-            {messages && messages.map((message) => (
-                <div key={`message${message.id}`} className={classes.messages__message}>
-                    <div className={classes.messages__message__header}>
-                        {message.user}
-                    </div>
+            <div className={classes.messages__list}>
+                {messages && messages.map((message) => (
+                    <div key={`message-${message.user.userName}-${message.id}`} className={classes.messages__message}>
+                        <div className={classes.messages__message__header}>
+                            {message.user.userName}
+                        </div>
 
-                    <div className={classes.messages__message__body}>
-                        {message.message}
+                        <div className={classes.messages__message__body}>
+                            {message.message}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
+
+            <AddMessage />
 
         </div>
     )

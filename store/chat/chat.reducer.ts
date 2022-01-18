@@ -3,7 +3,9 @@ import { actions } from "./chat.actions";
 
 const initialState : IChatState = {
     messages: [],
-    hidden: true
+    hidden: true,
+    users: [],
+    connected: false
 };
 
 const chatReducer = (state=initialState, { type, payload } : IAction ) => {
@@ -20,6 +22,27 @@ const chatReducer = (state=initialState, { type, payload } : IAction ) => {
             return ({
                 ...state,
                 hidden: payload
+            });
+
+        case actions.CHAT_USER_CONNECT:
+            if (state.users.some(user => user.id === payload.id)) {
+                return state;
+            };
+            return ({
+                ...state,
+                users: [...state.users, payload]
+            });
+
+        case actions.CHAT_USER_DISCONNECT:
+            return ({
+                ...state,
+                users: state.users.filter((user) => user.id !== payload.id)
+            });
+
+        case actions.CHAT_SET_CONNECTED_STATUS:
+            return ({
+                ...state,
+                connected: payload
             });
 
         default:

@@ -12,6 +12,9 @@ const persistConfig = {
     storage,
     whitelist: [
         "user",
+    ],
+    blacklist: [
+        "chat"
     ]
 };
 

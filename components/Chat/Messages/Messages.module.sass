@@ -1,8 +1,8 @@
 @import ../../../styles/colors
     
 .messages
+    position: relative
     height: 50%
-    overflow-y: scroll
     display: flex
     flex-direction: column
     align-items: center
@@ -10,19 +10,39 @@
     background-color: #fff
     border-radius: 10px
     width: 100%
+    padding-top: 40px
+
+.messages__list
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: center
+    height: 80%
+    width: 100%
+    overflow-y: scroll
     &::-webkit-scrollbar
         width: 10px
-        background-color: $blue
+        background-color: #fff
     &::-webkit-scrollbar-thumb
-        background-color: $yellow
-
+        background-color: #ccc0c0
+f
 .messages__message
-    width: 100%
-    border-bottom: 1px solid #000
+    width: 95%
+    margin: 5px auto
+    border-radius: 5px
+    overflow: hidden
+    box-shadow: 1px 1px 5px #000
+    min-height: 60px
 
 .messages__message__header
     width: 100%
     background-color: $blue
     color: #fff
     font-weight: 600
-    
+    padding: 5px
+
+
+.messages__message__body
+    border: none
+    color: $blue
+    padding: 5px

@@ -1,17 +1,58 @@
 import classes from './Chat.module.sass';
 import { useSelector, useDispatch } from 'react-redux';
-import { IState } from '../../store/types';
-import { Fragment } from 'react';
+import { IState, IChatMessage } from '../../store/types';
+import { Fragment, useEffect } from 'react';
 import { showChat, hideChat } from '../../store/chat/chat.actions';
 import Messages from './Messages';
 import UsersOnline from './UsersOnline';
+import SocketIOClient from "socket.io-client";
+import {
+    changeConnectionStatus,
+    addUserToChat,
+    removeUserFromChat,
+    addChatMessage
+} from '../../store/chat/chat.actions';
 
 const Chat = () => {
 
     const dispatch = useDispatch();
 
-    const { hidden, messages } = useSelector((state: IState) => state.chat);
-    const { users } = useSelector((state: IState) => state.user);
+    const { hidden, messages, users, connected } = useSelector((state: IState) => state.chat);
+    const { user } = useSelector((state: IState) => state.user);
+
+    const connect = () => {
+
+        const socket = SocketIOClient.connect(process.env.BASE_URL, {
+            path: "/api/socketio",
+        });
+
+        socket.on("connect", () => {
+            console.log("SOCKET CONNECTED!", socket.id);
+            dispatch(changeConnectionStatus(true))
+            if (user) {
+                dispatch(addUserToChat(user));
+            }
+        });
+
+        socket.on("disconnect", () => {
+            console.log("SOCKET_DISCONNECTED!");
+            dispatch(changeConnectionStatus(false));
+        })
+
+        socket.on("message", (message: IChatMessage) => {
+            console.log(message);
+            dispatch(addChatMessage(message))
+        });
+
+    }
+
+    useEffect(() => {
+
+        if (!user) return () => { };
+
+        connect()
+
+    }, [user])
 
     const onIconClick = () => {
         hidden ? dispatch(showChat()) : dispatch((hideChat()));
@@ -19,9 +60,10 @@ const Chat = () => {
 
     return (
         <Fragment>
-            <div className={classes.chat__icon} onClick={onIconClick}/>
+            <div className={classes.chat__icon} onClick={onIconClick} />
             <div className={(hidden ? classes.chat__hidden : classes.chat__visible)}>
-                <Messages messages={messages}/>
+                <div className={connected ? classes.chat__connected : classes.chat__disconnected} />
+                <Messages messages={messages} />
 
                 <UsersOnline users={users} />
             </div>
