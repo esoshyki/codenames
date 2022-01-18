@@ -9,7 +9,7 @@ import userReducer from './user/user.reducer';
 const persistConfig = {
     key: "codenames",
     storage,
-    whiteList: [
+    whitelist: [
         "user"
     ]
 };

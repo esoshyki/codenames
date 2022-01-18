@@ -1,12 +1,33 @@
+@import ../../styles/colors
+    
 .login
-    width: 100%
-    height: 100%
+    height: 50px
+    position: absolute
     display: flex
     flex-direction: column
     align-items: center
     justify-content: center
+    position: relative
 
 .login__input
-    width: 100%
-    max-width: 300px
-    padding: 20px
+    width: 400px
+    max-width: 400px
+    padding: 15px 15px
+    border: none
+    outline: none
+    background-color: $blue
+    color: #fff
+    border: 1px solid #fff
+    font-weight: 700
+    transition: 0.1s ease-in
+    &::placeholder
+        color: #fff
+
+    &:focus
+        border-color: $yellow
+
+.login__error
+    position: absolute
+    color: $error
+    top: 60px
+    left: 0

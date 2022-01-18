@@ -2,8 +2,11 @@ import classes from './Menu.module.sass';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store/types';
+import { deleteUser } from '../../store/user/user.actions';
 
 const Menu = () => {
+
+    const dispatch = useDispatch();
 
     const user = useSelector((state: IState) => state.user.user);
 
@@ -27,6 +30,15 @@ const Menu = () => {
             <Link href={"/Settings"}>
                 <a className={classes.menu__link}>Settings</a>
             </Link>
+
+            {user && (
+                <a 
+                    className={classes.menu__link}
+                    onClick={() => dispatch(deleteUser(user.id))}
+                >
+                    Logout
+                </a>
+            )}
 
         </nav>
     )

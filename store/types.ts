@@ -10,7 +10,8 @@ export interface IUser {
 
 export interface IUserState {
     user: IUser | null,
-    users: number[]
+    users: IUser[],
+    loginError?: string;
 }
 
 export interface IState {
