@@ -16,6 +16,10 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
     const httpServer: NetServer = res.socket.server as any;
     const io = new ServerIO<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer, {
       path: "/api/socketio",
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+      }
     });
 
     res.socket.server.io = io;
