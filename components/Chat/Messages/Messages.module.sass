@@ -12,19 +12,28 @@
     width: 100%
     padding-top: 40px
 
+
 .messages__list
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-    justify-content: center
     height: 80%
     width: 100%
     overflow-y: scroll
+    position: relative
     &::-webkit-scrollbar
         width: 10px
         background-color: #fff
     &::-webkit-scrollbar-thumb
         background-color: #ccc0c0
+
+
+.messages__container
+    position: absolute
+    top: 0
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: center
+    transition: 0.3s ease-in
 
 .messages__message
     width: 95%
