@@ -20,7 +20,7 @@ const AddMessage = () => {
             id: messages.length
         };
 
-        const response = await axios.post("/api/chat", {
+        const response = await axios.post("/api/chat/addmessage", {
             ...newMessage  
         }, { 
             headers: {

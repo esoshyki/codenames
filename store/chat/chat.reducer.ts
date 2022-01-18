@@ -25,7 +25,7 @@ const chatReducer = (state=initialState, { type, payload } : IAction ) => {
             });
 
         case actions.CHAT_USER_CONNECT:
-            if (state.users.some(user => user.id === payload.id)) {
+            if (state.users.some(user => user.userName === payload.userName)) {
                 return state;
             };
             return ({

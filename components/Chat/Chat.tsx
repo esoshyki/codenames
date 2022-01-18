@@ -1,6 +1,6 @@
 import classes from './Chat.module.sass';
 import { useSelector, useDispatch } from 'react-redux';
-import { IState, IChatMessage } from '../../store/types';
+import { IState, IChatMessage, IUser } from '../../store/types';
 import { Fragment, useEffect } from 'react';
 import { showChat, hideChat } from '../../store/chat/chat.actions';
 import Messages from './Messages';
@@ -12,6 +12,7 @@ import {
     removeUserFromChat,
     addChatMessage
 } from '../../store/chat/chat.actions';
+import axios from 'axios';
 
 const Chat = () => {
 
@@ -19,6 +20,22 @@ const Chat = () => {
 
     const { hidden, messages, users, connected } = useSelector((state: IState) => state.chat);
     const { user } = useSelector((state: IState) => state.user);
+
+    const enterToChat = async () => {
+        const result = await axios.post("/api/chat/enter", user, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    };
+
+    const leaveChat = async () => {
+        const result = await axios.post("/api/chat/leave", user, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    };
 
     const _connect = () => {
 
@@ -29,9 +46,6 @@ const Chat = () => {
         socket.on("connect", () => {
             console.log("SOCKET CONNECTED!", socket.id);
             dispatch(changeConnectionStatus(true))
-            if (user) {
-                dispatch(addUserToChat(user));
-            }
         });
 
         socket.on("disconnect", () => {
@@ -40,17 +54,32 @@ const Chat = () => {
         })
 
         socket.on("message", (message: IChatMessage) => {
-            console.log(message);
-            dispatch(addChatMessage(message))
+            dispatch(addChatMessage(message));
         });
 
-    }
+        socket.on("adduser", (user : IUser) => {
+            dispatch(addUserToChat(user))
+        });
+
+        socket.on("leavechat", (user: IUser) => {
+            dispatch(removeUserFromChat(user));
+        })
+
+        enterToChat();
+
+    };
 
     useEffect(() => {
 
-        if (!user) return () => { };
+        if (user) {
+            _connect();
+        } else {
+            leaveChat();
+        }
 
-        _connect()
+        return () => {
+            leaveChat()
+        }
 
     }, [user])
 

@@ -12,7 +12,7 @@ const UsersOnline = ({ users }: UsersOnlineProps) => {
             <h5>Users online</h5>
 
             {users && users.map((user) => (
-                <div key={`user${user.id}`} className={classes.users_online__user}>
+                <div key={`user-${user.userName}`} className={classes.users_online__user}>
                     {user.userName}
                 </div>
             ))}

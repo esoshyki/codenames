@@ -18,8 +18,6 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-
-                <Chat />
                 {children}
             </main>
         </div>

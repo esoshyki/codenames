@@ -4,6 +4,7 @@
     height: 100vh
     top: 0
     transition: 0.3s ease-in
+    z-index: 5
 
 .chat__connected, .chat__disconnected
     width: 20px
@@ -12,7 +13,7 @@
     position: absolute
     left: 5px
     top: 5px
-    z-index: 5
+    z-index: 6
 
 .chat__connected
     background-color: green
@@ -27,14 +28,14 @@
     right: 0px
 
 .chat__icon
-    position: absolute
+    position: fixed
     top: 10px
     right: 20px
     width: 45px
     height: 45px
     background-image: url(/icons/chat.png)
     background-size: cover
-    z-index: 1
+    z-index: 7
     &:hover
         cursor: pointer
         animation: roll 0.5s linear 0s infinite
