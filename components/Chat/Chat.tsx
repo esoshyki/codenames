@@ -5,13 +5,14 @@ import { Fragment, useEffect } from 'react';
 import { showChat, hideChat } from '../../store/chat/chat.actions';
 import Messages from './Messages';
 import UsersOnline from './UsersOnline';
-import SocketIOClient from "socket.io-client";
+import { connect } from "socket.io-client";
 import {
     changeConnectionStatus,
     addUserToChat,
     removeUserFromChat,
     addChatMessage
 } from '../../store/chat/chat.actions';
+import { ServerToClientEvents, ClientToServerEvents } from '../../socket.types';
 
 const Chat = () => {
 
@@ -20,12 +21,12 @@ const Chat = () => {
     const { hidden, messages, users, connected } = useSelector((state: IState) => state.chat);
     const { user } = useSelector((state: IState) => state.user);
 
-    const connect = () => {
+    const _connect = () => {
 
-        const socket = SocketIOClient.connect(process.env.BASE_URL, {
+        const socket = connect((process.env.BASE_URL || "http://localhost:3000"), {
             path: "/api/socketio",
-        });
-
+          });
+     
         socket.on("connect", () => {
             console.log("SOCKET CONNECTED!", socket.id);
             dispatch(changeConnectionStatus(true))
@@ -50,7 +51,7 @@ const Chat = () => {
 
         if (!user) return () => { };
 
-        connect()
+        _connect()
 
     }, [user])
 
