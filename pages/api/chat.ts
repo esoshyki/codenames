@@ -6,6 +6,9 @@ export default (req: NextApiRequest, res: NextApiResponseServerIO) => {
     // get message
     const message = req.body;
 
+    console.log('message');
+    console.log(message);
+
     // dispatch to channel "message"
     res?.socket?.server?.io?.emit("message", message);
 

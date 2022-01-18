@@ -12,7 +12,6 @@ import {
     removeUserFromChat,
     addChatMessage
 } from '../../store/chat/chat.actions';
-import { ServerToClientEvents, ClientToServerEvents } from '../../socket.types';
 
 const Chat = () => {
 

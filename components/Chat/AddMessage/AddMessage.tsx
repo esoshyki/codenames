@@ -2,6 +2,7 @@ import classes from './AddMessage.module.sass';
 import { useRef } from 'react';
 import { IChatMessage, IState } from '../../../store/types';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const AddMessage = () => {
 
@@ -19,18 +20,17 @@ const AddMessage = () => {
             id: messages.length
         };
 
-        const response = await fetch("/api/chat", {
-            method: "POST",
+        const response = await axios.post("/api/chat", {
+            ...newMessage  
+        }, { 
             headers: {
-                "Content-type" : "application/json"
-            },
-            body: JSON.stringify(newMessage)
-        });
+                "Content-Type" : "application/json"
+            }
+        })
 
-        if (response.ok) {
+        if (response.status === 201) {
             inputRef.current.value = "";
         }
-
     };
 
     return (
