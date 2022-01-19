@@ -20,17 +20,15 @@ const AddMessage = () => {
             id: messages.length
         };
 
-        const response = await axios.post("/api/chat/addmessage", {
-            ...newMessage  
-        }, { 
+        const response = await axios.post("/api/chat/addmessage", newMessage, {
             headers: {
                 "Content-Type" : "application/json"
             }
-        })
+        });
 
         if (response.status === 201) {
             inputRef.current.value = "";
-        }
+        };
     };
 
     return (

@@ -6,12 +6,12 @@ import { IState, IUser, IChatMessage } from '../store/types';
 import ReadyUsers from '../components/ReadyUsers';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { io, connect,  } from "socket.io-client";
+import { io, connect, } from "socket.io-client";
 import {
-    changeConnectionStatus,
-    addUserToChat,
-    removeUserFromChat,
-    addChatMessage
+  changeConnectionStatus,
+  addUserToChat,
+  removeUserFromChat,
+  addChatMessage
 } from '../store/chat/chat.actions';
 import API from '../axios/service';
 import { addReadyUser, removeReadyUser, setProcessing } from '../store/game/game.actions';
@@ -19,119 +19,118 @@ import { addReadyUser, removeReadyUser, setProcessing } from '../store/game/game
 
 const Home: NextPage = () => {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const { user, disconnectedUser } = useSelector((state: IState) => state.user);
-    const { ready, processing, readyUsers } = useSelector((state: IState) => state.game);
+  const { user, disconnectedUser } = useSelector((state: IState) => state.user);
+  const { ready, processing, readyUsers } = useSelector((state: IState) => state.game);
 
-    const addUser = async (user: IUser) => {
-        const result = await axios.post("/api/chat/enter", user, {
+  const addUser = async (user: IUser) => {
+    const result = await axios.post("/api/chat/enter", user, {
 
-        });
+    });
 
-        if (result.data) {
-            console.log(result.data);
-        }
+    if (result.data) {
+      console.log(result.data);
     }
+  }
 
-    const leaveChat = async (user: IUser) => {
+  const leaveChat = async (user: IUser) => {
 
-        const result = await axios.post("/api/chat/disconnect", user, {
-            
-        });
+    const result = await axios.post("/api/chat/disconnect", user, {
 
-        if (result.data) {
-            console.log(result.data);
-        }
-    };
+    });
 
-    const socketWorker = () => {
+    if (result.data) {
+      console.log(result.data);
+    }
+  };
 
-        console.log("socketWorker");
+  const socketWorker = () => {
 
-        const socket = connect((process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"), {
-            path: "/api/socketio",
-        });
+    console.log("socketWorker");
 
-        socket.on("connect", () => {
-            dispatch(changeConnectionStatus(true));
-            if (user) {
-                dispatch(addUserToChat(user));
-            }
-        });
+    const socket = connect((process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"), {
+      path: "/api/socketio",
+    });
 
-        socket.on("disconnect_user", (user) => {
-            console.log("user")
-            dispatch(removeUserFromChat(user))
-        });
+    socket.on("connect", () => {
+      dispatch(changeConnectionStatus(true));
+    });
 
-        socket.on("disconnect", () => {
-            dispatch(changeConnectionStatus(false));
-        });
+    socket.on("disconnect_user", (user) => {
+      console.log("user")
+      dispatch(removeUserFromChat(user))
+    });
 
-        socket.on("ping", (count) => {
-            console.log("ping", count);
-        })
+    socket.on("disconnect", () => {
+      dispatch(changeConnectionStatus(false));
+    });
 
-        socket.on("message", (message: IChatMessage) => {
-            dispatch(addChatMessage(message));
-        });
+    socket.on("ping", (count) => {
+      console.log("ping", count);
+    })
 
-        socket.on("adduser", (user: IUser) => {
-            dispatch(addUserToChat(user))
-        });
+    socket.on("message", (message: IChatMessage) => {
+      dispatch(addChatMessage(message));
+    });
 
-        socket.on("leavechat", (user: IUser) => {
-            dispatch(removeUserFromChat(user));
-        });
+    socket.on("adduser", (user: IUser) => {
+      dispatch(addUserToChat(user))
+    });
 
-        socket.once("user_ready", (user: IUser) => {
-            dispatch(addReadyUser(user));
-        });
+    socket.on("leavechat", (user: IUser) => {
+      dispatch(removeUserFromChat(user));
+    });
 
-        socket.once("user_unready", (user: IUser) => {
-            dispatch(removeReadyUser(user));
-        })
+    socket.on("user_ready", (user: IUser) => {
+      dispatch(addReadyUser(user));
+    });
 
-    };
+    socket.on("user_unready", (user: IUser) => {
+      dispatch(removeReadyUser(user));
+    })
 
-    useEffect(() => {
+  };
+
+  useEffect(() => {
+    if (!user) {
         socketWorker()
-    }, []);
+    };
+  }, []);
 
-    useEffect(() => {
-        if (user) {
-            addUser(user)
-        }
-    }, [user])
+  useEffect(() => {
+      if (user) {
+          addUser(user)
+      }
+  }, [user])
 
-    useEffect(() => {
+  useEffect(() => {
 
-        if (disconnectedUser) {
-            leaveChat(disconnectedUser)
-        };
+    if (disconnectedUser) {
+      leaveChat(disconnectedUser)
+    };
 
-    }, [disconnectedUser]);
+  }, [disconnectedUser]);
 
-    useEffect(() => {
-        if (typeof ready !== "boolean") return;
-        if (!user || processing) return;
-        dispatch(setProcessing(true))
-        if (ready) {
-            API.userReady(user);
-        } else {
-            API.userUnready(user);
-        }
-        dispatch(setProcessing(false))
-    }, [ready])
+  useEffect(() => {
+    if (typeof ready !== "boolean") return;
+    if (!user || processing) return;
+    dispatch(setProcessing(true))
+    if (ready) {
+      API.userReady(user);
+    } else {
+      API.userUnready(user);
+    }
+    dispatch(setProcessing(false))
+  }, [ready])
 
 
-    return (
-        <Layout>
-            <Menu />
-            <ReadyUsers users={readyUsers} />
-        </Layout>
-    )
+  return (
+    <Layout>
+      <Menu />
+      <ReadyUsers users={readyUsers} />
+    </Layout>
+  )
 }
 
 export default Home
