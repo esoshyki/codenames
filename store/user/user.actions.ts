@@ -1,34 +1,35 @@
-import { IAction } from "../types";
+import { IAction, IUser } from "../types";
 import { store } from '../'
+import { AnyAction, Dispatch } from "redux";
 
-const CREATE_USER = "CREATE_USER";
+const LOGIN = "LOGIN";
 const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
-const DELETE_USER = "DELETE_USER";
+const LOGOUT = "LOGOUT";
+const CLEAR_DISCONNECTED_USER = "CLEAR_DISCONNECTED_USER";
 
 export const actions = {
-    CREATE_USER,
+    LOGIN,
     SET_LOGIN_ERROR,
-    DELETE_USER
+    LOGOUT,
+    CLEAR_DISCONNECTED_USER
 };
 
-export const createUser = (userName: string, id: number): IAction => {
+export const login = (user: IUser): IAction => {
 
     return ({
-        type: actions.CREATE_USER,
-        payload: {
-            userName,
-            id
-        }
+        type: actions.LOGIN,
+        payload: user
     })
 };
 
-export const deleteUser = (id: number): IAction => {
+export const clearDisconnectedUser = () : IAction => ({
+    type: CLEAR_DISCONNECTED_USER,
+})
 
-    return ({
-        type: actions.DELETE_USER,
-        payload: id
+export const logout = (user: IUser) : IAction => ({
+        type: actions.LOGOUT,
+        payload: user
     });
-};
 
 export const createLoginError = (error: string): IAction => ({
     type: SET_LOGIN_ERROR,
@@ -37,4 +38,4 @@ export const createLoginError = (error: string): IAction => ({
 
 export const clearLoginError = (): IAction => ({
     type: SET_LOGIN_ERROR,
-})
+});

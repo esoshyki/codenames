@@ -2,6 +2,9 @@ import { ReactNode } from 'react';
 import classes from './Layout.module.sass';
 import Head from 'next/head';
 import Chat from '../Chat';
+import { useSelector } from 'react-redux';
+import { IState } from '../../store/types';
+import Loading from '../Loading';
 
 interface LayoutProps {
     children: ReactNode,
@@ -9,6 +12,8 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, pageName }: LayoutProps) => {
+
+    const { processing } = useSelector((state: IState) => state.game);
 
     return (
         <div className={classes.page_container}>
@@ -19,7 +24,9 @@ const Layout = ({ children, pageName }: LayoutProps) => {
             </Head>
             <main>
                 {children}
+
             </main>
+            {processing && <Loading />}
         </div>
     );
 

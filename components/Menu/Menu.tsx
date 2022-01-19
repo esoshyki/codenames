@@ -1,25 +1,33 @@
 import classes from './Menu.module.sass';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { IState } from '../../store/types';
-import { deleteUser } from '../../store/user/user.actions';
+import { IState, IUser } from '../../store/types';
+import { logout } from '../../store/user/user.actions';
+import { setReady } from '../../store/game/game.actions';
 
 const Menu = () => {
 
     const dispatch = useDispatch();
 
     const user = useSelector((state: IState) => state.user.user);
+    const { ready } = useSelector((state: IState) => state.game);
 
     return (
         <nav className={classes.menu}>
 
-            {user && <Link href={"/create"}>
-                <a className={classes.menu__link}>Create game</a>
-            </Link>}
+            {user && !ready && (
+                <span
+                    onClick={() => dispatch(setReady(true))} 
+                    className={["menu__item", classes.menu__link].join(" ")}>
+                    Ready
+                </span>)}
 
-            {user && <Link href={"/join"}>
-                <a className={classes.menu__link}>Join game</a>
-            </Link>}
+            {user && ready && (
+                <span
+                    onClick={() => dispatch(setReady(false))}  
+                    className={["menu__item", classes.menu__link].join(" ")}>
+                    Not ready
+                </span>)}
 
             {!user && <Link href={"/login"}>
                 <a className={classes.menu__link}>Login</a>
@@ -32,7 +40,7 @@ const Menu = () => {
             {user && (
                 <a 
                     className={classes.menu__link}
-                    onClick={() => dispatch(deleteUser(user.id))}
+                    onClick={() => dispatch(logout(user))}
                 >
                     Logout
                 </a>

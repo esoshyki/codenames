@@ -36,7 +36,7 @@ const chatReducer = (state=initialState, { type, payload } : IAction ) => {
         case actions.CHAT_USER_DISCONNECT:
             return ({
                 ...state,
-                users: state.users.filter((user) => user.id !== payload.id)
+                users: state.users.filter((user) => user.userName !== payload.userName)
             });
 
         case actions.CHAT_SET_CONNECTED_STATUS:

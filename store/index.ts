@@ -6,21 +6,25 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from './user/user.reducer';
 import chatReducer from './chat/chat.reducer';
+import gameReducer from './game/game.reducer';
 
 const persistConfig = {
     key: "codenames",
     storage,
     whitelist: [
-        "user",
+
     ],
     blacklist: [
-        "chat"
+        "user",
+        "chat",
+        "game"
     ]
 };
 
 const rootReducer = combineReducers({
     user: userReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    game: gameReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

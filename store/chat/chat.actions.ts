@@ -1,4 +1,6 @@
 import { IAction, IChatMessage, IUser } from "../types";
+import { AnyAction, Dispatch } from "redux";
+import axios from "axios";
 
 const ADD_CHAT_MESSAGE = "ADD_CHAT_MESSAGE";
 const SET_CHAT_HIDDEN = "SET_CHAT_HIDDEN";

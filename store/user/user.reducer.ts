@@ -1,20 +1,19 @@
-import { IAction, IUser } from "../types";
+import { IAction, IUser, IUserState } from "../types";
 import { actions } from "./user.actions";
 
-const initialState = {
+const initialState : IUserState = {
     user: null,
-    users: []
+    disconnectedUser: null
 };
 
 const userReducer = (state=initialState, { type, payload } : IAction ) => {
 
     switch (type) {
 
-        case actions.CREATE_USER:
+        case actions.LOGIN:
             return ({
                 ...state,
                 user: payload,
-                users: [...state.users, payload]
             });
 
         case actions.SET_LOGIN_ERROR: 
@@ -23,13 +22,19 @@ const userReducer = (state=initialState, { type, payload } : IAction ) => {
                 loginError: payload
             });
 
-        case actions.DELETE_USER:
-            const newUsers = state.users.filter((user: IUser) => user.id !== payload);
+        case actions.LOGOUT:
 
             return ({
                 ...state,
                 user: null,
-                users: newUsers
+                disconnectedUser: payload
+            });
+
+        case actions.CLEAR_DISCONNECTED_USER:
+
+            return ({
+                ...state,
+                disconnectedUser: null
             })
 
         default:

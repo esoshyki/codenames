@@ -5,8 +5,8 @@ export default (req: NextApiRequest, res: NextApiResponseServerIO) => {
   if (req.method === "POST") {
     const user = req.body;
 
-    res?.socket?.server?.io?.emit("adduser", user);
+    res?.socket?.server?.io?.emit("disconnect_user", user);
 
-    res.status(201).json(user);
+    res.status(200).send("disconnected");
   }
 };
