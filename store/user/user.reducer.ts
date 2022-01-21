@@ -1,56 +1,30 @@
-import { IAction, IUser, IUserState } from "../types";
-import { actions } from "./user.actions";
+import { IUserState, UsersTypes } from "./users.types";
+import { IAction } from "../types";
 
-const initialState : IUserState = {
+const init : IUserState = {
     user: null,
-    disconnectedUser: null,
-    onlineUsers: []
+    usersOnline: []
 };
 
-const userReducer = (
-    state=initialState, { type, payload } : IAction 
+export const usersReducer = (
+    state = init, { type, payload } : IAction
     ) : IUserState => {
 
-    switch (type) {
+    switch(type) {
 
-        case actions.LOGIN:
+        case UsersTypes.SET_CURRENT_USER:
             return ({
                 ...state,
-                user: payload,
+                user: payload
             });
 
-        case actions.SET_LOGIN_ERROR: 
+        case UsersTypes.SET_ONLINE_USERS:
             return ({
                 ...state,
-                loginError: payload
+                usersOnline: payload
             });
-
-        case actions.LOGOUT:
-
-            return ({
-                ...state,
-                user: null,
-                disconnectedUser: payload
-            });
-
-        case actions.CLEAR_DISCONNECTED_USER:
-
-            return ({
-                ...state,
-                disconnectedUser: null
-            });
-
-        case actions.SET_ONLINE_USERS:
-
-            return ({
-                ...state,
-                onlineUsers: payload
-            })
 
         default:
             return state
-
     }
-};
-
-export default userReducer;
+}

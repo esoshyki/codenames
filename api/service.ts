@@ -17,18 +17,27 @@ const userUnready = async (user: IUser) => {
     };
 };
 
-const enter = async (user: IUser) => {
-    const result = await API.post("/api/enter", user);
+const connect = async (user: IUser) => {
+    const result = await API.post("/api/connect", user);
+    return result.data
+};
 
-    return result;
+const logUserOut = async (user: IUser) => {
+    const result = await API.post("/api/logout", user);
+    return result.data
+};
+
+const updateOnlineUsers = async () => {
+    const result = await API.get("/api/users-online");
+    return result.data()
 }
-
-
 
 const service = {
     userReady,
     userUnready,
-    enter
+    connect,
+    logUserOut,
+    updateOnlineUsers
 };
 
 export default service;

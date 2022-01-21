@@ -1,19 +1,18 @@
 import classes from './Login.module.sass';
 import { KeyboardEvent, MouseEvent, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, clearLoginError, createLoginError } from '../../store/user/user.actions';
+import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../store/types';
-import { errors } from '../../store/errors';
 import { useRouter } from 'next/router';
-import API from 'axios/service';
+import { userConnect } from '@/store/user/users.actions';
+
 
 const Login = () => {
 
     const router = useRouter();
 
     const dispatch = useDispatch();
+
     const { user, loginError } = useSelector((state: IState) => state.user);
-    const { users } = useSelector((state: IState) => state.chat);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -23,13 +22,7 @@ const Login = () => {
 
         if (!userName) return;
 
-        if (users.some(user => user.userName === userName)) {
-            dispatch(createLoginError(errors.login.userExists))
-        } else {
-            await API.enter({userName});
-            dispatch(login({userName}));
-            router.push("/");
-        }
+        dispatch(userConnect({ userName }));
 
     };
 
@@ -41,7 +34,7 @@ const Login = () => {
 
     const handleChange = () => {
         if (loginError) {
-            dispatch(clearLoginError())
+            // dispatch(clearLoginError())
         }
     };
 

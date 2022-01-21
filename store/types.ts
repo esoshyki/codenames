@@ -1,3 +1,5 @@
+import { AppState } from "./app/app.types";
+
 export interface IAction {
     type: string;
     payload?: any;
@@ -64,4 +66,5 @@ export interface IState {
     user: IUserState;
     chat: IChatState;
     game: IGameState;
+    app: AppState;
 };

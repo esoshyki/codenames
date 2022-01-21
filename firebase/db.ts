@@ -1,5 +1,5 @@
 import app from '.';
-import { getDatabase, ref, set, child, get, push } from "firebase/database";
+import { getDatabase, ref, set, child, get, remove } from "firebase/database";
 import { IUser } from 'store/types';
 
 const database = getDatabase(app);
@@ -10,6 +10,13 @@ const addOnlineUser = async (user: IUser) => {
 
     return user;
 };
+
+const removeUserFromOnline = async (user: IUser) => {
+
+    await remove (ref(database, "codenames/online" + user.userName));
+
+    return user;
+}
 
 const getOnlineUsers = async () => {
 
@@ -24,6 +31,7 @@ const getOnlineUsers = async () => {
 
 export const databaseService = {
     addOnlineUser,
-    getOnlineUsers
+    getOnlineUsers,
+    removeUserFromOnline
 
 }
