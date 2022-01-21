@@ -6,12 +6,14 @@ const LOGIN = "LOGIN";
 const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 const LOGOUT = "LOGOUT";
 const CLEAR_DISCONNECTED_USER = "CLEAR_DISCONNECTED_USER";
+const SET_ONLINE_USERS = "SET_ONLINE_USERS";
 
 export const actions = {
     LOGIN,
     SET_LOGIN_ERROR,
     LOGOUT,
-    CLEAR_DISCONNECTED_USER
+    CLEAR_DISCONNECTED_USER,
+    SET_ONLINE_USERS
 };
 
 export const login = (user: IUser): IAction => {
@@ -21,6 +23,14 @@ export const login = (user: IUser): IAction => {
         payload: user
     })
 };
+
+export const setOnlineUsers = (users: IUser[]) : IAction  => {
+
+    return ({
+        type: actions.SET_ONLINE_USERS,
+        payload: users
+    })
+}
 
 export const clearDisconnectedUser = () : IAction => ({
     type: CLEAR_DISCONNECTED_USER,

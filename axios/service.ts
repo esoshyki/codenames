@@ -17,11 +17,18 @@ const userUnready = async (user: IUser) => {
     };
 };
 
+const enter = async (user: IUser) => {
+    const result = await API.post("/api/enter", user);
+
+    return result;
+}
+
 
 
 const service = {
     userReady,
-    userUnready
+    userUnready,
+    enter
 };
 
 export default service;

@@ -15,6 +15,7 @@ import {
 } from '../store/chat/chat.actions';
 import API from '../axios/service';
 import { addReadyUser, removeReadyUser, setProcessing } from '../store/game/game.actions';
+import { setOnlineUsers } from '@/store/user/user.actions';
 
 
 const Home: NextPage = () => {
@@ -88,6 +89,11 @@ const Home: NextPage = () => {
 
     socket.on("user_unready", (user: IUser) => {
       dispatch(removeReadyUser(user));
+    });
+
+    socket.on("change_online_users", (users: IUser[]) => {
+      console.log("users", users);
+      dispatch(setOnlineUsers(users));
     })
 
   };

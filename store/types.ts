@@ -11,6 +11,7 @@ export interface IUserState {
     user: IUser | null;
     loginError?: string;
     disconnectedUser: IUser | null;
+    onlineUsers: IUser[];
 };
 
 export interface IChatMessage {

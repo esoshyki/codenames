@@ -3,10 +3,13 @@ import { actions } from "./user.actions";
 
 const initialState : IUserState = {
     user: null,
-    disconnectedUser: null
+    disconnectedUser: null,
+    onlineUsers: []
 };
 
-const userReducer = (state=initialState, { type, payload } : IAction ) => {
+const userReducer = (
+    state=initialState, { type, payload } : IAction 
+    ) : IUserState => {
 
     switch (type) {
 
@@ -35,6 +38,13 @@ const userReducer = (state=initialState, { type, payload } : IAction ) => {
             return ({
                 ...state,
                 disconnectedUser: null
+            });
+
+        case actions.SET_ONLINE_USERS:
+
+            return ({
+                ...state,
+                onlineUsers: payload
             })
 
         default:

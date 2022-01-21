@@ -5,6 +5,7 @@ import { login, clearLoginError, createLoginError } from '../../store/user/user.
 import { IState } from '../../store/types';
 import { errors } from '../../store/errors';
 import { useRouter } from 'next/router';
+import API from 'axios/service';
 
 const Login = () => {
 
@@ -12,11 +13,11 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const { user, loginError } = useSelector((state: IState) => state.user);
-    const { users } = useSelector((state: IState) => state.chat)
+    const { users } = useSelector((state: IState) => state.chat);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const submit = () => {
+    const submit = async () => {
 
         const userName = inputRef.current?.value || null;
 
@@ -25,7 +26,9 @@ const Login = () => {
         if (users.some(user => user.userName === userName)) {
             dispatch(createLoginError(errors.login.userExists))
         } else {
-            dispatch(login({userName}))
+            await API.enter({userName});
+            dispatch(login({userName}));
+            router.push("/");
         }
 
     };
