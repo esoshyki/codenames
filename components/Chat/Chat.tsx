@@ -10,7 +10,7 @@ const Chat = () => {
 
     const dispatch = useDispatch();
 
-    const { hidden, messages, users } = useSelector((state: IState) => state.chat);
+    const { hidden, messages } = useSelector((state: IState) => state.chat);
     const { connected } = useSelector((state: IState) => state.app);
  
     const onIconClick = () => {
