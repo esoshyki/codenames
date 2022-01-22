@@ -1,5 +1,5 @@
 import app from '.';
-import { getDatabase, ref, set, child, get, remove } from "firebase/database";
+import { getDatabase, ref, set, get, remove } from "firebase/database";
 import { IUser } from 'store/types';
 
 const database = getDatabase(app);

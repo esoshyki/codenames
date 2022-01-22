@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import classes from './Layout.module.sass';
 import Head from 'next/head';
-import Chat from '../Chat';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store/types';
 import Loading from '../Loading';

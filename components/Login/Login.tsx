@@ -1,5 +1,5 @@
 import classes from './Login.module.sass';
-import { KeyboardEvent, MouseEvent, useEffect, useRef } from 'react';
+import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../store/types';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ const Login = () => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const { user, loginError } = useSelector((state: IState) => state.user);
+    const { user } = useSelector((state: IState) => state.user);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const submit = async () => {
@@ -26,9 +26,7 @@ const Login = () => {
     };
 
     const handleChange = () => {
-        if (loginError) {
-            // dispatch(clearLoginError())
-        }
+
     };
 
     useEffect(() => {
@@ -46,12 +44,6 @@ const Login = () => {
                 onKeyPress={handleClick}
                 onChange={handleChange}
                 />
-
-            {loginError && (
-                <span className={classes.login__error}>
-                    {loginError}
-                </span>
-            )}
 
         </div>
     )
