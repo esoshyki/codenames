@@ -1,5 +1,4 @@
 import { IAction, IUser } from "../types";
-import { Dispatch, AnyAction } from 'redux';
 
 const ADD_READY_USER = "ADD_READY_USER";
 const REMOVE_READY_USER = "REMOVE_READY_USER";

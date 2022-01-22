@@ -4,7 +4,6 @@ import { IUser } from "../types";
 import { takeEvery, put, call, fork } from "redux-saga/effects";
 import { IAction } from "../types";
 import { setCurrentUser } from "./users.actions";
-// import { setShowLogin } from "../app/app.actions";
 
 const connect = async (user: IUser) : Promise<IUser> => {
     const result = await API.connect(user);
