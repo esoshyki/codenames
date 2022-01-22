@@ -1,10 +1,6 @@
-import { IState, IUser } from '../../../store/types';
+import { IState } from '../../../store/types';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-
-interface UsersOnlineProps {
-    users: IUser[]
-};
 
 const UsersOnlineWrapper = styled.div`
     
