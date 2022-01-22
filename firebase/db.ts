@@ -13,7 +13,7 @@ const addOnlineUser = async (user: IUser) => {
 
 const removeUserFromOnline = async (user: IUser) => {
 
-    await remove (ref(database, "codenames/online" + user.userName));
+    await remove(ref(database, "codenames/online/" + user.userName));
 
     return user;
 }

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store/types';
 import { setReady } from '../../store/game/game.actions';
 import { setShowLogin } from '@/store/app/app.actions';
-import { userDisconnect } from '@/store/user/users.actions';
+import { userLogoutRequest } from '@/store/user/users.actions';
 import Login from '../Login';
 
 const Menu = () => {
@@ -37,12 +37,12 @@ const Menu = () => {
                 </span>)}
 
            
-            <span 
+            {!user && <span 
                 onClick={toogleLogin}
                 className={["menu__item", classes.menu__link].join(" ")}
                 >
                 {showLogin ? "Back" : "Login"}
-            </span>
+            </span>}
 
             {showLogin && <Login />}
 
@@ -53,7 +53,7 @@ const Menu = () => {
             {user && (
                 <a 
                     className={classes.menu__link}
-                    onClick={() => dispatch(userDisconnect(user))}
+                    onClick={() => dispatch(userLogoutRequest(user))}
                 >
                     Logout
                 </a>

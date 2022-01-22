@@ -1,41 +1,32 @@
 import { UsersTypes } from "./users.types";
 import API from '@/api/service';
 import { IUser } from "../types";
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, fork } from "redux-saga/effects";
 import { IAction } from "../types";
 import { setCurrentUser } from "./users.actions";
-import { setShowLogin } from "../app/app.actions";
+// import { setShowLogin } from "../app/app.actions";
 
 const connect = async (user: IUser) : Promise<IUser> => {
     const result = await API.connect(user);
     return result;
 };
 
-const disconnect = async (user: IUser) : Promise<IUser> => {
-    const result = await API.logUserOut(user);
-    return result;
-};
-
-function* connectWorker ({payload} : IAction) {
-    const user : IUser = yield call(connect, payload);
-    yield put(setCurrentUser(user));
-};
-
-function* setCurrentUserWorker () {
-    yield call(API.updateOnlineUsers)
-};
-
 function* disconnectWorker ({payload} : IAction) {
-    yield call(disconnect, payload)
+    yield call(API.connect, payload)
 };
 
-function* setOnlineUsersWorker () {
-    yield put(setShowLogin(false))
+function* loginRequestWorker (action: IAction) {
+    yield fork(connect, action.payload);
+    yield put(setCurrentUser(action.payload));
 };
+
+function* logoutRequestWorker (action: IAction) {
+    yield call(API.disconnect, action.payload);
+    yield put(setCurrentUser(null));
+}
 
 export default function* usersSaga () {
-    yield takeEvery(UsersTypes.CONNECT, connectWorker);
+    yield takeEvery(UsersTypes.USER_LOGIN_REQUEST, loginRequestWorker);
     yield takeEvery(UsersTypes.DISCONNECT_REQUEST, disconnectWorker);
-    yield takeEvery(UsersTypes.SET_CURRENT_USER, setCurrentUserWorker);
-    yield takeEvery(UsersTypes.SET_ONLINE_USERS, setOnlineUsersWorker);
+    yield takeEvery(UsersTypes.USER_LOGOUT_REQUEST, logoutRequestWorker);
 };

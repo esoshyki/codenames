@@ -1,22 +1,52 @@
-import classes from './UsersOnline.module.sass';
-import { IUser } from '../../../store/types';
+import { IState, IUser } from '../../../store/types';
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 interface UsersOnlineProps {
     users: IUser[]
-}
+};
 
-const UsersOnline = ({ users }: UsersOnlineProps) => {
+const UsersOnlineWrapper = styled.div`
+    
+    display: flex;
+    width: 100%;
+    height: 50%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 700;
+    color: #fff;
+
+    & > h5 {
+        margin: 5px 0;
+        text-align: end;
+    }
+`;
+
+const UserWrapper = styled.div`
+    width: 100%;
+    text-align: end;
+    padding: 0 20px;
+`
+
+const UsersOnline = () => {
+
+    const usersOnline = useSelector((state: IState) => state.user.usersOnline);
+
+    const users = usersOnline ? Object.values(usersOnline) : [];
+
+    console.log()
 
     return (
-        <div className={classes.users_online}>
+        <UsersOnlineWrapper>
             <h5>Users online</h5>
 
             {users && users.map((user) => (
-                <div key={`user-${user.userName}`} className={classes.users_online__user}>
+                <UserWrapper key={`user-${user.userName}`}>
                     {user.userName}
-                </div>
+                </UserWrapper>
             ))}
-        </div>
+        </UsersOnlineWrapper>
     )
 };
 

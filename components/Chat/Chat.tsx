@@ -24,7 +24,7 @@ const Chat = () => {
                 <div className={connected ? classes.chat__connected : classes.chat__disconnected} />
                 <Messages messages={messages} />
 
-                <UsersOnline users={users} />
+                <UsersOnline />
             </div>
         </Fragment>
     )

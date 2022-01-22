@@ -10,3 +10,7 @@ export const setShowLogin = (value: boolean) : IAction => ({
     type: AppTypes.SET_SHOW_LOGIN,
     payload: value
 });
+
+export const updateOnlineUsersRequest = () : IAction => ({
+    type: AppTypes.UPDATE_ONLINE_USERS_REQUEST
+});

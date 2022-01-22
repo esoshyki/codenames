@@ -1,4 +1,5 @@
 import { AppState } from "./app/app.types";
+import { IUserState } from "./user/users.types";
 
 export interface IAction {
     type: string;
@@ -7,13 +8,6 @@ export interface IAction {
 
 export interface IUser {
     userName: string;
-};
-
-export interface IUserState {
-    user: IUser | null;
-    loginError?: string;
-    disconnectedUser: IUser | null;
-    onlineUsers: IUser[];
 };
 
 export interface IChatMessage {

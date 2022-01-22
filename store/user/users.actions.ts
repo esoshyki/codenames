@@ -11,12 +11,22 @@ export const userDisconnect = (user: IUser) : IAction => ({
     payload: user
 });
 
-export const setUsersOnline = (users: IUser) : IAction => ({
+export const userLoginRequest = (user: IUser) : IAction => ({
+    type: UsersTypes.USER_LOGIN_REQUEST,
+    payload: user
+});
+
+export const userLogoutRequest = (user: IUser) : IAction => ({
+    type: UsersTypes.USER_LOGOUT_REQUEST,
+    payload: user
+});
+
+export const setUsersOnline = (users: IUser[]) : IAction => ({
     type: UsersTypes.SET_ONLINE_USERS,
     payload: users
 });
 
-export const setCurrentUser = (user: IUser) : IAction => ({
+export const setCurrentUser = (user: IUser | null) : IAction => ({
     type: UsersTypes.SET_CURRENT_USER,
     payload: user
 });
