@@ -2,10 +2,10 @@ import { UsersTypes } from "./users.types";
 import API from '@/api/service';
 import { IUser } from "../types";
 import { takeEvery, put, call, fork } from "redux-saga/effects";
-import { IAction } from "../types";
+import { IAction, IFBUserData } from "../types";
 import { setCurrentUser } from "./users.actions";
 
-const connect = async (user: IUser) : Promise<IUser> => {
+const connect = async (user : IFBUserData) : Promise<IUser> => {
     const result = await API.connect(user);
     return result;
 };

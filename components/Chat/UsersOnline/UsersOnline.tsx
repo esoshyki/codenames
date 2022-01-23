@@ -31,8 +31,6 @@ const UsersOnline = () => {
 
     const users = usersOnline ? Object.values(usersOnline) : [];
 
-    console.log()
-
     return (
         <UsersOnlineWrapper>
             <h5>Users online</h5>

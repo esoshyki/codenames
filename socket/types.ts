@@ -3,5 +3,6 @@ export enum SocketActions {
     disconnect = "disconnect",
     user_connected = "user-connected",
     user_disconnected = "user-disconnected",
-    update_online_users = "users-online-update"
+    update_online_users = "users-online-update",
+    
 };

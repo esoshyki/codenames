@@ -17,8 +17,6 @@ const Messages = ({ messages }: MessagesProps) => {
 
         const height = containerRef.current.offsetHeight - listRef.current.offsetHeight;
 
-        console.log(height);
-
         containerRef.current.style.top = `-${height}px`;
 
     }, [messages])

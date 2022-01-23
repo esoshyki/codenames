@@ -5,10 +5,11 @@ import { SocketActions } from "socket/types";
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
   if (req.method === "POST") {
-    const user = req.body;
-    await databaseService.removeUserFromOnline(user);
+    const { socketId, user } = req.body;
 
-    res?.socket?.server?.io?.emit(SocketActions.user_disconnected);
+    await databaseService.removeUserFromOnline(socketId);
+
+    res?.socket?.server?.io?.emit(SocketActions.user_disconnected, user);
     res.status(200).json(user);
   };
 };

@@ -11,12 +11,13 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const { user } = useSelector((state: IState) => state.user);
+    const { socketId } = useSelector((state: IState) => state.app);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const submit = async () => {
         const userName = inputRef.current?.value || null;
-        if (!userName) return;
-        dispatch(userLoginRequest({ userName }));
+        if (!userName || !socketId) return;
+        dispatch(userLoginRequest({ userName, socketId }));
     };
 
     const handleClick = (e: KeyboardEvent) => {

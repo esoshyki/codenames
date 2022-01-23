@@ -1,10 +1,14 @@
 import { connect } from 'socket.io-client';
-import { setConnectionStatus } from '@/store/app/app.actions';
+import { setSocketId } from '@/store/app/app.actions';
 import { setUsersOnline } from '@/store/user/users.actions';
 import { AnyAction, Dispatch } from 'redux';
 import { SocketActions } from './types';
 import { IUser } from '@/store/types';
-import { updateOnlineUsersRequest } from '@/store/app/app.actions';
+import { 
+  	updateOnlineUsersRequest,
+  	showUserConnectedAd,
+  	showUserDisconnectedAd
+} from '@/store/app/app.actions';
 
 export const connectSocket = (dispatch : Dispatch<AnyAction>) => {
 
@@ -12,24 +16,33 @@ export const connectSocket = (dispatch : Dispatch<AnyAction>) => {
       path: "/api/socketio",
     });
 
+
     socket.on(SocketActions.connect, () => {
-      dispatch(setConnectionStatus(true))
+      dispatch(setSocketId(socket.id))
     });
 
-    socket.on(SocketActions.user_connected, () => {
+    socket.on(SocketActions.user_connected, (user: IUser) => {
+		    dispatch(showUserConnectedAd(user))
         dispatch(updateOnlineUsersRequest());
     });
 
-    socket.on(SocketActions.user_disconnected, () => {
+    socket.on(SocketActions.user_disconnected, (user) => {
+		    dispatch(showUserDisconnectedAd(user));
         dispatch(updateOnlineUsersRequest());
-    })
+    });
+
+    socket.on("userDisconnected", () => {
+      dispatch(updateOnlineUsersRequest());
+    });
 
     socket.on(SocketActions.update_online_users, (users: IUser[]) => {
         dispatch(setUsersOnline(users));
     });
 
     socket.on(SocketActions.disconnect, () => {
-      dispatch(setConnectionStatus(false))
+      dispatch(setSocketId(null))
     });
+
+    return socket;
 
 }

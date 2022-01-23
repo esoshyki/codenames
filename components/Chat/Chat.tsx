@@ -11,7 +11,7 @@ const Chat = () => {
     const dispatch = useDispatch();
 
     const { hidden, messages } = useSelector((state: IState) => state.chat);
-    const { connected } = useSelector((state: IState) => state.app);
+    const { socketId } = useSelector((state: IState) => state.app);
  
     const onIconClick = () => {
         hidden ? dispatch(showChat()) : dispatch((hideChat()));
@@ -21,7 +21,7 @@ const Chat = () => {
         <Fragment>
             <div className={classes.chat__icon} onClick={onIconClick} />
             <div className={(hidden ? classes.chat__hidden : classes.chat__visible)}>
-                <div className={connected ? classes.chat__connected : classes.chat__disconnected} />
+                <div className={socketId ? classes.chat__connected : classes.chat__disconnected} />
                 <Messages messages={messages} />
 
                 <UsersOnline />

@@ -37,6 +37,11 @@ export interface ICard {
     pushed: boolean;
 };
 
+export interface IFBUserData {
+    userName: string;
+    socketId: string;
+}
+
 export interface IGameField {
     cardlist: ICard[];
     blackIdx: number;

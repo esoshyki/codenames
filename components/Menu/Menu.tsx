@@ -13,7 +13,7 @@ const Menu = () => {
 
     const user = useSelector((state: IState) => state.user.user);
     const { ready } = useSelector((state: IState) => state.game);
-    const { showLogin } = useSelector((state: IState) => state.app);
+    const { showLogin, socketId } = useSelector((state: IState) => state.app);
 
     const toogleLogin = () => {
         dispatch(setShowLogin(!showLogin));
@@ -50,10 +50,10 @@ const Menu = () => {
                 <a className={classes.menu__link}>Settings</a>
             </Link>
 
-            {user && (
+            {user && socketId &&  (
                 <a 
                     className={classes.menu__link}
-                    onClick={() => dispatch(userLogoutRequest(user))}
+                    onClick={() => dispatch(userLogoutRequest({userName: user.userName, socketId}))}
                 >
                     Logout
                 </a>

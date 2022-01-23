@@ -1,4 +1,4 @@
-import { IAction, IUser } from "../types";
+import { IAction, IUser, IFBUserData } from "../types";
 import { UsersTypes } from "./users.types";
 
 export const userConnect = (user: IUser) : IAction => ({
@@ -11,12 +11,12 @@ export const userDisconnect = (user: IUser) : IAction => ({
     payload: user
 });
 
-export const userLoginRequest = (user: IUser) : IAction => ({
+export const userLoginRequest = (user : IFBUserData) : IAction => ({
     type: UsersTypes.USER_LOGIN_REQUEST,
-    payload: user
+    payload: (user)
 });
 
-export const userLogoutRequest = (user: IUser) : IAction => ({
+export const userLogoutRequest = (user: IFBUserData) : IAction => ({
     type: UsersTypes.USER_LOGOUT_REQUEST,
     payload: user
 });

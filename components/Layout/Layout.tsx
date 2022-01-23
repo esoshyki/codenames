@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store/types';
 import Loading from '../Loading';
+import Info from '../Info';
 
 interface LayoutProps {
     children: ReactNode,
@@ -22,6 +23,7 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
+                <Info />
                 {children}
 
             </main>

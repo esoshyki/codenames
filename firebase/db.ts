@@ -1,21 +1,23 @@
 import app from '.';
 import { getDatabase, ref, set, get, remove } from "firebase/database";
-import { IUser } from 'store/types';
+import { IUser, IFBUserData } from 'store/types';
 
 const database = getDatabase(app);
 
-const addOnlineUser = async (user: IUser) => {
+const addOnlineUser = async (user: IFBUserData) : Promise<IUser> => {
 
-    await set(ref(database, "codenames/online/" + user.userName), user);
+    console.log(user);
+    await set(
+        ref(database, "codenames/online/" + user.socketId), user );
 
     return user;
 };
 
-const removeUserFromOnline = async (user: IUser) => {
+const removeUserFromOnline = async (socketId: string) => {
 
-    await remove(ref(database, "codenames/online/" + user.userName));
+    await remove(ref(database, "codenames/online/" + socketId));
 
-    return user;
+    return socketId;
 }
 
 const getOnlineUsers = async () => {
@@ -27,11 +29,19 @@ const getOnlineUsers = async () => {
     };
 
     return [];
+};
+
+const removeOnlineUserBySocketId = async (socketId: string) => {
+    console.log("HERE");
+
+    console.log(socketId);
+    const result = await remove(ref(database, "codenames/online/" + socketId));
+    return result
 }
 
 export const databaseService = {
     addOnlineUser,
     getOnlineUsers,
-    removeUserFromOnline
-
-}
+    removeUserFromOnline,
+    removeOnlineUserBySocketId
+};

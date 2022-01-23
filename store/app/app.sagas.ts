@@ -9,7 +9,7 @@ function* setCurrentUserWorker () {
     yield put(setShowLogin(false))
 };
 
-function* setConnectionStatusWorker ({payload} : IAction) {
+function* setSocketIdWorker ({payload} : IAction) {
     if (payload) {
         yield put(updateOnlineUsersRequest())
     };
@@ -21,6 +21,6 @@ function* updateOnlineUsersRequestWorker() {
 
 export default function* appSagas () {
     yield takeEvery(UsersTypes.SET_CURRENT_USER, setCurrentUserWorker);
-    yield takeEvery(AppTypes.SET_CONNECTED_STATUS, setConnectionStatusWorker);
+    yield takeEvery(AppTypes.SET_SOCKET_ID, setSocketIdWorker);
     yield takeEvery(AppTypes.UPDATE_ONLINE_USERS_REQUEST, updateOnlineUsersRequestWorker)
 };
