@@ -34,3 +34,13 @@ export const setSocketId = (socketId: string | null) : IAction => ({
     type: AppTypes.SET_SOCKET_ID,
     payload: socketId
 });
+
+export const showGame = () : IAction => ({
+    type: AppTypes.SET_SHOW_GAME,
+    payload: true
+});
+
+export const hideGame = () : IAction => ({
+    type: AppTypes.SET_SHOW_GAME,
+    payload: false
+});

@@ -1,11 +1,8 @@
-import { IUser } from '../../store/types';
+import { IState, IUser } from '../../store/types';
 import ReadyUser from './ReadyUser';
 import { Fragment } from 'react';
 import styled from 'styled-components';
-
-interface ReadyUsersProps {
-    users: IUser[];
-}
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -22,7 +19,9 @@ const UsersWrappers = styled.div`
     justify-content: center;
 `
 
-const ReadyUsers = ({ users }: ReadyUsersProps) => {
+const ReadyUsers = () => {
+
+    const { members } = useSelector((state: IState) => state.game);
 
     return (
 
@@ -30,9 +29,9 @@ const ReadyUsers = ({ users }: ReadyUsersProps) => {
             <h5>Ready users</h5>
 
             <UsersWrappers>
-                {users && users.map((user, idx) => (
+                {members && members.map((member, idx) => (
                     <Fragment key={idx}>
-                        <ReadyUser user={user} />
+                        <ReadyUser user={member} />
                     </Fragment>
                 )
                 )}

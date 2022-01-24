@@ -35,6 +35,7 @@ export default async function socketIO(
         origin: "*",
         methods: ["GET", "POST"],
       },
+      
     });
 
 	io.sockets.on("connection", (socket) => {

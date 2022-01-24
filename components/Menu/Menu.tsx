@@ -1,37 +1,95 @@
 import classes from './Menu.module.sass';
 import Link from 'next/link';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store/types';
-import { setReady } from '../../store/game/game.actions';
-import { setShowLogin } from '@/store/app/app.actions';
+import { setReadyRequest, setUnreadyRequest } from '../../store/game/game.actions';
+import { setShowLogin, showGame } from '@/store/app/app.actions';
 import { userLogoutRequest } from '@/store/user/users.actions';
 import Login from '../Login';
+import API from '@/api/service';
+import { useEffect } from 'react';
+
+const StartGameSpan = styled.span<{active: boolean}>`
+    font-size: 40px;
+    margin-top: 20px;
+    font-weight: 700;
+    color: ${props => props.active ? "green" : "#fff"};
+    &:hover {
+        color: #fffb1e
+    }
+`
 
 const Menu = () => {
 
     const dispatch = useDispatch();
 
     const user = useSelector((state: IState) => state.user.user);
-    const { ready } = useSelector((state: IState) => state.game);
+    const { members, votedToStart } = useSelector((state: IState) => state.game);
     const { showLogin, socketId } = useSelector((state: IState) => state.app);
 
     const toogleLogin = () => {
         dispatch(setShowLogin(!showLogin));
     };
 
-    return (
+    const onReady = () => {
+        if (user && socketId) {
+            dispatch(setReadyRequest({
+                userName: user.userName,
+                socketId
+            }))
+        };
+    };
+
+    const onUnready = () => {
+        if (user && socketId) {
+            dispatch(setUnreadyRequest({
+                userName: user.userName,
+                socketId
+            }))
+        };
+    };
+
+    const isReady = () => {
+        if (!user) {
+            return false
+        };
+
+        return members.find((member) => member.userName === user.userName )
+    };
+
+    useEffect(() => {
+        if (votedToStart.length > 0 && votedToStart.length === members.length) {
+            dispatch(showGame())
+        }
+    }, [votedToStart])
+
+    const setStartVote = () => {
+        if (!user || ! socketId) {
+            return;
+        }
+
+        console.log("here");
+
+        API.sendStartVoteRequest({
+            userName: user.userName,
+            socketId
+        })
+    }
+
+     return (
         <nav className={classes.menu}>
 
-            {user && !ready && (
+            {user && !isReady() && (
                 <span
-                    onClick={() => dispatch(setReady(true))} 
+                    onClick={onReady} 
                     className={["menu__item", classes.menu__link].join(" ")}>
                     Ready
                 </span>)}
 
-            {user && ready && (
+            {user && isReady() && (
                 <span
-                    onClick={() => dispatch(setReady(false))}  
+                    onClick={onUnready}  
                     className={["menu__item", classes.menu__link].join(" ")}>
                     Not ready
                 </span>)}
@@ -57,6 +115,14 @@ const Menu = () => {
                 >
                     Logout
                 </a>
+            )}
+
+            {isReady() && members.length >= 4 && (
+                <StartGameSpan 
+                    active={Boolean(votedToStart.find((member) => member.userName === user?.userName))}
+                    className={"menu__item"} onClick={setStartVote}>
+                    Start!
+                </StartGameSpan>
             )}
 
         </nav>

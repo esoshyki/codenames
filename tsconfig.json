@@ -47,6 +47,9 @@
       ],
       "@/api/*": [
         "api/*"
+      ],
+      "@/utils/*": [
+        "utils/*"
       ]
     },
     "incremental": true

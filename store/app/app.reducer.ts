@@ -6,6 +6,7 @@ const initialState : AppState = {
     userConnectedAd: null,
     userDisconnectedAd: null,
     socketId: null,
+    showGame: false,
 };
 
 export const appReducer = ( state = initialState, { type, payload } : IAction) : AppState => {
@@ -34,6 +35,12 @@ export const appReducer = ( state = initialState, { type, payload } : IAction) :
             return ({
                 ...state,
                 socketId: payload
+            });
+
+        case AppTypes.SET_SHOW_GAME:
+            return ({
+                ...state,
+                showGame: payload
             });
 
         default:

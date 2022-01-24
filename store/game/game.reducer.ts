@@ -1,44 +1,62 @@
-import { IGameState, IAction } from "../types";
-import { actions } from "./game.actions";
+import { IAction } from "../types";
+import { IGameState } from "./game.types";
+import { GameActions } from "./game.types";
 
 const initialState : IGameState = {
-    readyUsers: [],
+    members: [],
     blueLeader: null,
     redLeader: null,
     blueProposer: null,
     redProposer: null,
-    field: null,
+    guesserData: [],
+    startSide: null,
     ready: false,
     processing: false,
+    fieldData: null,
+    collection: null,
+    votedToStart: [],
+    chosenCards: [],
 };
 
 const gameReducer = (state = initialState, { type, payload } : IAction) : IGameState => {
 
     switch (type) {
 
-        case actions.ADD_READY_USER:
+        case GameActions.SET_GUESSER_DATA:
             return ({
                 ...state,
-                readyUsers: [...state.readyUsers, payload]
+                guesserData: payload
             });
 
-        case actions.REMOVE_READY_USER:
+        case GameActions.SET_START_SIDE:
             return ({
                 ...state,
-                readyUsers: state.readyUsers.filter((user) => user.userName !== payload.userName)
+                startSide: payload
             });
 
-        case actions.SET_READY:
+        case GameActions.SET_COLLECTION:
             return ({
                 ...state,
-                ready: payload
+                collection: payload
             });
 
-        case actions.SET_PROCESSING:
+        case GameActions.SET_FIELD_DATA:
             return ({
                 ...state,
-                processing: payload
+                fieldData: payload
+            })
+
+        case GameActions.SET_MEMBERS:
+            return ({
+                ...state,
+                members: payload
             });
+
+        case GameActions.SET_WANTED_TO_START:
+            return ({
+                ...state,
+                votedToStart: payload
+            })
 
         default:
             return state;

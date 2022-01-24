@@ -4,6 +4,7 @@ export enum AppTypes {
     SHOW_USER_CONNECTED_AD = "App/Show-User-Connected-Ad",
     SHOW_USER_DISCONNECTED_AD = "App/Show-User-Disconnected-Ad",
     SET_SOCKET_ID = "App/Set-Socket-ID",
+    SET_SHOW_GAME = "App/Set-Show-Game",
 };
 
 export interface AppState {
@@ -11,5 +12,6 @@ export interface AppState {
     userConnectedAd: string | null;
     userDisconnectedAd: string | null;
     socketId: string | null;
+    showGame: boolean;
 };
 

@@ -1,11 +1,11 @@
+import Game from '@/components/Game';
 import type { NextPage } from 'next'
 import Layout from '../components/Layout';
-import Login from '../components/Login';
 
 const LoginPage: NextPage = () => {
   return (
     <Layout>
-        <Login />
+        <Game />
     </Layout>
   )
 }

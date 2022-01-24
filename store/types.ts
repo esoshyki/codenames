@@ -1,5 +1,6 @@
 import { AppState } from "./app/app.types";
 import { IUserState } from "./user/users.types";
+import { IGameState } from "./game/game.types";
 
 export interface IAction {
     type: string;
@@ -50,16 +51,6 @@ export interface IGameField {
     bluelist: number[];
 };
 
-export interface IGameState {
-    readyUsers: IUser[];
-    redLeader: IUser | null;
-    blueLeader: IUser | null;
-    redProposer: IUser | null;
-    blueProposer: IUser | null;
-    field: IGameField | null;
-    ready: boolean;
-    processing: boolean;
-}
 
 export interface IState {
     user: IUserState;

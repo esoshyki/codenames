@@ -33,12 +33,18 @@ const updateOnlineUsers = async () => {
     return result.data;
 };
 
+const sendStartVoteRequest = async (user: IFBUserData) => {
+    const result = await API.post("/api/game/startvote", user);
+    return result.data;
+};
+
 const service = {
     userReady,
     userUnready,
     connect,
     disconnect,
-    updateOnlineUsers
+    updateOnlineUsers,
+    sendStartVoteRequest
 };
 
 export default service;
