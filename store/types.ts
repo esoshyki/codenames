@@ -1,5 +1,5 @@
 import { AppState } from "./app/app.types";
-import { IUserState } from "./user/users.types";
+import { UserState } from "./user/users.types";
 import { IGameState } from "./game/game.types";
 
 export interface IAction {
@@ -53,7 +53,7 @@ export interface IGameField {
 
 
 export interface IState {
-    user: IUserState;
+    user: UserState;
     chat: IChatState;
     game: IGameState;
     app: AppState;

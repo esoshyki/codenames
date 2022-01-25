@@ -1,99 +1,121 @@
 import app from '.';
 import { getDatabase, ref, set, get, remove } from "firebase/database";
-import { IUser, IFBUserData } from 'store/types';
+import { ServerData, FireBaseResponse, User } from '@/types';
+import { refs } from './refs';
 
 const database = getDatabase(app);
 
-const addOnlineUser = async (user: IFBUserData) : Promise<IUser> => {
+const updateServerData = async () : Promise<FireBaseResponse> => {
 
-    console.log(user);
-    await set(
-        ref(database, "codenames/online/" + user.socketId), user );
+    try {
 
-    return user;
+        const snapshot = await get(ref(database, "/codenames/serverData"));
+
+        if (snapshot.exists()) {
+            return ({
+                result: snapshot.val()
+            })
+        } else {
+            return ({
+                result: null
+            })
+        }
+
+    } catch (error: any) {
+        return ({
+            error: error.message || "Database error"
+        })
+    };
 };
 
-const removeUserFromOnline = async (socketId: string) => {
-
-    await remove(ref(database, "codenames/online/" + socketId));
-
-    return socketId;
+const getData = async (target: string) => {
+    return get(ref(database, target));
 }
 
-const getOnlineUsers = async () => {
+const writeData = async (target: string, data: any) => {
 
-    const snapshot = await get(ref(database, "codenames/online"));
+    return await set(ref(database, target), data)
 
-    if (snapshot.val()) {
-        return snapshot.val()
-    };
-
-    return [];
 };
 
-const removeOnlineUserBySocketId = async (socketId: string) => {
-    const result = await remove(ref(database, "codenames/online/" + socketId));
-    return result
+const removeData = async (target: string, key: string) => {
+
+    return await remove(ref(database, target + key));
+
 };
 
-const addGameMember = async (user: IFBUserData) => {
-    await set(
-        ref(database, "codenames/game/members/" + user.socketId), user );
-};
+const removeOnlineUser = async (socketId: string) : Promise<FireBaseResponse> => {
 
-const removeGameMember = async (socketId: string) => {
-    return await remove(ref(database, "codenames/game/members/" + socketId))
-};
+    try {
+        await removeData(refs.ONLINE_USERS, socketId);
 
-const getGameMembers = async () : Promise<IFBUserData[]> => {
-    const snapshot = await get(ref(database, "codenames/game/members/"));
+        const snapshot = await getData(refs.ONLINE_USERS);
 
-    if (snapshot.exists()) {
-        return Object.values(snapshot.val());
-    };
+        if (snapshot.exists()) {
+            const newOnlineUsers = Object.values(snapshot.val());
 
-    return [];
-};
+            return ({
+                result: newOnlineUsers
+            });
+        };
 
-const addVotedToStartMember = async (user: IFBUserData) => {
-    const snapshot = await get(ref(database, "codenames/game/votedTostart/" + user.socketId));
+        return ({
+            result: []
+        })
 
-    if (snapshot.exists()) {
-        return remove(ref(database, "codenames/game/votedTostart/" + user.socketId))
-    } else {
-        return await set(ref(database, "codenames/game/votedTostart/" + user.socketId), user)
+    } catch (err: any) {
+
+        return ({
+            error: err.message || "Firebase error"
+        })
     }
+
 };
 
-const removeVotedToStartMember = async (socketId: string) => {
-    return await remove(ref(database, "codenames/game/votedTostart/" + socketId))
-};
+const login = async (user: User) : Promise<FireBaseResponse> => {
 
-const getVotedToStartMembers = async () : Promise<IFBUserData[]> => {
-    const snapshot = await get(ref(database, "codenames/game/votedTostart/"));
+    try {
 
-    if (snapshot.exists()) {
-        return Object.values(snapshot.val());
+        const snapshot = await get(ref(database, "/codenames/serverData/onlineUsers"));
+
+        if (snapshot.exists()) {
+            const onlineUsers: User[] = Object.values(snapshot.val());
+
+            if (onlineUsers.find((el) => el.userName === user.userName)) {
+
+                return ({
+                    error: "User exists"
+                })
+
+            } else {
+
+                await writeData("/codenames/serverData/onlineUsers/" + user.socketId, user);
+
+                return ({
+                    result: [...onlineUsers, user]
+                })
+
+            }
+        }
+
+        await writeData("/codenames/serverData/onlineUsers/" + user.socketId, user);
+
+        return ({
+            result: [user]
+        })
+
+    } catch (error: any) {
+        return ({
+            error: error.message || "Database error"
+        })
     };
-
-    return [];
 };
 
-const destroyAllData = async () => {
-    remove(ref(database, "codenames/"))
-}
+
 
 
 export const databaseService = {
-    addOnlineUser,
-    getOnlineUsers,
-    removeUserFromOnline,
-    removeOnlineUserBySocketId,
-    addGameMember,
-    removeGameMember,
-    getGameMembers,
-    addVotedToStartMember,
-    removeVotedToStartMember,
-    getVotedToStartMembers,
-    destroyAllData
+    updateServerData,
+    login,
+    removeOnlineUser
 };

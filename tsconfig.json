@@ -42,11 +42,17 @@
       "@/theme/*": [
         "theme/*"
       ],
+      "@/types" : [
+        "types"
+      ],
+      "@/types/*" : [
+        "types/*"
+      ],
       "@/firebase/*": [
         "firebase/*"
       ],
-      "@/api/*": [
-        "api/*"
+      "@/api": [
+        "api"
       ],
       "@/utils/*": [
         "utils/*"

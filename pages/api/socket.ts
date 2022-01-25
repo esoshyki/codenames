@@ -30,7 +30,7 @@ export default async function socketIO(
       InterServerEvents,
       SocketData
     >(httpServer, {
-      path: "/api/socketio",
+      path: "/api/socket",
       cors: {
         origin: "*",
         methods: ["GET", "POST"],
@@ -40,17 +40,21 @@ export default async function socketIO(
 
 	io.sockets.on("connection", (socket) => {
 
-    const socketId = socket.id;
-		
     socket.on("disconnecting", () => {
-      databaseService.removeOnlineUserBySocketId(socketId).then(() => {
-        io.emit("userDisconnected")
-      });
+      console.log("disconnected!");
+
+      databaseService.removeOnlineUser(socket.id).then((response) => {
+
+        io.emit("user_disconnected", (response.result))
+
+      })
+
 		});
 
 	});
 
     res.socket.server.io = io;
   }
+
   res.end();
 }

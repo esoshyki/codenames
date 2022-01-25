@@ -2,22 +2,59 @@ import classes from './Login.module.sass';
 import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../store/types';
-import { useRouter } from 'next/router';
-import { userLoginRequest } from '@/store/user/users.actions';
+import API from '../../api';
+import { setLoginError, setProcessing, setUserName } from '@/store/user/users.actions';
+import styled from 'styled-components';
+import { setShowLogin } from '@/store/app/app.actions';
+
+const LoginError = styled.span`
+    color: red;
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+`;
 
 const Login = () => {
 
-    const router = useRouter();
     const dispatch = useDispatch();
 
-    const { user } = useSelector((state: IState) => state.user);
-    const { socketId } = useSelector((state: IState) => state.app);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const socketId = useSelector((state: IState) => state.user.user?.socketId);
+    const loginError = useSelector((state: IState) => state.user.loginError);
+
     const submit = async () => {
+
+        if (!socketId) {
+            return;
+        }
+
+        dispatch(setProcessing(true));
+
         const userName = inputRef.current?.value || null;
-        if (!userName || !socketId) return;
-        dispatch(userLoginRequest({ userName, socketId }));
+
+
+        if (!userName) {
+            return;
+        }
+
+        const loginUser = {
+            userName,
+            socketId
+            }
+
+        try {
+            await API.login(loginUser);
+            dispatch(setUserName(userName));
+            dispatch(setShowLogin(false));
+
+        } catch (err: any) {
+            console.log(err.response.data);
+            dispatch(setLoginError(err.response.data));
+        }
+        
+
     };
 
     const handleClick = (e: KeyboardEvent) => {
@@ -27,14 +64,11 @@ const Login = () => {
     };
 
     const handleChange = () => {
-
+        if (loginError) {
+            dispatch(setLoginError(null))
+        }
     };
 
-    useEffect(() => {
-        if (user) {
-            router.push("/")
-        };
-    }, [user])
 
     return (
         <div className={classes.login}>
@@ -45,7 +79,7 @@ const Login = () => {
                 onKeyPress={handleClick}
                 onChange={handleChange}
                 />
-
+            {loginError && <LoginError>{loginError}</LoginError>}
         </div>
     )
 };

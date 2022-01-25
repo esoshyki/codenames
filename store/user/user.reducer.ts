@@ -1,28 +1,48 @@
-import { IUserState, UsersTypes } from "./users.types";
+import { UserState, UserActions } from "./users.types";
 import { IAction } from "../types";
 
-const init : IUserState = {
+const init : UserState = {
     user: null,
-    usersOnline: []
+    usersOnline: [],
+    loginError: null,
+    processing: false,
 };
 
 export const usersReducer = (
     state = init, { type, payload } : IAction
-    ) : IUserState => {
+    ) : UserState => {
 
     switch(type) {
 
-        case UsersTypes.SET_CURRENT_USER:
+        case UserActions.SET_SOCKET_ID:
             return ({
                 ...state,
-                user: payload
+                user: {
+                    userName: state?.user?.userName || null,
+                    socketId: payload
+                }
             });
 
-        case UsersTypes.SET_ONLINE_USERS:
+        case UserActions.SET_LOGIN_ERROR:
             return ({
                 ...state,
-                usersOnline: payload
+                loginError: payload
             });
+
+        case UserActions.SET_PROCESSING:
+            return ({
+                ...state,
+                processing: payload
+            });
+
+        case UserActions.SET_USERNAME:
+            return ({
+                ...state,
+                user: {
+                    socketId: state?.user?.socketId || null,
+                    userName: payload
+                }
+            })
 
         default:
             return state

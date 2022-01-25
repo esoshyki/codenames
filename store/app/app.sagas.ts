@@ -1,9 +1,9 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { IAction } from "../types";
-import { UsersTypes } from "../user/users.types";
+import { UserActions } from "../user/users.types";
 import { setShowLogin, updateOnlineUsersRequest } from "./app.actions";
 import { AppTypes } from "./app.types";
-import API from '@/api/service';
+import API from '@/api';
 
 function* setCurrentUserWorker () {
     yield put(setShowLogin(false))
@@ -20,7 +20,7 @@ function* updateOnlineUsersRequestWorker() {
 };
 
 export default function* appSagas () {
-    yield takeEvery(UsersTypes.SET_CURRENT_USER, setCurrentUserWorker);
+    // yield takeEvery(UsersTypes.SET_CURRENT_USER, setCurrentUserWorker);
     yield takeEvery(AppTypes.SET_SOCKET_ID, setSocketIdWorker);
     yield takeEvery(AppTypes.UPDATE_ONLINE_USERS_REQUEST, updateOnlineUsersRequestWorker)
 };

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { connectSocket } from 'socket';
+import connectSocket from 'socket';
 import type { NextPage } from 'next'
 import Layout from '../components/Layout';
 import Menu from '../components/Menu';

@@ -1,15 +1,15 @@
-import { IUser } from "../types";
+import { User } from '@/types'
 
-export enum UsersTypes {
-    CONNECT = "Users/Connect",
-    DISCONNECT_REQUEST = "Users/Disconnect-Request",
-    USER_LOGIN_REQUEST = "Users/User-Login-Request",
-    USER_LOGOUT_REQUEST = "Users/User-Logout-Request",
-    SET_ONLINE_USERS = "Users/Set-online-users",
-    SET_CURRENT_USER = "Users/Set-current-user"
+export enum UserActions {
+    SET_SOCKET_ID = "User/Set-Socket-Id",
+    SET_LOGIN_ERROR = "User/Set-Login-Error",
+    SET_PROCESSING = "User/Set-Processing",
+    SET_USERNAME = "User/Set-Username"
 };
 
-export interface IUserState {
-    user: IUser | null,
-    usersOnline: IUser[]
+export interface UserState {
+    user: User | null,
+    loginError: string | null,
+    usersOnline: User[],
+    processing: boolean,
 }

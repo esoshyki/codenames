@@ -1,32 +1,22 @@
-import { IAction, IUser, IFBUserData } from "../types";
-import { UsersTypes } from "./users.types";
+import { ReduxAction } from "@/types";
+import { UserActions } from "./users.types";
 
-export const userConnect = (user: IUser) : IAction => ({
-    type: UsersTypes.CONNECT,
-    payload: user
+export const setSockedId = (socketId: string) : ReduxAction => ({
+    type: UserActions.SET_SOCKET_ID,
+    payload: socketId
 });
 
-export const userDisconnect = (user: IUser) : IAction => ({
-    type: UsersTypes.DISCONNECT_REQUEST,
-    payload: user
+export const setLoginError = (value: string | null) : ReduxAction => ({
+    type: UserActions.SET_LOGIN_ERROR,
+    payload: value
 });
 
-export const userLoginRequest = (user : IFBUserData) : IAction => ({
-    type: UsersTypes.USER_LOGIN_REQUEST,
-    payload: (user)
+export const setProcessing = (value: boolean) : ReduxAction => ({
+    type: UserActions.SET_PROCESSING,
+    payload: value
 });
 
-export const userLogoutRequest = (user: IFBUserData) : IAction => ({
-    type: UsersTypes.USER_LOGOUT_REQUEST,
-    payload: user
-});
-
-export const setUsersOnline = (users: IUser[]) : IAction => ({
-    type: UsersTypes.SET_ONLINE_USERS,
-    payload: users
-});
-
-export const setCurrentUser = (user: IUser | null) : IAction => ({
-    type: UsersTypes.SET_CURRENT_USER,
-    payload: user
+export const setUserName = (userName: string) : ReduxAction => ({
+    type: UserActions.SET_USERNAME,
+    payload: userName
 });

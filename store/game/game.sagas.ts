@@ -1,10 +1,10 @@
-import { call, put, takeEvery, select } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { GameActions } from "./game.types";
 import { getGuesserData } from "../../utils/getGuesser";
 import { setFieldData, setGameMembers, setGuesserData, setStartSide, setVotedToStartMembers } from './game.actions';
 import { getWords } from '../../utils/wordCollections';
 import { IAction, IFBUserData } from "../types";
-import API from '@/api/service';
+import API from '@/api'
 import { databaseService } from "@/firebase/db";
 
 function* gameStartRequestWorker ({payload} : IAction) {
