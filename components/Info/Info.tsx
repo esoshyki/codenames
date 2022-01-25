@@ -53,14 +53,14 @@ const GameStateInfoAnimation = keyframes`
     100% {
         opacity: 1
     };
-`
+`;
 
 const GameStatesInfoSpan = styled.span`
     font-size: 25px;
     font-weight: 700;
     text-align: justify;
     animation: ${GameStateInfoAnimation} 3s linear 0s infinite;
-`
+`;
 
 const UserAd = () => {
     const dispatch = useDispatch();
@@ -99,10 +99,10 @@ const UserAd = () => {
 
             {members?.length < 4 && (
                 <GameStatesInfoSpan>
-                    Вы можете начать игру, как только будут готовы хотя бы 4 игрока
+                    Вы можете начать игру, как только будут готовы хотя бы 4
+                    игрока
                 </GameStatesInfoSpan>
             )}
-
         </InfoWrapper>
     );
 };

@@ -12,17 +12,16 @@ const FieldSettingsWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 20px
+    padding: 0 20px;
 `;
 
 const FieldSettings = () => {
-
     return (
         <FieldSettingsWrapper>
             <h5>Settings</h5>
             <FieldChooseCollection />
         </FieldSettingsWrapper>
-    )
+    );
 };
 
 export default FieldSettings;

@@ -13,8 +13,8 @@ export enum GameActions {
     GAME_START_REQUEST = "Game/Game-Start-Request",
     GET_WORDS_REQUEST = "Game/Get-Words-Request",
     GET_READY_USERS_REQUEST = "Game/Get-Ready-Users-Request",
-    GET_VOTED_TO_START = "Game/Get-Wanted-To-Start",
-};
+    GET_VOTED_TO_START = "Game/Get-Wanted-To-Start"
+}
 
 export interface IGameState {
     guesserData: string[];

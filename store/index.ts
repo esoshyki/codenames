@@ -1,28 +1,19 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import createSagaMiddleware from 'redux-saga';
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import sagas from './sagas';
-import { rootReducer } from './reducers';
+import sagas from "./sagas";
+import { rootReducer } from "./reducers";
 
 const persistConfig = {
     key: "codenames",
     storage,
-    whitelist: [
-
-    ],
-    blacklist: [
-        "users",
-        "chat",
-        "game",
-        "server"
-    ]
+    whitelist: [],
+    blacklist: ["users", "chat", "game", "server"]
 };
 
 const sagaMiddleware = createSagaMiddleware();
-
-
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -32,11 +23,11 @@ const initStore = () => {
         composeWithDevTools(applyMiddleware(sagaMiddleware))
     );
     sagaMiddleware.run(sagas);
-    return store
+    return store;
 };
 
 const store = initStore();
 
 const persistor = persistStore(store);
 
-export { store, persistor }
+export { store, persistor };

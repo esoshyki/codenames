@@ -26,11 +26,10 @@ const ControlPanel = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-`
+`;
 
 const Game = () => {
-
-    const collection = useSelector((state: IState) => state.game.collection)
+    const collection = useSelector((state: IState) => state.game.collection);
 
     const dispatch = useDispatch();
 
@@ -43,22 +42,25 @@ const Game = () => {
     };
 
     const changeWords = () => {
-        dispatch(getWordsRequest(collection?.idx))
+        dispatch(getWordsRequest(collection?.idx));
     };
 
-    const { guesserData, fieldData } = useSelector((state: IState) => state.game);
+    const { guesserData, fieldData } = useSelector(
+        (state: IState) => state.game
+    );
 
     return (
         <GameWrapper>
-
             <Field />
 
             <Guesser />
 
             <ControlPanel>
-                {!guesserData?.length &&  <Button className="button" onClick={startGame}>
-                    Start Game
-                </Button>}
+                {!guesserData?.length && (
+                    <Button className="button" onClick={startGame}>
+                        Start Game
+                    </Button>
+                )}
 
                 {!!guesserData?.length && (
                     <Button className="button" onClick={changeGuesser}>
@@ -72,9 +74,8 @@ const Game = () => {
                     </Button>
                 )}
             </ControlPanel>
-
         </GameWrapper>
-    )
+    );
 };
 
 export default Game;

@@ -14,32 +14,32 @@ export const actions = {
     CHAT_SET_CONNECTED_STATUS
 };
 
-export const addUserToChat = (user: IUser) : IAction => ({
+export const addUserToChat = (user: IUser): IAction => ({
     type: CHAT_USER_CONNECT,
     payload: user
 });
 
-export const removeUserFromChat = (user: IUser) : IAction => ({
+export const removeUserFromChat = (user: IUser): IAction => ({
     type: CHAT_USER_DISCONNECT,
     payload: user
 });
 
-export const addChatMessage = (message: IChatMessage) : IAction => ({
+export const addChatMessage = (message: IChatMessage): IAction => ({
     type: actions.ADD_CHAT_MESSAGE,
     payload: message
 });
 
-export const hideChat = () : IAction => ({
+export const hideChat = (): IAction => ({
     type: actions.SET_CHAT_HIDDEN,
     payload: true
 });
 
-export const showChat = () : IAction => ({
+export const showChat = (): IAction => ({
     type: actions.SET_CHAT_HIDDEN,
     payload: false
 });
 
-export const changeConnectionStatus = (status: boolean) : IAction => ({
+export const changeConnectionStatus = (status: boolean): IAction => ({
     type: actions.CHAT_SET_CONNECTED_STATUS,
     payload: status
 });

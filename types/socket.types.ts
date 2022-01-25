@@ -15,8 +15,8 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
     [SocketClientActions.LOGIN]: (user: SocketUser) => void;
-    [SocketClientActions.LOGOUT] : (user: SocketUser) => void;
-    [SocketClientActions.UPDATE_ONLINE_USERS_REQUEST] : () => void;
+    [SocketClientActions.LOGOUT]: (user: SocketUser) => void;
+    [SocketClientActions.UPDATE_ONLINE_USERS_REQUEST]: () => void;
 }
 
 export interface InterServerEvents {

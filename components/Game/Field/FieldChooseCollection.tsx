@@ -11,13 +11,12 @@ const ChoouseCollection = styled.select`
 `;
 
 const StyledOption = styled.option`
-    background: none !important; 
+    background: none !important;
     padding: 10px;
     height: 40px;
-`
+`;
 
 const FieldChooseCollection = () => {
-
     const dispatch = useDispatch();
 
     const collection = useSelector((state: IState) => state.game.collection);
@@ -26,7 +25,7 @@ const FieldChooseCollection = () => {
         const idx = e.target.value;
 
         console.log(idx);
-        dispatch(setCollection(wordCollections[idx]))
+        dispatch(setCollection(wordCollections[idx]));
     };
 
     const getValue = () => {
@@ -38,15 +37,14 @@ const FieldChooseCollection = () => {
     return (
         <ChoouseCollection onChange={select} value={getValue()}>
             {wordCollections.map((col, idx) => {
-                
                 return (
-                    <StyledOption key={idx} value={idx} >
+                    <StyledOption key={idx} value={idx}>
                         {col.title}
                     </StyledOption>
-                )
+                );
             })}
         </ChoouseCollection>
-    )
+    );
 };
 
 export default FieldChooseCollection;

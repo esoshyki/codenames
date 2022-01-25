@@ -10,7 +10,7 @@ const animation = keyframes`
     100% {
         opacity: 1
     }
-`
+`;
 
 const FieldWrapper = styled.div`
     display: flex;
@@ -18,16 +18,15 @@ const FieldWrapper = styled.div`
     justify-content: flex-start;
     align-items: center;
     animation: ${animation} 3s linear 0s;
-`
+`;
 
 const Field = () => {
-
     return (
         <FieldWrapper>
             <FieldSettings></FieldSettings>
             <FieldGrid />
         </FieldWrapper>
-    )
+    );
 };
 
 export default Field;

@@ -1,9 +1,8 @@
-import { IState } from '../../../store/types';
-import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { IState } from "../../../store/types";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const UsersOnlineWrapper = styled.div`
-    
     display: flex;
     width: 100%;
     height: 50%;
@@ -23,11 +22,12 @@ const UserWrapper = styled.div`
     width: 100%;
     text-align: end;
     padding: 0 20px;
-`
+`;
 
 const UsersOnline = () => {
-
-    const usersOnline = useSelector((state: IState) => state.server.onlineUsers);
+    const usersOnline = useSelector(
+        (state: IState) => state.server.onlineUsers
+    );
 
     const users = usersOnline ? Object.values(usersOnline) : [];
 
@@ -35,13 +35,14 @@ const UsersOnline = () => {
         <UsersOnlineWrapper>
             <h5>Users online</h5>
 
-            {users && users.map((user) => (
-                <UserWrapper key={`user-${user.userName}`}>
-                    {user.userName}
-                </UserWrapper>
-            ))}
+            {users &&
+                users.map((user) => (
+                    <UserWrapper key={`user-${user.userName}`}>
+                        {user.userName}
+                    </UserWrapper>
+                ))}
         </UsersOnlineWrapper>
-    )
+    );
 };
 
 export default UsersOnline;

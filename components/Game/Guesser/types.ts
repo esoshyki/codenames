@@ -3,4 +3,4 @@ export enum GuesserTypes {
     blue = "blue",
     black = "black",
     white = "white"
-};
+}

@@ -1,6 +1,12 @@
 /* eslint-disable */
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
+import Document, {
+    Html,
+    Head,
+    Main,
+    NextScript,
+    DocumentContext
+} from "next/document";
+import { ServerStyleSheet } from "styled-components";
 
 class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext) {
@@ -10,7 +16,8 @@ class MyDocument extends Document {
         try {
             ctx.renderPage = () =>
                 originalRenderPage({
-                    enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
+                    enhanceApp: (App) => (props) =>
+                        sheet.collectStyles(<App {...props} />)
                 });
 
             const initialProps = await Document.getInitialProps(ctx);
@@ -21,7 +28,7 @@ class MyDocument extends Document {
                         {initialProps.styles}
                         {sheet.getStyleElement()}
                     </>
-                ),
+                )
             };
         } finally {
             sheet.seal();
@@ -33,8 +40,8 @@ class MyDocument extends Document {
             <Html>
                 <Head />
                 <body>
-                <Main />
-                <NextScript />
+                    <Main />
+                    <NextScript />
                 </body>
             </Html>
         );

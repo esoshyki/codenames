@@ -16,23 +16,22 @@ const FieldGridWrapper = styled.div`
 `;
 
 const FieldGrid = () => {
-
     const { fieldData } = useSelector((state: IState) => state.game);
 
     const data = fieldData || new Array(25).fill("");
 
     return (
         <FieldGridWrapper>
-            {data && data.map((el, idx) => {
-                return (
-                    <Fragment key={idx}>
-                        <FieldCard word={el}/>
-                    </Fragment>
-                )
-            })}
+            {data &&
+                data.map((el, idx) => {
+                    return (
+                        <Fragment key={idx}>
+                            <FieldCard word={el} />
+                        </Fragment>
+                    );
+                })}
         </FieldGridWrapper>
-    )
-
+    );
 };
 
 export default FieldGrid;

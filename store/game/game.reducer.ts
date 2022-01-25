@@ -2,7 +2,7 @@ import { IAction } from "../types";
 import { IGameState } from "./game.types";
 import { GameActions } from "./game.types";
 
-const initialState : IGameState = {
+const initialState: IGameState = {
     members: [],
     blueLeader: null,
     redLeader: null,
@@ -15,48 +15,49 @@ const initialState : IGameState = {
     fieldData: null,
     collection: null,
     votedToStart: [],
-    chosenCards: [],
+    chosenCards: []
 };
 
-const gameReducer = (state = initialState, { type, payload } : IAction) : IGameState => {
-
+const gameReducer = (
+    state = initialState,
+    { type, payload }: IAction
+): IGameState => {
     switch (type) {
-
         case GameActions.SET_GUESSER_DATA:
-            return ({
+            return {
                 ...state,
                 guesserData: payload
-            });
+            };
 
         case GameActions.SET_START_SIDE:
-            return ({
+            return {
                 ...state,
                 startSide: payload
-            });
+            };
 
         case GameActions.SET_COLLECTION:
-            return ({
+            return {
                 ...state,
                 collection: payload
-            });
+            };
 
         case GameActions.SET_FIELD_DATA:
-            return ({
+            return {
                 ...state,
                 fieldData: payload
-            })
+            };
 
         case GameActions.SET_MEMBERS:
-            return ({
+            return {
                 ...state,
                 members: payload
-            });
+            };
 
         case GameActions.SET_WANTED_TO_START:
-            return ({
+            return {
                 ...state,
                 votedToStart: payload
-            })
+            };
 
         default:
             return state;

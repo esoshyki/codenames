@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const CardWrapper = styled.div`
     position: relative;
@@ -24,22 +24,19 @@ const CardText = styled.span`
     bottom: 27px;
     width: 100%;
     text-align: center;
-`
+`;
 
 interface FieldCardProps {
     idx?: number;
     word?: string;
 }
 
-const FieldCard = ({
-    word
-} : FieldCardProps) => {
-
+const FieldCard = ({ word }: FieldCardProps) => {
     return (
         <CardWrapper>
             {word && <CardText>{word.toUpperCase()}</CardText>}
         </CardWrapper>
-    )
+    );
 };
 
 export default FieldCard;

@@ -10,31 +10,29 @@ const CardStackContainer = styled.div`
 `;
 
 const CardStack = () => {
+    const { chosenCards, guesserData } = useSelector(
+        (state: IState) => state.game
+    );
 
-    const { chosenCards, guesserData } = useSelector((state: IState) => state.game);
-
-    const getRedCardsCount = () => chosenCards.filter(card => card === cardType.red).length - guesserData.filter(card => card === cardType.red).length;
-    const getBlueCardCount = () => chosenCards.filter(card => card === cardType.blue).length - guesserData.filter(card => card === cardType.blue).length;
-    const getWhiteCardCount = () => chosenCards.filter(card => card === cardType.white).length - guesserData.filter(card => card === cardType.white).length;
+    const getRedCardsCount = () =>
+        chosenCards.filter((card) => card === cardType.red).length -
+        guesserData.filter((card) => card === cardType.red).length;
+    const getBlueCardCount = () =>
+        chosenCards.filter((card) => card === cardType.blue).length -
+        guesserData.filter((card) => card === cardType.blue).length;
+    const getWhiteCardCount = () =>
+        chosenCards.filter((card) => card === cardType.white).length -
+        guesserData.filter((card) => card === cardType.white).length;
 
     return (
         <Fragment>
-            {getRedCardsCount() && (
-                <CardStackContainer>
-                </CardStackContainer>
-            )}
+            {getRedCardsCount() && <CardStackContainer></CardStackContainer>}
 
-            {getBlueCardCount() && (
-                <CardStackContainer>
-                </CardStackContainer>
-            )}
+            {getBlueCardCount() && <CardStackContainer></CardStackContainer>}
 
-            {getWhiteCardCount() && (
-                <CardStackContainer>
-                </CardStackContainer>
-            )}
+            {getWhiteCardCount() && <CardStackContainer></CardStackContainer>}
         </Fragment>
-    )
+    );
 };
 
-export default CardStack
+export default CardStack;

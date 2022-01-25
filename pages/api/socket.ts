@@ -8,7 +8,10 @@ import {
     InterServerEvents,
     SocketData
 } from "../../types/socket.types";
-import { SocketClientActions, SocketServerActions } from "@/types/socket.actions";
+import {
+    SocketClientActions,
+    SocketServerActions
+} from "@/types/socket.actions";
 import { User } from "@/types";
 
 export const config = {
@@ -20,7 +23,7 @@ export const config = {
 interface SocketUser {
     userName: string;
     socketId: string;
-};
+}
 
 interface ChatMessage {
     message: string;
@@ -29,7 +32,7 @@ interface ChatMessage {
 
 interface ServerData {
     onlineUsers: SocketUser[];
-    chatMessages: ChatMessage[]
+    chatMessages: ChatMessage[];
 }
 
 const serverData: ServerData = {
@@ -74,9 +77,12 @@ export default async function socketIO(
                 );
             });
 
-			socket.on(SocketClientActions.UPDATE_ONLINE_USERS_REQUEST, () => {
-				io.emit(SocketServerActions.CHANGE_ONLINE_USERS, getOnlineUsers());
-			});
+            socket.on(SocketClientActions.UPDATE_ONLINE_USERS_REQUEST, () => {
+                io.emit(
+                    SocketServerActions.CHANGE_ONLINE_USERS,
+                    getOnlineUsers()
+                );
+            });
 
             socket.on(SocketClientActions.LOGIN, (userdata) => {
                 serverData.onlineUsers.push(userdata);

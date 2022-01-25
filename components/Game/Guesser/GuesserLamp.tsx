@@ -7,7 +7,7 @@ export enum LampPos {
     right = "right",
     top = "top",
     bottom = "bottom"
-};
+}
 
 enum LampColors {
     red = "red",
@@ -25,9 +25,8 @@ interface GuesserLampProps {
     position: LampPos;
 }
 
-const GuesserLamp = ({ position } : GuesserLampProps) => {
-
-    const { startSide } = useSelector((state: IState) => state.game)
+const GuesserLamp = ({ position }: GuesserLampProps) => {
+    const { startSide } = useSelector((state: IState) => state.game);
 
     const getBackgroundImage = () => {
         switch (startSide) {
@@ -38,61 +37,60 @@ const GuesserLamp = ({ position } : GuesserLampProps) => {
         }
     };
 
-    const getPosition = () : {
-        left: number | string, top: number | string
+    const getPosition = (): {
+        left: number | string;
+        top: number | string;
     } => {
-
         switch (position) {
-
             case LampPos.right:
-                return ({
+                return {
                     left: 187,
                     top: "calc(50% - 18px)"
-                })
+                };
 
             case LampPos.bottom:
-                return ({
+                return {
                     left: "calc(50% - 9px)",
                     top: 178
-                }); 
+                };
 
             case LampPos.top:
-                return ({
+                return {
                     left: "calc(50% - 9px)",
                     top: 2
-                })
+                };
 
             default:
-                return ({
+                return {
                     left: 10,
                     top: "calc(50% - 18px)"
-                })
+                };
         }
     };
 
     const getTransfrom = () => {
-
         switch (position) {
             case LampPos.top:
-                return "rotate(90deg)"
+                return "rotate(90deg)";
             case LampPos.right:
-                return "rotate(180deg)"
+                return "rotate(180deg)";
             case LampPos.bottom:
                 return "rotate(270deg)";
             default:
-                return "none"
+                return "none";
         }
     };
 
-    return <GuesserLampWrapper 
-        style={{
-            backgroundImage: getBackgroundImage(),
-            left: getPosition().left,
-            top: getPosition().top,
-            transform: getTransfrom()
-        }}
+    return (
+        <GuesserLampWrapper
+            style={{
+                backgroundImage: getBackgroundImage(),
+                left: getPosition().left,
+                top: getPosition().top,
+                transform: getTransfrom()
+            }}
         />
+    );
 };
 
 export default GuesserLamp;
-

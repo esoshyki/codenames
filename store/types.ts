@@ -6,24 +6,24 @@ import { ServerData } from "@/types";
 export interface IAction {
     type: string;
     payload?: any;
-};
+}
 
 export interface IUser {
     userName: string;
-};
+}
 
 export interface IChatMessage {
     message: string;
     user: IUser;
     id: number;
-};
+}
 
 export interface IChatState {
     messages: IChatMessage[];
     hidden: boolean;
     users: IUser[];
     connected: boolean;
-};
+}
 
 export enum cardType {
     red = "red",
@@ -37,7 +37,7 @@ export interface ICard {
     position: number;
     type: cardType;
     pushed: boolean;
-};
+}
 
 export interface IFBUserData {
     userName: string;
@@ -50,13 +50,12 @@ export interface IGameField {
     whitelist: number[];
     redlist: number[];
     bluelist: number[];
-};
-
+}
 
 export interface IState {
     users: UsersState;
     chat: IChatState;
     game: IGameState;
     app: AppState;
-    server: ServerData
-};
+    server: ServerData;
+}

@@ -1,13 +1,15 @@
-import classes from './Menu.module.sass';
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { IState } from '../../store/types';
-import Login from '../Login';
-import { hideLoginComponent, showLoginComponent } from '@/store/app/app.actions';
-import { logoutRequest } from '@/store/users/users.actions';
+import classes from "./Menu.module.sass";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { IState } from "../../store/types";
+import Login from "../Login";
+import {
+    hideLoginComponent,
+    showLoginComponent
+} from "@/store/app/app.actions";
+import { logoutRequest } from "@/store/users/users.actions";
 
 const Menu = () => {
-
     const dispatch = useDispatch();
 
     const currentUser = useSelector((state: IState) => state.users.currentUser);
@@ -20,31 +22,32 @@ const Menu = () => {
 
     const logout = () => {
         if (currentUser) {
-            dispatch(logoutRequest(currentUser.userName))
+            dispatch(logoutRequest(currentUser.userName));
         }
-    }
+    };
 
-     return (
+    return (
         <nav className={classes.menu}>
-         
-            {!currentUser && <span 
-                onClick={toogleLogin}
-                className={["menu__item", classes.menu__link].join(" ")}
+            {!currentUser && (
+                <span
+                    onClick={toogleLogin}
+                    className={["menu__item", classes.menu__link].join(" ")}
                 >
-                {showLogin ? "Back" : "Login"}
-            </span>}
+                    {showLogin ? "Back" : "Login"}
+                </span>
+            )}
 
             {showLogin && <Login />}
 
             {currentUser && (
-                <span 
-                className={["menu__item", classes.menu__link].join(" ")}
-                onClick={logout}
+                <span
+                    className={["menu__item", classes.menu__link].join(" ")}
+                    onClick={logout}
                 >
                     Logout
                 </span>
             )}
-{/* 
+            {/* 
             {isReady() && members.length >= 4 && (
                 <StartGameSpan 
                     active={Boolean(votedToStart.find((member) => member.userName === user?.userName))}
@@ -52,9 +55,8 @@ const Menu = () => {
                     Start!
                 </StartGameSpan>
             )} */}
-
         </nav>
-    )
+    );
 };
 
 export default Menu;

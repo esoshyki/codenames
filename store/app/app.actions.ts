@@ -1,36 +1,36 @@
 import { ReduxAction } from "@/types";
 import { AppActions } from "./app.types";
 
-export const showLoading = () : ReduxAction => ({
+export const showLoading = (): ReduxAction => ({
     type: AppActions.SHOW_LOADING
 });
 
-export const hideLoading = () : ReduxAction => ({
+export const hideLoading = (): ReduxAction => ({
     type: AppActions.HIDE_LOADING
 });
 
-export const showLoginComponent = () : ReduxAction => ({
+export const showLoginComponent = (): ReduxAction => ({
     type: AppActions.SHOW_LOGIN_COMPONENT
 });
 
-export const hideLoginComponent = () : ReduxAction => ({
+export const hideLoginComponent = (): ReduxAction => ({
     type: AppActions.HIDE_LOGIN_COMPONENT
 });
 
-export const showGameComponent = () : ReduxAction => ({
+export const showGameComponent = (): ReduxAction => ({
     type: AppActions.SHOW_GAME_COMPONENT
 });
 
-export const hideGameComponent = () : ReduxAction => ({
+export const hideGameComponent = (): ReduxAction => ({
     type: AppActions.HIDE_LOGIN_COMPONENT
 });
 
-export const changeSocketIdRequest = (socketId: string) : ReduxAction => ({
+export const changeSocketIdRequest = (socketId: string): ReduxAction => ({
     type: AppActions.CHANGE_SOCKET_ID_REQUEST,
     payload: socketId
 });
 
-export const setSockedId = (socketId: string | null) : ReduxAction => ({
+export const setSockedId = (socketId: string | null): ReduxAction => ({
     type: AppActions.SET_SOCKET_ID,
     payload: socketId
 });

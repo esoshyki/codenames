@@ -14,31 +14,33 @@ const GuesserWrapper = styled.div`
     width: 218px;
     background-image: url(/images/guesser.png);
     border-radius: 15px;
-`
+`;
 const Guesser = () => {
-
-    const { startSide, guesserData } = useSelector((state: IState) => state.game);
+    const { startSide, guesserData } = useSelector(
+        (state: IState) => state.game
+    );
 
     console.log(guesserData);
 
+    return (
+        <GuesserWrapper>
+            {guesserData &&
+                guesserData.map((el, idx) => (
+                    <Fragment key={idx}>
+                        <GuessItem type={el} idx={idx} />
+                    </Fragment>
+                ))}
 
-
-    return <GuesserWrapper>
-
-        {guesserData && guesserData.map((el, idx) => (
-            <Fragment key={idx}>
-                <GuessItem type={el} idx={idx} />
-            </Fragment>
-
-        ))}
-
-        {startSide && <Fragment>
-            <GuesserLamp position={LampPos.left} />
-            <GuesserLamp position={LampPos.top} />
-            <GuesserLamp position={LampPos.right} />
-            <GuesserLamp position={LampPos.bottom} />
-        </Fragment>}
-    </GuesserWrapper>
+            {startSide && (
+                <Fragment>
+                    <GuesserLamp position={LampPos.left} />
+                    <GuesserLamp position={LampPos.top} />
+                    <GuesserLamp position={LampPos.right} />
+                    <GuesserLamp position={LampPos.bottom} />
+                </Fragment>
+            )}
+        </GuesserWrapper>
+    );
 };
 
 export default Guesser;

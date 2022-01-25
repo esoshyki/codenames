@@ -1,11 +1,11 @@
 export interface User {
     userName: string;
-};
+}
 
 export interface ReduxAction {
     type: string;
-    payload?: any
-};
+    payload?: any;
+}
 
 export interface GameData {
     members: User[];
@@ -14,14 +14,14 @@ export interface GameData {
 export interface ServerData {
     onlineUsers: User[];
     gameData: GameData;
-};
+}
 
 export interface APIResponse {
-    data?: any,
+    data?: any;
     error?: string;
 }
 
 export interface FireBaseResponse {
-    result?: any,
+    result?: any;
     error?: string;
-};
+}

@@ -1,58 +1,59 @@
 import { AppState, AppActions } from "./app.types";
 import { IAction } from "../types";
 
-const initialState : AppState = {
+const initialState: AppState = {
     showLogin: false,
     socketId: null,
     showGame: false,
     processing: false
 };
 
-export const appReducer = ( state = initialState, { type, payload } : IAction) : AppState => {
-
+export const appReducer = (
+    state = initialState,
+    { type, payload }: IAction
+): AppState => {
     switch (type) {
-
         case AppActions.SHOW_LOADING:
-            return ({
+            return {
                 ...state,
                 processing: true
-            });
+            };
 
         case AppActions.HIDE_LOADING:
-            return ({
+            return {
                 ...state,
                 processing: false
-            });
+            };
 
         case AppActions.SHOW_LOGIN_COMPONENT:
-            return ({
+            return {
                 ...state,
                 showLogin: true
-            });
+            };
 
         case AppActions.HIDE_LOGIN_COMPONENT:
-            return ({
+            return {
                 ...state,
                 showLogin: false
-            });
+            };
 
         case AppActions.SHOW_GAME_COMPONENT:
-            return ({
+            return {
                 ...state,
                 showGame: true
-            });
+            };
 
         case AppActions.HIDE_GAME_COMPONENT:
-            return ({
+            return {
                 ...state,
                 showGame: false
-            });
+            };
 
         case AppActions.SET_SOCKET_ID:
-            return ({
+            return {
                 ...state,
                 socketId: payload
-            })
+            };
 
         default:
             return state;
