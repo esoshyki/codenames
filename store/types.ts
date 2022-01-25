@@ -1,6 +1,7 @@
 import { AppState } from "./app/app.types";
-import { UserState } from "./user/users.types";
+import { UsersState } from "./users/users.types";
 import { IGameState } from "./game/game.types";
+import { ServerData } from "@/types";
 
 export interface IAction {
     type: string;
@@ -53,8 +54,9 @@ export interface IGameField {
 
 
 export interface IState {
-    user: UserState;
+    users: UsersState;
     chat: IChatState;
     game: IGameState;
     app: AppState;
+    server: ServerData
 };

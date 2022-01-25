@@ -13,7 +13,7 @@ interface LayoutProps {
 
 const Layout = ({ children, pageName }: LayoutProps) => {
 
-    const userProcessing = useSelector((state: IState) => state.user.processing);
+    const processing = useSelector((state: IState) => state.app.processing);
 
     return (
         <div className={classes.page_container}>
@@ -27,7 +27,7 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 {children}
 
             </main>
-            {userProcessing && <Loading />}
+            {processing && <Loading />}
         </div>
     );
 

@@ -10,10 +10,10 @@ const persistConfig = {
     key: "codenames",
     storage,
     whitelist: [
-        "user",
+
     ],
     blacklist: [
-
+        "users",
         "chat",
         "game",
         "server"

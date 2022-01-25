@@ -8,35 +8,30 @@ const createSocket = async () => {
 
 const login = async (user: User) : Promise<APIResponse> => {
 
-    const result = await instance.post("/api/login", user);
+    try {
+        await instance.post("/api/login", user);
 
-    if (result.status === 200) {
         return ({
-            data: result.data
+            data: true
         })
-    };
+        
+    } catch (error: any) {
 
-    if (result.status === 401) {
         return ({
-            error: "User with this userName is Online"
-        })
-    };
-
-    if (result.status === 500) {
-        return ({
-            error: "Unknow Error"
+            error: error?.response?.data || "Server error"
         })
     }
-
-    return ({
-        data: result.data
-    })
-
+ 
 };
+
+const updateUserData = async (user: User) => {
+    instance.post("/api/update-user-data", user)
+}
 
 const service = {
     createSocket,
-    login
+    login,
+    updateUserData
 };
 
 export default service;

@@ -1,17 +1,18 @@
-export enum AppTypes {
-    SET_SHOW_LOGIN = "App/Set-Show-Login",
-    UPDATE_ONLINE_USERS_REQUEST = "App/Update-Online-Users-Request",
-    SHOW_USER_CONNECTED_AD = "App/Show-User-Connected-Ad",
-    SHOW_USER_DISCONNECTED_AD = "App/Show-User-Disconnected-Ad",
-    SET_SOCKET_ID = "App/Set-Socket-ID",
-    SET_SHOW_GAME = "App/Set-Show-Game",
+export enum AppActions {
+    SHOW_LOADING = "App/Show-Loading",
+    HIDE_LOADING = "App/Hide-Loading",
+    SHOW_LOGIN_COMPONENT = "App/Show-Login-Component",
+    HIDE_LOGIN_COMPONENT = "App/Hide-Login-Component",
+    SHOW_GAME_COMPONENT = "App/Show-Game-Component",
+    HIDE_GAME_COMPONENT = "App/Hide-Game-Component",
+    CHANGE_SOCKET_ID_REQUEST = "App/Change-Socket-Id-Request",
+    SET_SOCKET_ID = "App/Set-Socket-Id"
 };
 
 export interface AppState {
-    showLogin: boolean;
-    userConnectedAd: string | null;
-    userDisconnectedAd: string | null;
     socketId: string | null;
+    showLogin: boolean;
     showGame: boolean;
+    processing: boolean;
 };
 

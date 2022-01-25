@@ -3,9 +3,10 @@ import { KeyboardEvent, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../../store/types';
 import API from '../../api';
-import { setLoginError, setProcessing, setUserName } from '@/store/user/users.actions';
+import { loginRequest, setLoginError } from '@/store/users/users.actions';
 import styled from 'styled-components';
-import { setShowLogin } from '@/store/app/app.actions';
+import { showLoading, hideLoading } from '@/store/app/app.actions';
+
 
 const LoginError = styled.span`
     color: red;
@@ -21,16 +22,11 @@ const Login = () => {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const socketId = useSelector((state: IState) => state.user.user?.socketId);
-    const loginError = useSelector((state: IState) => state.user.loginError);
+    const loginError = useSelector((state: IState) => state.users.loginError);
 
     const submit = async () => {
 
-        if (!socketId) {
-            return;
-        }
-
-        dispatch(setProcessing(true));
+        dispatch(showLoading());
 
         const userName = inputRef.current?.value || null;
 
@@ -39,21 +35,17 @@ const Login = () => {
             return;
         }
 
-        const loginUser = {
-            userName,
-            socketId
-            }
-
         try {
-            await API.login(loginUser);
-            dispatch(setUserName(userName));
-            dispatch(setShowLogin(false));
+            dispatch(loginRequest({
+                userName
+            }))
 
         } catch (err: any) {
-            console.log(err.response.data);
+
             dispatch(setLoginError(err.response.data));
         }
         
+        dispatch(hideLoading())
 
     };
 
@@ -65,7 +57,7 @@ const Login = () => {
 
     const handleChange = () => {
         if (loginError) {
-            dispatch(setLoginError(null))
+            dispatch(setLoginError())
         }
     };
 

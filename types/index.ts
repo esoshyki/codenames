@@ -1,6 +1,5 @@
 export interface User {
-    userName: string | null;
-    socketId: string | null;
+    userName: string;
 };
 
 export interface ReduxAction {
@@ -25,4 +24,4 @@ export interface APIResponse {
 export interface FireBaseResponse {
     result?: any,
     error?: string;
-}
+};

@@ -1,9 +1,9 @@
 import { connect } from 'socket.io-client';
 import { AnyAction, Dispatch } from 'redux';
-import { setSockedId } from '@/store/user/users.actions';
 import { SocketActions } from '@/types/socket.actions';
-import { updateOnlineUsers } from '@/store/server/server.actions';
-import { User } from '@/types';
+import { updateOnlineUsers, updateServerData } from '@/store/server/server.actions';
+import { ServerData, User } from '@/types';
+import { setSockedId } from '@/store/app/app.actions';
 
 const connectSocket = (dispatch: Dispatch<AnyAction>) => {
 
@@ -12,7 +12,6 @@ const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     });
 
     socket.on("connect", () => {
-        console.log("connect");
         dispatch(setSockedId(socket.id));
     });
 
@@ -22,7 +21,12 @@ const connectSocket = (dispatch: Dispatch<AnyAction>) => {
 
     socket.on(SocketActions.CHANGE_ONLINE_USERS, (users: User[]) => {
         dispatch(updateOnlineUsers(users));
-    })
+    });
+
+    socket.on(SocketActions.UPDATE_SERVER_DATA, (newServerData: ServerData) => {
+        console.log("newServerData", newServerData)
+        dispatch(updateServerData(newServerData))
+    });
 
     return socket;
 

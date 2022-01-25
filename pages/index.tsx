@@ -8,22 +8,17 @@ import Game from '@/components/Game';
 import ReadyUsers from '@/components/ReadyUsers';
 
 import { IState } from '@/store/types';
+import { updateSocketRequest } from '@/store/users/users.actions';
 
 const Home: NextPage = () => {
 
   	const dispatch = useDispatch();
 
-	const user = useSelector((state: IState) => state.user.user);
 	const showGame = useSelector((state: IState) => state.app.showGame);
 
 	useEffect(() => {
-		const socket = connectSocket(dispatch);
+		connectSocket(dispatch);
 
-		return () => {
-			if (user) {
-				socket.emit("user_leaving", user);				
-			}
-		};
 	}, [])
 
   	return (

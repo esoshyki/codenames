@@ -1,7 +1,8 @@
 import app from '.';
 import { getDatabase, ref, set, get, remove } from "firebase/database";
-import { ServerData, FireBaseResponse, User } from '@/types';
+import { FireBaseResponse, User } from '@/types';
 import { refs } from './refs';
+
 
 const database = getDatabase(app);
 
@@ -33,6 +34,10 @@ const getData = async (target: string) => {
 }
 
 const writeData = async (target: string, data: any) => {
+
+    console.log(target);
+
+    console.log(data);
 
     return await set(ref(database, target), data)
 
@@ -76,10 +81,12 @@ const login = async (user: User) : Promise<FireBaseResponse> => {
 
     try {
 
-        const snapshot = await get(ref(database, "/codenames/serverData/onlineUsers"));
+        const snapshot = await getData(refs.ONLINE_USERS);
+
+
 
         if (snapshot.exists()) {
-            const onlineUsers: User[] = Object.values(snapshot.val());
+            const onlineUsers: User[] = snapshot.val();
 
             if (onlineUsers.find((el) => el.userName === user.userName)) {
 
@@ -89,7 +96,10 @@ const login = async (user: User) : Promise<FireBaseResponse> => {
 
             } else {
 
-                await writeData("/codenames/serverData/onlineUsers/" + user.socketId, user);
+                await writeData(refs.ONLINE_USERS, [
+                    ...onlineUsers,
+                    user
+                ]);
 
                 return ({
                     result: [...onlineUsers, user]
@@ -98,7 +108,7 @@ const login = async (user: User) : Promise<FireBaseResponse> => {
             }
         }
 
-        await writeData("/codenames/serverData/onlineUsers/" + user.socketId, user);
+        await writeData(refs.ONLINE_USERS, [user]);
 
         return ({
             result: [user]
@@ -112,10 +122,8 @@ const login = async (user: User) : Promise<FireBaseResponse> => {
 };
 
 
-
-
 export const databaseService = {
     updateServerData,
     login,
-    removeOnlineUser
+    removeOnlineUser,
 };

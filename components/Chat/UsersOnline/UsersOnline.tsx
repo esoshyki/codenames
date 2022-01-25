@@ -27,7 +27,7 @@ const UserWrapper = styled.div`
 
 const UsersOnline = () => {
 
-    const usersOnline = useSelector((state: IState) => state.user.usersOnline);
+    const usersOnline = useSelector((state: IState) => state.server.onlineUsers);
 
     const users = usersOnline ? Object.values(usersOnline) : [];
 

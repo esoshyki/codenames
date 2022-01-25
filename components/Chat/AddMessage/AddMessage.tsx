@@ -7,16 +7,16 @@ import axios from 'axios';
 const AddMessage = () => {
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const { user } = useSelector((state: IState) => state.user);
+    const { currentUser } = useSelector((state: IState) => state.users);
     const { messages } = useSelector((state: IState) => state.chat)
 
     const sendMessage = async () => {
-        if (!inputRef.current?.value || !user) {
+        if (!inputRef.current?.value || !currentUser) {
             return;
         }
         const newMessage: IChatMessage = {
             message: inputRef.current.value,
-            user: user,
+            user: currentUser,
             id: messages.length
         };
 

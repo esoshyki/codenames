@@ -1,46 +1,35 @@
-import { IAction, IUser } from "../types";
-import { AppTypes } from "./app.types";
+import { ReduxAction } from "@/types";
+import { AppActions } from "./app.types";
 
-export const setShowLogin = (value: boolean) : IAction => ({
-    type: AppTypes.SET_SHOW_LOGIN,
-    payload: value
+export const showLoading = () : ReduxAction => ({
+    type: AppActions.SHOW_LOADING
 });
 
-export const showUserConnectedAd = (user: IUser) : IAction => ({
-    type: AppTypes.SHOW_USER_CONNECTED_AD,
-    payload: user.userName
+export const hideLoading = () : ReduxAction => ({
+    type: AppActions.HIDE_LOADING
 });
 
-export const hideUserConnectedAd = () : IAction => ({
-    type: AppTypes.SHOW_USER_CONNECTED_AD,
-    payload: null
+export const showLoginComponent = () : ReduxAction => ({
+    type: AppActions.SHOW_LOGIN_COMPONENT
 });
 
-export const showUserDisconnectedAd = (user: IUser) : IAction => ({
-    type: AppTypes.SHOW_USER_DISCONNECTED_AD,
-    payload: user.userName
+export const hideLoginComponent = () : ReduxAction => ({
+    type: AppActions.HIDE_LOGIN_COMPONENT
 });
 
-export const hideUserDisconnectedAd = () : IAction => ({
-    type: AppTypes.SHOW_USER_DISCONNECTED_AD,
-    payload: null
-}); 
-
-export const updateOnlineUsersRequest = () : IAction => ({
-    type: AppTypes.UPDATE_ONLINE_USERS_REQUEST
+export const showGameComponent = () : ReduxAction => ({
+    type: AppActions.SHOW_GAME_COMPONENT
 });
 
-export const setSocketId = (socketId: string | null) : IAction => ({
-    type: AppTypes.SET_SOCKET_ID,
+export const hideGameComponent = () : ReduxAction => ({
+    type: AppActions.HIDE_LOGIN_COMPONENT
+});
+
+export const changeSocketIdRequest = (socketId: string) : ReduxAction => ({
+    type: AppActions.CHANGE_SOCKET_ID_REQUEST
+});
+
+export const setSockedId = (socketId: string | null) : ReduxAction => ({
+    type: AppActions.SET_SOCKET_ID,
     payload: socketId
-});
-
-export const showGame = () : IAction => ({
-    type: AppTypes.SET_SHOW_GAME,
-    payload: true
-});
-
-export const hideGame = () : IAction => ({
-    type: AppTypes.SET_SHOW_GAME,
-    payload: false
 });
