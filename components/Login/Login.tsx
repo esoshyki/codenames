@@ -26,26 +26,13 @@ const Login = () => {
 
     const submit = async () => {
 
-        dispatch(showLoading());
-
         const userName = inputRef.current?.value || null;
-
 
         if (!userName) {
             return;
         }
 
-        try {
-            dispatch(loginRequest({
-                userName
-            }))
-
-        } catch (err: any) {
-
-            dispatch(setLoginError(err.response.data));
-        }
-        
-        dispatch(hideLoading())
+        dispatch(loginRequest(userName))
 
     };
 

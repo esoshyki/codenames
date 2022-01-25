@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store/types';
 import Login from '../Login';
 import { hideLoginComponent, showLoginComponent } from '@/store/app/app.actions';
+import { logoutRequest } from '@/store/users/users.actions';
 
 const Menu = () => {
 
@@ -17,6 +18,12 @@ const Menu = () => {
         dispatch(showLogin ? hideLoginComponent() : showLoginComponent());
     };
 
+    const logout = () => {
+        if (currentUser) {
+            dispatch(logoutRequest(currentUser.userName))
+        }
+    }
+
      return (
         <nav className={classes.menu}>
          
@@ -29,17 +36,13 @@ const Menu = () => {
 
             {showLogin && <Login />}
 
-            <Link href={"/Settings"}>
-                <a className={classes.menu__link}>Settings</a>
-            </Link>
-
             {currentUser && (
-                <a 
-                    className={classes.menu__link}
-                    // onClick={() => dispatch(userLogoutRequest({userName: user.userName, socketId}))}
+                <span 
+                className={["menu__item", classes.menu__link].join(" ")}
+                onClick={logout}
                 >
                     Logout
-                </a>
+                </span>
             )}
 {/* 
             {isReady() && members.length >= 4 && (

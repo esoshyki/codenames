@@ -12,7 +12,7 @@ const login = async (user: User) : Promise<APIResponse> => {
         await instance.post("/api/login", user);
 
         return ({
-            data: true
+            data: user
         })
         
     } catch (error: any) {
@@ -24,6 +24,24 @@ const login = async (user: User) : Promise<APIResponse> => {
  
 };
 
+const logout = async (user: User) : Promise<APIResponse> => {
+
+    try {
+
+        await instance.post("/api/logout", user);
+
+        return ({
+            data: true
+        });
+
+    }  catch (error: any) {
+
+        return ({
+            error: error?.response?.data || "Server error"
+        })
+    }
+}
+
 const updateUserData = async (user: User) => {
     instance.post("/api/update-user-data", user)
 }
@@ -31,6 +49,7 @@ const updateUserData = async (user: User) => {
 const service = {
     createSocket,
     login,
+    logout,
     updateUserData
 };
 

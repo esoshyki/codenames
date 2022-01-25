@@ -1,17 +1,17 @@
 import { ReduxAction, User } from "@/types";
 import { UsersActions } from "./users.types";
 
-export const loginRequest = (user: User) : ReduxAction => ({
+export const loginRequest = (userName: string) : ReduxAction => ({
     type: UsersActions.LOGIN_REQUEST,
-    payload: user
+    payload: userName
 });
 
-export const logoutRequest = (user: User) : ReduxAction => ({
+export const logoutRequest = (userName: string) : ReduxAction => ({
     type: UsersActions.LOGOUT_REQUEST,
-    payload: user
+    payload: userName
 });
 
-export const setCurrentUser = (user: User) : ReduxAction => ({
+export const setCurrentUser = (user: User | null) : ReduxAction => ({
     type: UsersActions.SET_CURRENT_USER,
     payload: user
 });

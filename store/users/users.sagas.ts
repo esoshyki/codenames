@@ -1,26 +1,42 @@
-import { databaseService } from '@/firebase/db';
 import { UsersActions } from './users.types';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
-import { APIResponse, FireBaseResponse, ReduxAction, User } from '@/types';
-import { updateServerData } from "../server/server.actions";
+import { APIResponse, ReduxAction, User } from '@/types';
 import API from '../../api';
-import { IState, IUser } from '../types';
 import { setCurrentUser, setLoginError } from './users.actions';
+import { hideLoginComponent } from '../app/app.actions';
+import { socket } from '../../socket/socket'
+import { IState } from '../types';
+import { SocketActions } from '@/types/socket.actions';
 
 function* loginRequestWorker ({payload} : ReduxAction) {
-    const result : APIResponse = yield call(API.login, payload);
 
-    if (result.data) {
-        yield put(setCurrentUser(payload))
-    };
+    const state: IState = yield select();
+    const socketId = state.app.socketId;
 
-    if (result.error) {
-        yield put(setLoginError(result.error))
-    };
+    yield call(() => {
+        socket.emit(SocketActions.LOGIN, ({
+            userName: payload,
+            socketId
+        }))
+    });
+    yield put(setCurrentUser({userName: payload}));
+    yield put(hideLoginComponent());
+
 };
 
 function* logoutRequestWorker ({payload} : ReduxAction) {
 
+    const state: IState = yield select();
+    const socketId = state.app.socketId;
+
+    yield call(() => {
+        socket.emit(SocketActions.LOGOUT, ({
+            userName: payload,
+            socketId
+        }))
+    });
+
+    yield put(setCurrentUser(null));
 
 };
 

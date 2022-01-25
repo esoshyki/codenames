@@ -121,9 +121,42 @@ const login = async (user: User) : Promise<FireBaseResponse> => {
     };
 };
 
+const logout = async (user: User) : Promise<FireBaseResponse> => {
+
+    try {
+
+        const snapshot = await getData(refs.ONLINE_USERS);
+
+        if (snapshot.exists()) {
+            const onlineUsers: User[] = snapshot.val();
+
+            const newOnlineUsers = onlineUsers.filter(el => el.userName !== user.userName);
+
+            await writeData(refs.ONLINE_USERS, newOnlineUsers);
+
+            return ({
+                result: newOnlineUsers
+            });
+
+        }
+
+        return ({
+            error: "Firebase unknown error!"
+        })
+
+
+    } catch (error: any) {
+        return ({
+            error: error.message || "Database error"
+        })
+    };
+
+};
+
 
 export const databaseService = {
     updateServerData,
     login,
+    logout,
     removeOnlineUser,
 };

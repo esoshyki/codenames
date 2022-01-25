@@ -15,6 +15,12 @@ export const usersReducer = (state = init, { type, payload } : ReduxAction) : Us
                 currentUser: payload
             })
 
+        case UsersActions.SET_LOGIN_ERROR:
+            return ({
+                ...state,
+                loginError: payload
+            })
+
         default:
             return state
     }
