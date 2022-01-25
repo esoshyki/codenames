@@ -8,7 +8,8 @@ import {
     InterServerEvents,
     SocketData
 } from "../../types/socket.types";
-import { SocketActions } from "@/types/socket.actions";
+import { SocketClientActions, SocketServerActions } from "@/types/socket.actions";
+import { User } from "@/types";
 
 export const config = {
     api: {
@@ -19,14 +20,21 @@ export const config = {
 interface SocketUser {
     userName: string;
     socketId: string;
+};
+
+interface ChatMessage {
+    message: string;
+    author: User;
 }
 
 interface ServerData {
     onlineUsers: SocketUser[];
+    chatMessages: ChatMessage[]
 }
 
 const serverData: ServerData = {
-    onlineUsers: []
+    onlineUsers: [],
+    chatMessages: []
 };
 
 const getOnlineUsers = () =>
@@ -53,38 +61,41 @@ export default async function socketIO(
             }
         });
 
-        io.sockets.on("connection", (serverSocket) => {
-            serverSocket.on(SocketActions.DISCONNECTING, () => {
-                const socketId = serverSocket.id;
+        io.sockets.on("connection", (socket) => {
+            socket.on(SocketClientActions.DISCONNECTING, () => {
+                const socketId = socket.id;
                 const newOnlineUsers = serverData.onlineUsers.filter(
                     (user) => user.socketId !== socketId
                 );
                 serverData.onlineUsers = newOnlineUsers;
-                serverSocket.emit(
-                    SocketActions.CHANGE_ONLINE_USERS,
+                io.emit(
+                    SocketServerActions.CHANGE_ONLINE_USERS,
                     getOnlineUsers()
                 );
             });
 
-			serverSocket.on(SocketActions.UPDATE_ONLINE_USERS_REQUEST, () => {
-				serverSocket.emit(SocketActions.CHANGE_ONLINE_USERS, getOnlineUsers());
+			socket.on(SocketClientActions.UPDATE_ONLINE_USERS_REQUEST, () => {
+				io.emit(SocketServerActions.CHANGE_ONLINE_USERS, getOnlineUsers());
 			});
 
-            serverSocket.on(SocketActions.LOGIN, (userdata) => {
+            socket.on(SocketClientActions.LOGIN, (userdata) => {
                 serverData.onlineUsers.push(userdata);
-                serverSocket.emit(
-                    SocketActions.CHANGE_ONLINE_USERS,
+
+                console.log(userdata.userName, " logged");
+                console.log(getOnlineUsers());
+                io.emit(
+                    SocketServerActions.CHANGE_ONLINE_USERS,
                     getOnlineUsers()
                 );
             });
 
-            serverSocket.on(SocketActions.LOGOUT, (user) => {
+            socket.on(SocketClientActions.LOGOUT, (user) => {
                 const newOnlineUsers = serverData.onlineUsers.filter(
                     (el) => el.userName !== user.userName
                 );
                 serverData.onlineUsers = newOnlineUsers;
-                serverSocket.emit(
-                    SocketActions.CHANGE_ONLINE_USERS,
+                io.emit(
+                    SocketServerActions.CHANGE_ONLINE_USERS,
                     getOnlineUsers()
                 );
             });

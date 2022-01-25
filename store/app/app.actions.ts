@@ -26,7 +26,8 @@ export const hideGameComponent = () : ReduxAction => ({
 });
 
 export const changeSocketIdRequest = (socketId: string) : ReduxAction => ({
-    type: AppActions.CHANGE_SOCKET_ID_REQUEST
+    type: AppActions.CHANGE_SOCKET_ID_REQUEST,
+    payload: socketId
 });
 
 export const setSockedId = (socketId: string | null) : ReduxAction => ({

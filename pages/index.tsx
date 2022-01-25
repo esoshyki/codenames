@@ -7,9 +7,9 @@ import Game from '@/components/Game';
 import ReadyUsers from '@/components/ReadyUsers';
 import { IState } from '@/store/types';
 import { socket } from 'socket/socket';
-import { SocketActions } from '@/types/socket.actions';
+import { SocketServerActions } from '@/types/socket.actions';
 import { updateOnlineUsers, updateOnlineUsersRequest } from '@/store/server/server.actions';
-import { ServerData, User } from '@/types';
+import { User } from '@/types';
 import { setSockedId } from '@/store/app/app.actions';
 
 
@@ -27,9 +27,9 @@ const Home: NextPage = () => {
 		});
 	
 
-		socket.on(SocketActions.CHANGE_ONLINE_USERS, (users: User[]) => {
+		socket.on(SocketServerActions.CHANGE_ONLINE_USERS, (users: User[]) => {
 			console.log(users);
-			dispatch(updateOnlineUsersRequest());
+			dispatch(updateOnlineUsers(users));
 		});
 	
 	
