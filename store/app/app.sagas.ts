@@ -1,8 +1,7 @@
 import { AppActions } from "./app.types";
-import { takeEvery, call, put, select } from 'redux-saga/effects';
-import { ReduxAction } from "@/types";
+import { takeEvery } from 'redux-saga/effects';
 
-function* changeSocketIdRequest ({payload}: ReduxAction) {
+function* changeSocketIdRequest () {
     
 }   
 
