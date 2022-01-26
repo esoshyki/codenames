@@ -6,8 +6,8 @@ const myTheme: DefaultTheme = {
 
     colors: {
         main: "cyan",
-        secondary: "magenta"
-    }
+        secondary: "magenta",
+    },
 };
 
 export { myTheme };

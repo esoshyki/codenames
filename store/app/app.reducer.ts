@@ -5,7 +5,8 @@ const initialState: AppState = {
     showLogin: false,
     socketId: null,
     showGame: false,
-    processing: false
+    processing: false,
+    info: null
 };
 
 export const appReducer = (
@@ -54,6 +55,12 @@ export const appReducer = (
                 ...state,
                 socketId: payload
             };
+
+        case AppActions.SET_INFO:
+            return ({
+                ...state,
+                info: payload
+            })
 
         default:
             return state;

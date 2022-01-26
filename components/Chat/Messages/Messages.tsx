@@ -1,15 +1,22 @@
-import { IChatMessage } from "../../../store/types";
 import AddMessage from "../AddMessage";
-import classes from "./Messages.module.sass";
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { IState } from "@/store/types";
+import MessagesWrapper from "./MessagesWrapper";
+import MessagesList from "./MessagesList";
+import MessagesContainer from "./MessagesContainer";
+import Message from './Message';
+import MessageHeader from "./MessageHeader";
+import MessageBody from "./MessageBody";
 
-interface MessagesProps {
-    messages: IChatMessage[];
-}
+const Messages = () => {
 
-const Messages = ({ messages }: MessagesProps) => {
+    const messages = useSelector((state: IState) => state.chat.messages);
+
     const listRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+
+
 
     useEffect(() => {
         if (!listRef.current || !containerRef.current) return;
@@ -21,35 +28,32 @@ const Messages = ({ messages }: MessagesProps) => {
     }, [messages]);
 
     return (
-        <div className={classes.messages}>
-            <div className={classes.messages__list} ref={listRef}>
-                <div className={classes.messages__container} ref={containerRef}>
-                    {messages &&
-                        messages.map((message) => (
-                            <div
-                                key={`message-${message.user.userName}-${message.id}`}
-                                className={classes.messages__message}
-                            >
-                                <div
-                                    className={
-                                        classes.messages__message__header
-                                    }
-                                >
-                                    {message.user.userName}
-                                </div>
+        <MessagesWrapper>
+            <MessagesList ref={listRef}>
+                <MessagesContainer ref={containerRef}>
 
-                                <div
-                                    className={classes.messages__message__body}
-                                >
-                                    {message.message}
-                                </div>
-                            </div>
-                        ))}
-                </div>
-            </div>
+                    {messages &&
+                        messages.map((message, idx) => (
+
+                            <Message key={`message-${message.author.userName}-${idx}`}>
+
+                                <MessageHeader>
+                                    {message.author.userName}
+                                </MessageHeader>
+
+                                <MessageBody>
+                                    {message.text}
+                                </MessageBody>
+
+                            </Message>
+                        )
+                    )}
+
+                </MessagesContainer>
+            </MessagesList>
 
             <AddMessage />
-        </div>
+        </MessagesWrapper>
     );
 };
 

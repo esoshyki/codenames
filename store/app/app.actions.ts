@@ -34,3 +34,13 @@ export const setSockedId = (socketId: string | null): ReduxAction => ({
     type: AppActions.SET_SOCKET_ID,
     payload: socketId
 });
+
+export const showInfo = (message: string) : ReduxAction => ({
+    type: AppActions.SET_INFO,
+    payload: message
+});
+
+export const hideInfo = () : ReduxAction => ({
+    type: AppActions.SET_INFO,
+    payload: null
+});

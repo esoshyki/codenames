@@ -1,9 +1,38 @@
-import classes from "./Login.module.sass";
 import { KeyboardEvent, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IState } from "../../store/types";
 import { loginRequest, setLoginError } from "@/store/users/users.actions";
 import styled from "styled-components";
+import { colors } from "@/theme/colors";
+
+const LoginWrapper = styled.span`
+    height: 50px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+`;
+
+const LoginInput = styled.input`
+    width: 400px;
+    max-width: 400px;
+    padding: 15px 15px;
+    border: none;
+    outline: none;
+    background-color: ${colors.blue};
+    color: #fff;
+    border: 1px solid #fff;
+    font-weight: 700;
+    transition: 0.1s ease-in;
+    &::placeholder {
+        color: #fff;
+    }
+    &:focus {
+        border-color: ${colors.yellow} 
+    }
+`
 
 const LoginError = styled.span`
     color: red;
@@ -43,16 +72,15 @@ const Login = () => {
     };
 
     return (
-        <div className={classes.login}>
-            <input
-                className={classes.login__input}
+        <LoginWrapper>
+            <LoginInput
                 placeholder="Имя"
                 ref={inputRef}
                 onKeyPress={handleClick}
                 onChange={handleChange}
             />
             {loginError && <LoginError>{loginError}</LoginError>}
-        </div>
+        </LoginWrapper>
     );
 };
 

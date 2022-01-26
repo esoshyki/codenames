@@ -1,37 +1,38 @@
-import classes from "./AddMessage.module.sass";
 import { useRef } from "react";
-import { IChatMessage, IState } from "../../../store/types";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { IState } from "../../../store/types";
+import { ChatMessage } from "@/store/chat/chat.types";
+import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+import { addMessageRequest } from "@/store/chat/chat.actions";
+
+const AddMessageWrapper = styled.div`
+    position: absolute;
+    bottom: 20px ;
+`;
 
 const AddMessage = () => {
+
+    const dispatch = useDispatch();
+
     const inputRef = useRef<HTMLInputElement>(null);
     const { currentUser } = useSelector((state: IState) => state.users);
-    const { messages } = useSelector((state: IState) => state.chat);
 
     const sendMessage = async () => {
         if (!inputRef.current?.value || !currentUser) {
             return;
         }
-        const newMessage: IChatMessage = {
-            message: inputRef.current.value,
-            user: currentUser,
-            id: messages.length
+        const newMessage: ChatMessage = {
+            text: inputRef.current.value,
+            author: currentUser,
         };
 
-        const response = await axios.post("/api/chat/addmessage", newMessage, {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        dispatch(addMessageRequest(newMessage));
+        inputRef.current.value = "";
 
-        if (response.status === 201) {
-            inputRef.current.value = "";
-        }
     };
 
     return (
-        <div className={classes.add_message}>
+        <AddMessageWrapper >
             <input
                 className="input"
                 ref={inputRef}
@@ -46,7 +47,7 @@ const AddMessage = () => {
             <button onClick={sendMessage} className="button" type="button">
                 Send
             </button>
-        </div>
+        </AddMessageWrapper>
     );
 };
 

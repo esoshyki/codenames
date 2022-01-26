@@ -6,7 +6,8 @@ export enum AppActions {
     SHOW_GAME_COMPONENT = "App/Show-Game-Component",
     HIDE_GAME_COMPONENT = "App/Hide-Game-Component",
     CHANGE_SOCKET_ID_REQUEST = "App/Change-Socket-Id-Request",
-    SET_SOCKET_ID = "App/Set-Socket-Id"
+    SET_SOCKET_ID = "App/Set-Socket-Id",
+    SET_INFO = "App/Set-Info"
 }
 
 export interface AppState {
@@ -14,4 +15,5 @@ export interface AppState {
     showLogin: boolean;
     showGame: boolean;
     processing: boolean;
+    info: string | null;
 }

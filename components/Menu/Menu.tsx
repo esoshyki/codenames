@@ -1,5 +1,4 @@
 import classes from "./Menu.module.sass";
-import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { IState } from "../../store/types";
 import Login from "../Login";
@@ -47,14 +46,7 @@ const Menu = () => {
                     Logout
                 </span>
             )}
-            {/* 
-            {isReady() && members.length >= 4 && (
-                <StartGameSpan 
-                    active={Boolean(votedToStart.find((member) => member.userName === user?.userName))}
-                    className={"menu__item"} onClick={setStartVote}>
-                    Start!
-                </StartGameSpan>
-            )} */}
+
         </nav>
     );
 };

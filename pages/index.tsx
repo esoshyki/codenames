@@ -14,10 +14,10 @@ import {
     updateServerDataRequest
 } from "@/store/server/server.actions";
 import { User } from "@/types";
-import { setSockedId } from "@/store/app/app.actions";
+import { setSockedId, showInfo } from "@/store/app/app.actions";
 import { ServerData } from "@/store/server/server.types";
-import { LoginResponse } from "@/types/socket.types";
-import { setCurrentUser, setLoginError } from "@/store/users/users.actions";
+import { ChatMessage } from "@/store/chat/chat.types";
+import { addMessage } from "@/store/chat/chat.actions";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
@@ -38,15 +38,13 @@ const Home: NextPage = () => {
             dispatch(setServerData(serverData));
         })
 
-        socket.on(SocketServerActions.LOGIN_RESPONSE, (response: LoginResponse) => {
-            if (response.error) {
-                dispatch(setLoginError(response.error))
-            };
+        socket.on(SocketServerActions.LOGIN_RESPONSE, (user: User) => {
+            dispatch(showInfo(`${user.userName} connected`));
+        });
 
-            if (response.user) {
-                dispatch(setCurrentUser(response.user));
-            };
-        })
+        socket.on(SocketServerActions.ADD_MESSAGE_RESPONSE, (message: ChatMessage) => {
+            dispatch(addMessage(message));
+        });
      };
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { IState, IUser } from "../../store/types";
+import { IState } from "../../store/types";
 import ReadyUser from "./ReadyUser";
 import { Fragment } from "react";
 import styled from "styled-components";

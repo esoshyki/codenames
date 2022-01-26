@@ -1,5 +1,5 @@
 import { Collection } from "utils/wordCollections";
-import { IAction, IFBUserData, IUser } from "../types";
+import { IAction, IFBUserData } from "../types";
 import { GameActions } from "./game.types";
 
 export const setGuesserData = (data: string[]): IAction => ({

@@ -4,8 +4,8 @@ import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
 import { ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData} from "../../types/socket.types";
 import { SocketClientActions, SocketServerActions} from "@/types/socket.actions";
-import { User } from "@/types";
 import { ServerData } from "@/store/server/server.types";
+import { ChatMessage } from "@/store/chat/chat.types";
 
 export const config = {
     api: {
@@ -18,10 +18,6 @@ interface SocketUser {
     socketId: string;
 }
 
-interface ChatMessage {
-    message: string;
-    author: User;
-}
 
 interface SocketServerData {
     onlineUsers: SocketUser[];
@@ -98,6 +94,8 @@ export default async function socketIO(
                     SocketServerActions.CHANGE_ONLINE_USERS,
                     getOnlineUsers()
                 );
+
+                io.emit(SocketServerActions.LOGIN_RESPONSE, userdata)
             });
 
             socket.on(SocketClientActions.LOGOUT_REQUEST, (user) => {
@@ -109,6 +107,12 @@ export default async function socketIO(
                     SocketServerActions.CHANGE_ONLINE_USERS,
                     getOnlineUsers()
                 );
+            });
+
+            socket.on(SocketClientActions.ADD_MESSAGE_REQUEST, (message: ChatMessage) => {
+                serverData.chatMessages.push(message);
+
+                io.emit(SocketServerActions.ADD_MESSAGE_RESPONSE, (message))
             });
         });
 

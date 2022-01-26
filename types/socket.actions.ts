@@ -5,6 +5,7 @@ export enum SocketServerActions {
     LOGIN_RESPONSE = "Socket/Login-Response",
     LOGOUT_RESPONSE = "Socket/Logout-Response",
     UPDATE_SERVER_DATA_RESPONSE = "Socket/Update-Server-Data-Response",
+    ADD_MESSAGE_RESPONSE = "Socket/Add-Message-Response",
 }
 
 export enum SocketClientActions {
@@ -12,5 +13,6 @@ export enum SocketClientActions {
     UPDATE_SERVER_DATA_REQUEST = "Socket/Update-Server-Data-Request",
     LOGIN_REQUEST = "Socket/Login-Request",
     LOGOUT_REQUEST = "Socket/Logout-Request",
-    DISCONNECTING = "disconnecting"
+    DISCONNECTING = "disconnecting",
+    ADD_MESSAGE_REQUEST = "Socket/Add-Message-Request",
 }

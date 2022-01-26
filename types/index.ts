@@ -24,4 +24,4 @@ export interface APIResponse {
 export interface FireBaseResponse {
     result?: any;
     error?: string;
-}
+};

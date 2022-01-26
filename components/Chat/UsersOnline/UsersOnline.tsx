@@ -29,14 +29,12 @@ const UsersOnline = () => {
         (state: IState) => state.server.onlineUsers
     );
 
-    const users = usersOnline ? Object.values(usersOnline) : [];
-
     return (
         <UsersOnlineWrapper>
             <h5>Users online</h5>
 
-            {users &&
-                users.map((user) => (
+            {usersOnline &&
+                usersOnline.map((user) => (
                     <UserWrapper key={`user-${user.userName}`}>
                         {user.userName}
                     </UserWrapper>
