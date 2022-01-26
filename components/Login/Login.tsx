@@ -1,11 +1,9 @@
 import classes from "./Login.module.sass";
-import { KeyboardEvent, useEffect, useRef } from "react";
+import { KeyboardEvent, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IState } from "../../store/types";
-import API from "../../api";
 import { loginRequest, setLoginError } from "@/store/users/users.actions";
 import styled from "styled-components";
-import { showLoading, hideLoading } from "@/store/app/app.actions";
 
 const LoginError = styled.span`
     color: red;

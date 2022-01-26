@@ -2,17 +2,10 @@ import { NextApiRequest } from "next";
 import { NextApiResponseServerIO } from "../../types/next";
 import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
-import {
-    ClientToServerEvents,
-    ServerToClientEvents,
-    InterServerEvents,
-    SocketData
-} from "../../types/socket.types";
-import {
-    SocketClientActions,
-    SocketServerActions
-} from "@/types/socket.actions";
+import { ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData} from "../../types/socket.types";
+import { SocketClientActions, SocketServerActions} from "@/types/socket.actions";
 import { User } from "@/types";
+import { ServerData } from "@/store/server/server.types";
 
 export const config = {
     api: {
@@ -30,18 +23,26 @@ interface ChatMessage {
     author: User;
 }
 
-interface ServerData {
+interface SocketServerData {
     onlineUsers: SocketUser[];
     chatMessages: ChatMessage[];
 }
 
-const serverData: ServerData = {
+const serverData: SocketServerData = {
     onlineUsers: [],
     chatMessages: []
 };
 
-const getOnlineUsers = () =>
-    serverData.onlineUsers.map((user) => ({ userName: user.userName }));
+const getOnlineUsers = () => serverData.onlineUsers.map((user) => ({ userName: user.userName }));
+
+const getServerData = () : ServerData => {
+
+    return ({
+        onlineUsers: getOnlineUsers(),
+    })
+};
+
+const userExists = (user: SocketUser) => Boolean(serverData.onlineUsers.find((el) => el.userName === user.userName));
 
 export default async function socketIO(
     req: NextApiRequest,
@@ -51,16 +52,12 @@ export default async function socketIO(
 
     if (!res.socket.server.io) {
         const httpServer: NetServer = res.socket.server as any;
-        const io = new ServerIO<
-            ClientToServerEvents,
-            ServerToClientEvents,
-            InterServerEvents,
-            SocketData
-        >(httpServer, {
-            path: "/api/socket",
-            cors: {
-                origin: "*",
-                methods: ["GET", "POST"]
+        const io = new ServerIO<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
+            httpServer, {
+                path: "/api/socket",
+                cors: {
+                    origin: "*",
+                    methods: ["GET", "POST"]
             }
         });
 
@@ -84,18 +81,26 @@ export default async function socketIO(
                 );
             });
 
-            socket.on(SocketClientActions.LOGIN, (userdata) => {
-                serverData.onlineUsers.push(userdata);
+            socket.on(SocketClientActions.UPDATE_SERVER_DATA_REQUEST, () => {
+                io.emit(
+                    SocketServerActions.UPDATE_SERVER_DATA_RESPONSE,
+                    getServerData()
+                )
+            });
 
-                console.log(userdata.userName, " logged");
-                console.log(getOnlineUsers());
+            socket.on(SocketClientActions.LOGIN_REQUEST, (userdata) => {
+
+                if (!userExists(userdata)) {
+                    serverData.onlineUsers.push(userdata);
+                }
+
                 io.emit(
                     SocketServerActions.CHANGE_ONLINE_USERS,
                     getOnlineUsers()
                 );
             });
 
-            socket.on(SocketClientActions.LOGOUT, (user) => {
+            socket.on(SocketClientActions.LOGOUT_REQUEST, (user) => {
                 const newOnlineUsers = serverData.onlineUsers.filter(
                     (el) => el.userName !== user.userName
                 );

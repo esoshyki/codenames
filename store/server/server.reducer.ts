@@ -1,11 +1,9 @@
-import { ServerData, ReduxAction } from "@/types";
+import { ReduxAction } from "@/types";
 import { ServerActions } from "./server.types";
+import { ServerData } from "./server.types";
 
 const initialState: ServerData = {
     onlineUsers: [],
-    gameData: {
-        members: []
-    }
 };
 
 export const serverDataReducer = (
@@ -15,10 +13,10 @@ export const serverDataReducer = (
     const { type, payload } = action;
 
     switch (type) {
-        case ServerActions.UPDATE_SERVER_DATA:
+        case ServerActions.SET_SERVER_DATA:
             return payload;
 
-        case ServerActions.UPDATE_ONLINE_USERS:
+        case ServerActions.SET_ONLINE_USERS:
             return {
                 ...state,
                 onlineUsers: payload
