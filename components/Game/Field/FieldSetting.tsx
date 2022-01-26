@@ -1,4 +1,3 @@
-import { wordCollections } from "utils/wordCollections";
 import styled from "styled-components";
 import FieldChooseCollection from "./FieldChooseCollection";
 
