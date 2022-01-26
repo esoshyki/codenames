@@ -1,6 +1,6 @@
-import { IAction } from "../types";
 import { IGameState } from "./game.types";
 import { GameActions } from "./game.types";
+import { ReduxAction } from "@/types";
 
 const initialState: IGameState = {
     members: [],
@@ -20,7 +20,7 @@ const initialState: IGameState = {
 
 const gameReducer = (
     state = initialState,
-    { type, payload }: IAction
+    { type, payload }: ReduxAction
 ): IGameState => {
     switch (type) {
         case GameActions.SET_GUESSER_DATA:

@@ -1,4 +1,4 @@
-import { ReduxAction, User } from "@/types";
+import { ReduxAction } from "@/types";
 import { ChatMessage, ChatActions } from "./chat.types";
 
 export const showChat = () : ReduxAction => ({
