@@ -3,7 +3,7 @@ import { takeEvery, call, put, select } from "redux-saga/effects";
 import { ReduxAction } from "@/types";
 import { setCurrentUser, setLoginError } from "./users.actions";
 import { hideLoginComponent } from "../app/app.actions";
-import { socket } from "../../socket/socket";
+import { socket } from "../../socket/client";
 import { IState } from "../types";
 import { SocketClientActions } from "@/types/socket.actions";
 

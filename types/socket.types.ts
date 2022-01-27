@@ -29,6 +29,7 @@ export interface ClientToServerEvents {
     [SocketClientActions.UPDATE_ONLINE_USERS_REQUEST]: () => void;
     [SocketClientActions.UPDATE_SERVER_DATA_REQUEST]: () => void;
     [SocketClientActions.ADD_MESSAGE_REQUEST]: (message: ChatMessage) => void;
+    [SocketClientActions.START_GAME_REQUEST]: (user: User) => void;
 }
 
 export interface InterServerEvents {

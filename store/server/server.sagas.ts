@@ -1,7 +1,7 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { ServerActions } from "./server.types";
 import { hideLoading } from "../app/app.actions";
-import { socket } from "../../socket/socket";
+import { socket } from "../../socket/client";
 import { SocketClientActions } from "@/types/socket.actions";
 
 function* disableProcessing() {

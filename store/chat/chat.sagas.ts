@@ -1,6 +1,6 @@
 import { call, takeEvery } from "redux-saga/effects";
 import { ChatActions } from "./chat.types";
-import { socket } from "socket/socket";
+import { socket } from "socket/client";
 import { SocketClientActions } from "@/types/socket.actions";
 import { ReduxAction } from "@/types";
 

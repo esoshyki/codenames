@@ -15,4 +15,5 @@ export enum SocketClientActions {
     LOGOUT_REQUEST = "Socket/Logout-Request",
     DISCONNECTING = "disconnecting",
     ADD_MESSAGE_REQUEST = "Socket/Add-Message-Request",
+    START_GAME_REQUEST = "Socket/Start-Game-Request",
 }

@@ -46,7 +46,7 @@ const Game = () => {
     };
 
     const { guesserData, fieldData } = useSelector(
-        (state: IState) => state.game
+        (state: IState) => state.game.gameData
     );
 
     return (
