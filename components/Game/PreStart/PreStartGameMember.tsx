@@ -2,7 +2,9 @@ import { InGameUser } from "@/store/game/game.types";
 import { colors } from "@/theme/colors";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+    ready: boolean
+}>`
     width: 200px;
     padding: 20px 0;
     display: flex;
@@ -13,6 +15,7 @@ const Wrapper = styled.div`
     border-radius: 15px;
     font-size: 14px;
     color: ${colors.blue};
+    background-color: ${props => props.ready ? colors.green : "#fff"};
     margin: 10px;
 `;
 
@@ -23,7 +26,7 @@ interface Props {
 const PreStartGameMember = ({user} : Props) => {
 
     return (
-        <Wrapper>
+        <Wrapper ready={user.ready}>
             {user.userName}
         </Wrapper>
     )

@@ -66,6 +66,11 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
             serverData.toggleLeader(user);
             io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
         });
+
+        socket.on(SocketClientActions.TOGGLE_READY_REQUEST, (userName: string) => {
+            serverData.toggleReady(userName);
+            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+        })
     });
 
     return io;

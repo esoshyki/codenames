@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
-import PreStartWaitPlayers from "./PreStartWaitPlayers";
+import PreStartHeader from "./PreStartHeader";
 import PreStartGameMembers from "./PreStartGameMembers";
 import Teams from "./Teams";
+import { Sides } from "@/store/game/game.types";
+import { teamsAreComplete } from "./lib";
 
 const PreStartWrapper = styled.div`
     width: 100vw;
@@ -21,12 +23,27 @@ const PreStart = () => {
 
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
 
+    const getHeaderContent = () : string => {
+
+        if (!teamsAreComplete(gameMembers)) {
+            return "Teams are not complete"
+        };
+
+        return "Get ready to start"
+    };
+
     return (
         <PreStartWrapper>
             {gameMembers.length < 4 && (
-                <PreStartWaitPlayers>
-                    Ожидание игроков...
-                </PreStartWaitPlayers>
+                <PreStartHeader>
+                    Waiting for players
+                </PreStartHeader>
+            )}
+
+            {gameMembers.length >= 4 && (
+                <PreStartHeader>
+                    {getHeaderContent()}
+                </PreStartHeader>
             )}
 
 

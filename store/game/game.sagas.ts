@@ -29,11 +29,20 @@ function* setLeaderRequestWorker() {
     if (currentUser) {
         yield call(clientSocket.setLeaderRequest, currentUser)
     }
-
 };
+
+function* toggleReadyRequest() {
+    const state: IState = yield select();
+    const currentUser = state.users.currentUser;
+
+    if (currentUser) {
+        yield call(clientSocket.toggleReadyRequest, currentUser.userName);
+    };
+}
 
 export default function* gameSagas() {
     yield takeEvery(GameActions.START_GAME_REQUEST, startGameRequestWorker);
     yield takeEvery(GameActions.SET_TEAM_REQUEST, setTeamRequestWorker);
-    yield takeEvery(GameActions.SET_LEADER_REQUEST, setLeaderRequestWorker)
+    yield takeEvery(GameActions.SET_LEADER_REQUEST, setLeaderRequestWorker);
+    yield takeEvery(GameActions.TOGGLE_READY_REQUEST, toggleReadyRequest)
 }

@@ -62,12 +62,17 @@ const setTeamRequest = (user: User, side: Sides | null) => {
 
 const setLeaderRequest = (user: User) => {
     socket.emit(SocketClientActions.SET_LEADER_REQUEST, (user))
-}
+};
+
+const toggleReadyRequest = (userName: string) => {
+    socket.emit(SocketClientActions.TOGGLE_READY_REQUEST, userName)
+};
 
 const clientSocket = {
     startGameRequest,
     setTeamRequest,
-    setLeaderRequest
+    setLeaderRequest,
+    toggleReadyRequest
 };
 
 export default clientSocket;

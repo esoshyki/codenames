@@ -13,7 +13,7 @@ const TeamWrapper = styled.div<{
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: ${props => props.red ? "rgba(200, 10, 10, 0.5)" : "rgba(10, 200, 10, 0.5)"};
+    background-color: ${props => props.red ? "rgba(200, 10, 10, 0.5)" : "rgba(10, 10, 200, 0.5)"};
     transition: filter 0.3s ease-in;
     &:hover {
         cursor: pointer;
@@ -69,7 +69,7 @@ const Team = ({ team } : TeamProps ) => {
 
     return (
         <TeamWrapper red={team === Sides.red} onClick={handleClick}>
-            <TeamTitle>{team === Sides.blue ? "Read Team" : "Blue Team"}</TeamTitle>
+            <TeamTitle>{team === Sides.red ? "Red Team" : "Blue Team"}</TeamTitle>
 
             {teamUsers && teamUsers.map((user, idx) => (
                 <UserWrapper key={idx}>

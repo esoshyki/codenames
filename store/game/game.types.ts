@@ -5,6 +5,7 @@ export enum GameActions {
     SET_GAME_MEMBERS = "Game/Set-Game-Members",
     SET_TEAM_REQUEST = "Game/Set-Team-Request",
     SET_LEADER_REQUEST = "Game/Set-Leader-Request",
+    TOGGLE_READY_REQUEST = "Game/Toggle-Ready-Request",
 };
 
 export interface InGameUser {

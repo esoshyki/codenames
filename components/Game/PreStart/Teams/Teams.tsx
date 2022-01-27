@@ -2,8 +2,10 @@ import styled from "styled-components";
 import Team from "./Team";
 import { Sides } from "@/store/game/game.types";
 import { colors } from "@/theme/colors";
-import { useDispatch } from "react-redux";
-import { setLeaderRequest } from "@/store/game/game.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
+import { IState } from "@/store/types";
+import { teamsAreComplete } from "../lib";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -14,7 +16,7 @@ const TeamsWrapper = styled.div`
     flex-wrap: wrap;
 `
 
-const MakeMeLeaderButton = styled.button`
+const TeamsButton = styled.button`
     width: calc(100% - 40px);
     margin: 20px;
     padding: 20px;
@@ -30,22 +32,35 @@ const MakeMeLeaderButton = styled.button`
 `;
 
 
-
 const Teams = () => {
 
     const dispatch = useDispatch();
 
+    const gameUsers = useSelector((state: IState) => state.game.gameMembers);
+    const currentUser = useSelector((state: IState) => state.users.currentUser);
+
     const makeMeALeader = () => {
         dispatch(setLeaderRequest())
+    };
+
+    const toogleReady = () => {
+        dispatch(toggleReadyRequest())
     };
 
     return (
         <TeamsWrapper>
             <Team team={Sides.red} />
             <Team team={Sides.blue} />
-            <MakeMeLeaderButton
-                onClick={makeMeALeader}
-                >Make me leader</MakeMeLeaderButton>
+
+            <TeamsButton onClick={makeMeALeader}>
+                Make me leader
+            </TeamsButton>
+
+            {teamsAreComplete(gameUsers) && <TeamsButton onClick={toogleReady}>
+                {gameUsers.some(user => user.userName === currentUser?.userName && user.ready) ? "Not ready" : "Get Ready"}
+            </TeamsButton>}
+
+        
         </TeamsWrapper>
     )
 };

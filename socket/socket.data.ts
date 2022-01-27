@@ -132,6 +132,12 @@ class ServerData implements SocketServerData {
         };
     };
 
+    toggleReady(userName: string) {
+        const uidx = this.getGameMemberIdx(userName);
+        const { ready } = this.gameMembers[uidx];
+        this.gameMembers[uidx].ready = !ready;
+    }
+
 
 }
 

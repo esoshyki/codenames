@@ -36,6 +36,7 @@ export enum SocketClientActions {
     START_GAME_REQUEST = "Socket/Start-Game-Request",
     SET_TEAM_REQUEST = "Socket-Client/Set-Team-Request",
     SET_LEADER_REQUEST = "Socket-Client/Set-Loader-Request",
+    TOGGLE_READY_REQUEST = "Socket-Client/Toggle-Ready-Request",
 };
 
 export interface ServerToClientEvents {
@@ -59,6 +60,7 @@ export interface ClientToServerEvents {
     [SocketClientActions.START_GAME_REQUEST]: (user: User) => void;
     [SocketClientActions.SET_TEAM_REQUEST] : (user: User, side: Sides | null) => void;
     [SocketClientActions.SET_LEADER_REQUEST]: (user: User) => void;
+    [SocketClientActions.TOGGLE_READY_REQUEST]: (userName: string) => void;
 };
 
 export interface InterServerEvents {
