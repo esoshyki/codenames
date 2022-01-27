@@ -1,35 +1,36 @@
 import { Collection } from "utils/wordCollections";
-import { User } from "@/types";
 
 export enum GameActions {
     START_GAME_REQUEST = "Game/Start-Game-Request",
     SET_GAME_MEMBERS = "Game/Set-Game-Members",
+    SET_TEAM_REQUEST = "Game/Set-Team-Request",
+    SET_LEADER_REQUEST = "Game/Set-Leader-Request",
 };
 
 export interface InGameUser {
     userName: string;
     ready: boolean;
-    team: "blue" | "red" | null
+    team: Sides | null,
+    leader?: true
 };
+
+export enum Sides {
+    blue = "blue",
+    red = "red",
+}
 
 export interface GameData {
     guesserData: string | null;
-    startSide: "blue" | "red" | null;
-    leaders: {
-        blue: User | null,
-        red: User | null,
-    },
+    startSide: Sides | null;
     fieldData: string[] | null,
     collection: Collection | null,
 
     round: {
         number: number,
-        side: "blue" | "red" | null,
+        side: Sides | null,
         votes: number[]
     };
 };
-
-
 
 export interface IGameState {
     gameMembers: InGameUser[];

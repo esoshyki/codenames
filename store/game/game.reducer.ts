@@ -7,15 +7,11 @@ const initialState: IGameState = {
     gameData: {
         guesserData: null,
         startSide: null,
-        leaders: {
-            blue: null,
-            red: null,
-        },
         fieldData: null,
         collection: null,
     
         round: {
-            number: 1,
+            number: 0,
             side: null,
             votes: []
         }

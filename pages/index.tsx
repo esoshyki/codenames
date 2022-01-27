@@ -11,7 +11,17 @@ import { connectSocket } from "@/socket/socket.client";
 const Home: NextPage = () => {
     const dispatch = useDispatch();
 
-    const showGame = useSelector((state: IState) => state.app.showGame);
+    const currenUser = useSelector((state: IState) => state.users.currentUser);
+    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
+
+    const showGame = () => {
+
+        if (currenUser) {
+            return gameMembers.some((member) => member.userName === currenUser.userName)
+        };
+        
+        return false
+    }
 
     useEffect(() => {
         connectSocket(dispatch);
@@ -19,9 +29,9 @@ const Home: NextPage = () => {
 
     return (
         <Layout>
-            {!showGame && <Menu />}
-            {showGame && <Game />}
-            {!showGame && <ReadyUsers />}
+            {!showGame() && <Menu />}
+            {showGame() && <Game />}
+            {!showGame() && <ReadyUsers />}
         </Layout>
     );
 };

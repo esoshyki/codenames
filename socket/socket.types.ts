@@ -2,6 +2,7 @@ import { User } from "@/types";
 import { ServerData } from '@/store/server/server.types';
 import { ChatMessage } from "@/store/chat/chat.types";
 import { InGameUser } from "@/store/game/game.types"
+import { Sides } from '@/store/game/game.types';
 
 interface SocketUser {
     userName: string;
@@ -32,6 +33,7 @@ export enum SocketClientActions {
     DISCONNECTING = "disconnecting",
     ADD_MESSAGE_REQUEST = "Socket/Add-Message-Request",
     START_GAME_REQUEST = "Socket/Start-Game-Request",
+    SET_TEAM_REQUEST = "Socket-Client/Set-Team-Request"
 };
 
 export interface ServerToClientEvents {
@@ -51,6 +53,7 @@ export interface ClientToServerEvents {
     [SocketClientActions.UPDATE_SERVER_DATA_REQUEST]: () => void;
     [SocketClientActions.ADD_MESSAGE_REQUEST]: (message: ChatMessage) => void;
     [SocketClientActions.START_GAME_REQUEST]: (user: User) => void;
+    [SocketClientActions.SET_TEAM_REQUEST] : (user: User, side: Sides | null) => void;
 };
 
 export interface InterServerEvents {

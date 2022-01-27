@@ -8,6 +8,7 @@ import {
 import { logoutRequest } from "@/store/users/users.actions";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
+import { startGameRequest } from "@/store/game/game.actions";
 
 const MenuWrapper = styled.nav`
     height: 100%;
@@ -36,7 +37,7 @@ const Menu = () => {
         if (currentUser) {
             dispatch(logoutRequest(currentUser.userName));
         }
-        
+
     };
 
     return (
@@ -52,6 +53,12 @@ const Menu = () => {
             {currentUser && (
                 <MenuItem className="menu__item" onClick={logout}>
                     Logout
+                </MenuItem>
+            )}
+
+            {currentUser && (
+                <MenuItem className="menu__item" onClick={() => dispatch(startGameRequest())}>
+                    Start Game
                 </MenuItem>
             )}
 

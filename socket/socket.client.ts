@@ -11,7 +11,7 @@ import { ServerData } from "@/types";
 import { showInfo } from "@/store/app/app.actions";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { addMessage } from "@/store/chat/chat.actions";
-import { InGameUser } from "@/store/game/game.types";
+import { InGameUser, Sides } from "@/store/game/game.types";
 import { setGameMembers } from "@/store/game/game.actions";
 
 export const socket = io(
@@ -50,10 +50,15 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
 
 const startGameRequest = (user: User) => {
     socket.emit(SocketClientActions.START_GAME_REQUEST, user);
+};
+
+const setTeamRequest = (user: User, side: Sides | null) => {
+    socket.emit(SocketClientActions.SET_TEAM_REQUEST, user, side)
 }
 
 const clientSocket = {
-    startGameRequest
+    startGameRequest,
+    setTeamRequest
 };
 
 export default clientSocket;
