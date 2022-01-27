@@ -3,9 +3,9 @@ import { takeEvery, call, put, select } from "redux-saga/effects";
 import { ReduxAction } from "@/types";
 import { setCurrentUser, setLoginError } from "./users.actions";
 import { hideLoginComponent } from "../app/app.actions";
-import { socket } from "../../socket/client";
+import { socket } from "../../socket/socket.client";
 import { IState } from "../types";
-import { SocketClientActions } from "@/types/socket.actions";
+import { SocketClientActions } from "@/socket/socket.types";
 
 function* loginRequestWorker({ payload }: ReduxAction) {
     const state: IState = yield select();

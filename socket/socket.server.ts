@@ -1,10 +1,14 @@
 import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
-import { ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData} from "../types/socket.types";
+import { ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData} from "./socket.types";
 import { NextApiResponseServerIO } from "@/types/next";
-import { SocketClientActions, SocketServerActions } from "@/types/socket.actions";
+import { SocketClientActions, SocketServerActions } from "./socket.types";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { ServerData } from '@/store/server/server.types';
+import { User } from '@/types';
+import { GameData } from "@/store/game/game.types";
+import { InGameUser } from "@/store/game/game.types";
+import { createGameMember } from './lib';
 
 interface SocketUser {
     userName: string;
@@ -15,11 +19,30 @@ interface SocketUser {
 interface SocketServerData {
     onlineUsers: SocketUser[];
     chatMessages: ChatMessage[];
+    gameData: GameData;
+    gameMembers: InGameUser[]
 }
 
 const serverData: SocketServerData = {
     onlineUsers: [],
-    chatMessages: []
+    chatMessages: [],
+    gameMembers: [],
+    gameData: {
+        guesserData: null,
+        startSide: null,
+        leaders: {
+            blue: null,
+            red: null,
+        },
+        fieldData: null,
+        collection: null,
+    
+        round: {
+            number: 1,
+            side: null,
+            votes: []
+        }
+    }
 };
 
 const getOnlineUsers = () => serverData.onlineUsers.map((user) => ({ userName: user.userName }));
@@ -101,6 +124,13 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
 
             io.emit(SocketServerActions.ADD_MESSAGE_RESPONSE, (message))
         });
+
+        socket.on(SocketClientActions.START_GAME_REQUEST, (user: User) => {
+            if (serverData.gameMembers.every(us => us.userName !== user.userName)) {
+                serverData.gameMembers.push(createGameMember(user));
+                io.emit(SocketServerActions.START_GAME_RESPONSE, serverData.gameMembers)
+            };
+        })
     });
 
     return io;

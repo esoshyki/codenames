@@ -1,6 +1,6 @@
 import { NextApiRequest } from "next";
 import { NextApiResponseServerIO } from "../../types/next";
-import { creatseServerSocket } from "socket/server";
+import { creatseServerSocket } from "@/socket/socket.server";
 
 export const config = {
     api: {

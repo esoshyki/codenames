@@ -6,7 +6,7 @@ import Menu from "../components/Menu";
 import Game from "@/components/Game";
 import ReadyUsers from "@/components/ReadyUsers";
 import { IState } from "@/store/types";
-import { connectSocket } from "socket/client";
+import { connectSocket } from "@/socket/socket.client";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();

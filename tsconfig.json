@@ -30,7 +30,8 @@
             "@/types/*": ["types/*"],
             "@/firebase/*": ["firebase/*"],
             "@/api": ["api"],
-            "@/utils/*": ["utils/*"]
+            "@/utils/*": ["utils/*"],
+            "@/socket/*": ["socket/*"]
         },
         "incremental": true
     },

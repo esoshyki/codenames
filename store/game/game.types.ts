@@ -3,6 +3,7 @@ import { User } from "@/types";
 
 export enum GameActions {
     START_GAME_REQUEST = "Game/Start-Game-Request",
+    SET_GAME_MEMBERS = "Game/Set-Game-Members",
 };
 
 export interface InGameUser {
@@ -31,6 +32,6 @@ export interface GameData {
 
 
 export interface IGameState {
-    members: InGameUser[];
+    gameMembers: InGameUser[];
     gameData: GameData;
 }

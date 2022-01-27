@@ -3,7 +3,7 @@ import { GameActions } from "./game.types";
 import { ReduxAction } from "@/types";
 
 const initialState: IGameState = {
-    members: [],
+    gameMembers: [],
     gameData: {
         guesserData: null,
         startSide: null,
@@ -28,6 +28,11 @@ const gameReducer = (
 ): IGameState => {
     switch (type) {
  
+        case GameActions.SET_GAME_MEMBERS:
+            return ({
+                ...state,
+                gameMembers: payload
+            })
 
         default:
             return state;

@@ -1,8 +1,8 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { ServerActions } from "./server.types";
 import { hideLoading } from "../app/app.actions";
-import { socket } from "../../socket/client";
-import { SocketClientActions } from "@/types/socket.actions";
+import { socket } from "../../socket/socket.client";
+import { SocketClientActions } from "@/socket/socket.types";
 
 function* disableProcessing() {
     yield put(hideLoading());
