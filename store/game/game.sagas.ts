@@ -20,9 +20,20 @@ function* setTeamRequestWorker ({payload} : ReduxAction) {
     if (currentUser) {
         yield call(clientSocket.setTeamRequest, currentUser, payload)
     }
-}
+};
+
+function* setLeaderRequestWorker() {
+    const state: IState = yield select();
+    const currentUser = state.users.currentUser;
+
+    if (currentUser) {
+        yield call(clientSocket.setLeaderRequest, currentUser)
+    }
+
+};
 
 export default function* gameSagas() {
     yield takeEvery(GameActions.START_GAME_REQUEST, startGameRequestWorker);
     yield takeEvery(GameActions.SET_TEAM_REQUEST, setTeamRequestWorker);
+    yield takeEvery(GameActions.SET_LEADER_REQUEST, setLeaderRequestWorker)
 }

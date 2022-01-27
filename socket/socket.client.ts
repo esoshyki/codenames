@@ -44,6 +44,10 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     });
 
     socket.on(SocketServerActions.START_GAME_RESPONSE, (gameMembers: InGameUser[]) => {
+        dispatch(setGameMembers(gameMembers));
+    });
+
+    socket.on(SocketServerActions.UPDATE_GAME_MEMBERS, (gameMembers: InGameUser[]) => {
         dispatch(setGameMembers(gameMembers))
     });
 }
@@ -54,11 +58,16 @@ const startGameRequest = (user: User) => {
 
 const setTeamRequest = (user: User, side: Sides | null) => {
     socket.emit(SocketClientActions.SET_TEAM_REQUEST, user, side)
+};
+
+const setLeaderRequest = (user: User) => {
+    socket.emit(SocketClientActions.SET_LEADER_REQUEST, (user))
 }
 
 const clientSocket = {
     startGameRequest,
-    setTeamRequest
+    setTeamRequest,
+    setLeaderRequest
 };
 
 export default clientSocket;

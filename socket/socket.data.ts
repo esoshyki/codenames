@@ -74,9 +74,11 @@ class ServerData implements SocketServerData {
     }
 
     startGame(user: User) {
+        if (!this.gameMembers.length) {
+            return this.gameMembers.push(this.createGameMember(user));
+        };
         if (this.gameMembers.every((member) => member.userName !== user.userName)) {
-            const inGameUser = this.createGameMember(user);
-            this.gameMembers.push(inGameUser);
+            return this.gameMembers.push(this.createGameMember(user));
         };
     }
 
@@ -84,12 +86,53 @@ class ServerData implements SocketServerData {
         return this.gameMembers
     };
 
+    getGameMemberIdx(userName: string) {
+        return this.gameMembers.findIndex(mbr => mbr.userName === userName);
+    };
+
+    setLeader(userName: string, team: Sides) {
+        this.gameMembers = this.gameMembers.map((member) => {
+            if (member.team !== team) return member;
+            if (member.userName === userName) return {...member, leader: true};
+
+            return {...member, leader: undefined}
+        });
+    };
+
+    unSetLeader() {
+        this.gameMembers = this.gameMembers.map(member => member.leader ? {...member, leader: undefined} : member);
+    };
+
     setTeam(user: User, side: Sides | null) {
-        const userIndex = this.gameMembers.findIndex(mbr => mbr.userName === user.userName);
+        const userIndex = this.getGameMemberIdx(user.userName);
         if (userIndex >= 0) {
-            this.gameMembers[userIndex].team = side;
+            const currentSide = this.gameMembers[userIndex].team;
+            this.gameMembers[userIndex].team = side !== currentSide ? side : null;
+
+            if (!side) {
+                return;
+            }
+
+            if (this.gameMembers.filter(member => member.team === side && member.leader).length > 0) {
+                this.gameMembers[userIndex].leader = undefined;
+            }
+  
         };
-    }
+    };
+
+    toggleLeader(user: User) {
+        const userIndex = this.getGameMemberIdx(user.userName);
+        const { leader, team } = this.gameMembers[userIndex];
+        if (!team) return;
+
+        if (leader) {
+            this.unSetLeader()
+        } else {
+            this.setLeader(user.userName, team);
+        };
+    };
+
+
 }
 
 export default ServerData;

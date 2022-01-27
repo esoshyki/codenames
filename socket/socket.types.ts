@@ -23,6 +23,7 @@ export enum SocketServerActions {
     UPDATE_SERVER_DATA_RESPONSE = "Socket/Update-Server-Data-Response",
     ADD_MESSAGE_RESPONSE = "Socket/Add-Message-Response",
     START_GAME_RESPONSE = "Socket-Server/Start-Game-Response",
+    UPDATE_GAME_MEMBERS = "Socket-Server/Update-Game-Members",
 }
 
 export enum SocketClientActions {
@@ -33,7 +34,8 @@ export enum SocketClientActions {
     DISCONNECTING = "disconnecting",
     ADD_MESSAGE_REQUEST = "Socket/Add-Message-Request",
     START_GAME_REQUEST = "Socket/Start-Game-Request",
-    SET_TEAM_REQUEST = "Socket-Client/Set-Team-Request"
+    SET_TEAM_REQUEST = "Socket-Client/Set-Team-Request",
+    SET_LEADER_REQUEST = "Socket-Client/Set-Loader-Request",
 };
 
 export interface ServerToClientEvents {
@@ -43,7 +45,9 @@ export interface ServerToClientEvents {
     [SocketServerActions.LOGOUT_RESPONSE]: (user: User) => void;
     [SocketServerActions.UPDATE_SERVER_DATA_RESPONSE] : (serverData: ServerData) => void;
     [SocketServerActions.ADD_MESSAGE_RESPONSE]: (message: ChatMessage) => void;
-    [SocketServerActions.START_GAME_RESPONSE]: (gameMembers: InGameUser[]) => void;
+    [SocketServerActions.START_GAME_RESPONSE] : (gameMembers: InGameUser[]) => void;
+    [SocketServerActions.UPDATE_GAME_MEMBERS] : (gameMembers: InGameUser[]) => void;
+
 };
 
 export interface ClientToServerEvents {
@@ -54,6 +58,7 @@ export interface ClientToServerEvents {
     [SocketClientActions.ADD_MESSAGE_REQUEST]: (message: ChatMessage) => void;
     [SocketClientActions.START_GAME_REQUEST]: (user: User) => void;
     [SocketClientActions.SET_TEAM_REQUEST] : (user: User, side: Sides | null) => void;
+    [SocketClientActions.SET_LEADER_REQUEST]: (user: User) => void;
 };
 
 export interface InterServerEvents {

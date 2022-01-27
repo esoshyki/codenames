@@ -15,7 +15,6 @@ export const setTeamRequest = (side: Sides | null) => ({
     payload: side
 });
 
-export const setLeaderRequest = (value: boolean) => ({
+export const setLeaderRequest = () => ({
     type: GameActions.SET_LEADER_REQUEST,
-    payload: value
 })

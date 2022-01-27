@@ -59,7 +59,13 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
 
         socket.on(SocketClientActions.SET_TEAM_REQUEST, (user: User, side: Sides | null) => {
             serverData.setTeam(user, side);
-        })
+            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+        });
+
+        socket.on(SocketClientActions.SET_LEADER_REQUEST, (user: User) => {
+            serverData.toggleLeader(user);
+            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+        });
     });
 
     return io;
