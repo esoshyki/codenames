@@ -1,4 +1,4 @@
-import { InGameUser, GameData, Sides } from "@/store/game/game.types";
+import { InGameUser, GameData, Sides, CollectionVote } from "@/store/game/game.types";
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
 
@@ -23,8 +23,9 @@ class ServerData implements SocketServerData {
         startSide: null,
         fieldData: null,
         collection: null,
-        round: {
-            number: 0,
+        collectionVotes: [],
+        stage: {
+            round: 0,
             side: null,
             votes: []
         }
@@ -136,6 +137,23 @@ class ServerData implements SocketServerData {
         const uidx = this.getGameMemberIdx(userName);
         const { ready } = this.gameMembers[uidx];
         this.gameMembers[uidx].ready = !ready;
+    };
+
+    toggleCollectionVote(userName: string, collectionIdx: number) {
+        const vote = this.gameData.collectionVotes.find(user => user.userName === userName);
+
+        if (vote) {
+            return this.gameData.collectionVotes = this.gameData.collectionVotes.filter(user => user.userName !== userName);
+        };
+
+        return this.gameData.collectionVotes.push({
+            userName,
+            collectionIdx
+        });
+    };
+
+    getCollectionVotes() : CollectionVote[] {
+        return this.gameData.collectionVotes;
     }
 
 

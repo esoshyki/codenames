@@ -7,6 +7,8 @@ import { ChatMessage } from "@/store/chat/chat.types";
 import { User } from '@/types';
 import ServerData from "./socket.data";
 import { Sides } from "@/store/game/game.types";
+import { allCollectionVotesDone, getCollectionWinner } from "@/utils/teams";
+import { wordCollections } from "@/utils/wordCollections";
 
 
 const serverData = new ServerData();
@@ -70,6 +72,19 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
         socket.on(SocketClientActions.TOGGLE_READY_REQUEST, (userName: string) => {
             serverData.toggleReady(userName);
             io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+        });
+
+        socket.on(SocketClientActions.TOOGLE_COLLECTION_VOTE_REQUEST, (userName: string, collectionIdx: number) => {
+            serverData.toggleCollectionVote(userName, collectionIdx);
+            const votes = serverData.getCollectionVotes();
+            const allDone = allCollectionVotesDone(votes, serverData.getGameMembers());
+
+            if (allDone) {
+                const collectionIdx = getCollectionWinner(votes);
+                io.emit(SocketServerActions.SET_COLLECTION, wordCollections[collectionIdx])
+            } else {
+                io.emit(SocketServerActions.UPDATE_COLLECTION_VOTES, serverData.getCollectionVotes());
+            }
         })
     });
 

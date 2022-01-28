@@ -7,6 +7,7 @@ const MenuItem = styled.span`
     margin: 10px 0;
     &:hover {
         color: ${colors.yellow};
+        cursor: pointer;
     }
 `
 

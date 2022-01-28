@@ -1,8 +1,9 @@
 import { User } from "@/types";
 import { ServerData } from '@/store/server/server.types';
 import { ChatMessage } from "@/store/chat/chat.types";
-import { InGameUser } from "@/store/game/game.types"
+import { CollectionVote, InGameUser } from "@/store/game/game.types"
 import { Sides } from '@/store/game/game.types';
+import { Collection } from "@/utils/wordCollections";
 
 interface SocketUser {
     userName: string;
@@ -24,6 +25,8 @@ export enum SocketServerActions {
     ADD_MESSAGE_RESPONSE = "Socket/Add-Message-Response",
     START_GAME_RESPONSE = "Socket-Server/Start-Game-Response",
     UPDATE_GAME_MEMBERS = "Socket-Server/Update-Game-Members",
+    UPDATE_COLLECTION_VOTES = "Socket-Server/Update-Collection-Votes",
+    SET_COLLECTION = "Socket-Servet/Set-Collection"
 }
 
 export enum SocketClientActions {
@@ -37,6 +40,7 @@ export enum SocketClientActions {
     SET_TEAM_REQUEST = "Socket-Client/Set-Team-Request",
     SET_LEADER_REQUEST = "Socket-Client/Set-Loader-Request",
     TOGGLE_READY_REQUEST = "Socket-Client/Toggle-Ready-Request",
+    TOOGLE_COLLECTION_VOTE_REQUEST = "Socket-Client/Toggle-Collection-Vote-Request",
 };
 
 export interface ServerToClientEvents {
@@ -48,6 +52,8 @@ export interface ServerToClientEvents {
     [SocketServerActions.ADD_MESSAGE_RESPONSE]: (message: ChatMessage) => void;
     [SocketServerActions.START_GAME_RESPONSE] : (gameMembers: InGameUser[]) => void;
     [SocketServerActions.UPDATE_GAME_MEMBERS] : (gameMembers: InGameUser[]) => void;
+    [SocketServerActions.UPDATE_COLLECTION_VOTES] : (votes: CollectionVote[]) => void;
+    [SocketServerActions.SET_COLLECTION] : (collection: Collection) => void;
 
 };
 
@@ -61,6 +67,7 @@ export interface ClientToServerEvents {
     [SocketClientActions.SET_TEAM_REQUEST] : (user: User, side: Sides | null) => void;
     [SocketClientActions.SET_LEADER_REQUEST]: (user: User) => void;
     [SocketClientActions.TOGGLE_READY_REQUEST]: (userName: string) => void;
+    [SocketClientActions.TOOGLE_COLLECTION_VOTE_REQUEST] : (userName: string, collectionIdx: number) => void;
 };
 
 export interface InterServerEvents {

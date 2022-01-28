@@ -4,24 +4,14 @@ import type { NextPage } from "next";
 import Layout from "../components/Layout";
 import Menu from "../components/Menu";
 import Game from "@/components/Game";
-import ReadyUsers from "@/components/ReadyUsers";
 import { IState } from "@/store/types";
 import { connectSocket } from "@/socket/socket.client";
+import { GameStages } from "@/store/game/game.types";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
 
-    const currenUser = useSelector((state: IState) => state.users.currentUser);
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-
-    const showGame = () => {
-
-        if (currenUser) {
-            return gameMembers.some((member) => member.userName === currenUser.userName)
-        };
-        
-        return false
-    }
+    const round = useSelector((state: IState) => state.game.gameData.stage.round);
 
     useEffect(() => {
         connectSocket(dispatch);
@@ -29,9 +19,8 @@ const Home: NextPage = () => {
 
     return (
         <Layout>
-            {!showGame() && <Menu />}
-            {showGame() && <Game />}
-            {!showGame() && <ReadyUsers />}
+            {round === GameStages.noGame && <Menu />}
+            {round !== GameStages.noGame && <Game />}
         </Layout>
     );
 };

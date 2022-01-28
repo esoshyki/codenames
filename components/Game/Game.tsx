@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import Field from "./Field";
 import PreStart from "./PreStart";
+import { GameStages } from "@/store/game/game.types";
+import SelectCollection from "./SelectCollection";
 
 const GameWrapper = styled.div`
     width: 100%;
@@ -32,16 +34,21 @@ const Game = () => {
 
     const dispatch = useDispatch();
 
-    const { collection, round } = useSelector((state: IState) => state.game.gameData);
-    const roundNumber = round.number;
+    const { stage } = useSelector((state: IState) => state.game.gameData);
+
+    const round = stage.round;
 
     return (
         <GameWrapper>
 
-            {roundNumber === 0 && <PreStart />}
+            {round === GameStages.preStart && <PreStart />}
+
+            {round === GameStages.selectCollection && <SelectCollection />}
  
-            <Field />
-            <Guesser />
+            {round === GameStages.prepareField && <Field />}
+            {round === GameStages.prepareField && <Guesser />}
+
+
 
         </GameWrapper>
     );

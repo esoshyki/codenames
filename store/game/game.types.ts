@@ -6,6 +6,10 @@ export enum GameActions {
     SET_TEAM_REQUEST = "Game/Set-Team-Request",
     SET_LEADER_REQUEST = "Game/Set-Leader-Request",
     TOGGLE_READY_REQUEST = "Game/Toggle-Ready-Request",
+    SET_STAGE = "Game/Set-Game-Stage",
+    TOGGLE_COLLECTION_VOTE_REQUEST = "Game/Toggle-Collection-Vote-Request",
+    SET_COLLECTION_VOTES = "Game/Set-Collection-Votes",
+    SET_COLLECTION = "Game/Set-Collection",
 };
 
 export interface InGameUser {
@@ -18,6 +22,29 @@ export interface InGameUser {
 export enum Sides {
     blue = "blue",
     red = "red",
+};
+
+export enum GameStages {
+    noGame = "noGame",
+    preStart = "preStart",
+    selectCollection = "selectConnection",
+    prepareField = "prepareField"
+};
+
+interface RoundVote {
+    cardIdx: number;
+    userName: string;
+};
+
+interface Stage {
+    round: GameStages | number;
+    side: Sides | null,
+    votes: RoundVote[]
+};
+
+export interface CollectionVote {
+    collectionIdx: number;
+    userName: string;
 }
 
 export interface GameData {
@@ -25,15 +52,12 @@ export interface GameData {
     startSide: Sides | null;
     fieldData: string[] | null,
     collection: Collection | null,
-
-    round: {
-        number: number,
-        side: Sides | null,
-        votes: number[]
-    };
+    collectionVotes: CollectionVote[],
+    stage: Stage
 };
 
 export interface IGameState {
     gameMembers: InGameUser[];
     gameData: GameData;
-}
+};
+

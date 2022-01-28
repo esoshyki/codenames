@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Team from "./Team";
-import { Sides } from "@/store/game/game.types";
+import { GameStages, Sides } from "@/store/game/game.types";
 import { colors } from "@/theme/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
+import { setGameStage, setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
 import { IState } from "@/store/types";
-import { teamsAreComplete } from "../lib";
+import { allReady, teamsAreComplete } from "../lib";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;

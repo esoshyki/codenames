@@ -11,8 +11,9 @@ import { ServerData } from "@/types";
 import { showInfo } from "@/store/app/app.actions";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { addMessage } from "@/store/chat/chat.actions";
-import { InGameUser, Sides } from "@/store/game/game.types";
-import { setGameMembers } from "@/store/game/game.actions";
+import { CollectionVote, InGameUser, Sides } from "@/store/game/game.types";
+import { setCollection, setCollectionVotes, setGameMembers } from "@/store/game/game.actions";
+import { Collection } from "@/utils/wordCollections";
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
@@ -50,6 +51,14 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     socket.on(SocketServerActions.UPDATE_GAME_MEMBERS, (gameMembers: InGameUser[]) => {
         dispatch(setGameMembers(gameMembers))
     });
+
+    socket.on(SocketServerActions.UPDATE_COLLECTION_VOTES, (votes: CollectionVote[]) => {
+        dispatch(setCollectionVotes(votes))
+    });
+
+    socket.on(SocketServerActions.SET_COLLECTION, (collection: Collection) => {
+        dispatch(setCollection(collection))
+    });
 }
 
 const startGameRequest = (user: User) => {
@@ -68,11 +77,16 @@ const toggleReadyRequest = (userName: string) => {
     socket.emit(SocketClientActions.TOGGLE_READY_REQUEST, userName)
 };
 
+const toogleCollectionVoteRequest = (userName: string, collectionIdx: number) => {
+    socket.emit(SocketClientActions.TOOGLE_COLLECTION_VOTE_REQUEST, userName, collectionIdx);
+};
+
 const clientSocket = {
     startGameRequest,
     setTeamRequest,
     setLeaderRequest,
-    toggleReadyRequest
+    toggleReadyRequest,
+    toogleCollectionVoteRequest
 };
 
 export default clientSocket;
