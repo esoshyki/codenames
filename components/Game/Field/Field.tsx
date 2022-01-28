@@ -1,6 +1,5 @@
 import styled, { keyframes } from "styled-components";
 import FieldGrid from "./FieldGrid";
-import FieldSettings from "./FieldSetting";
 
 const animation = keyframes`
     0% {
@@ -23,7 +22,6 @@ const FieldWrapper = styled.div`
 const Field = () => {
     return (
         <FieldWrapper>
-            <FieldSettings></FieldSettings>
             <FieldGrid />
         </FieldWrapper>
     );

@@ -1,6 +1,9 @@
+import { colors } from "@/theme/colors";
 import styled from "styled-components";
 
-const CardWrapper = styled.div`
+const CardWrapper = styled.div<{
+    selected: boolean
+}>`
     position: relative;
     width: 200px;
     height: 130px;
@@ -9,10 +12,14 @@ const CardWrapper = styled.div`
     background-repeat: no-repeat;
     background-position-y: center;
     transition: 0.1s ease-in;
-    top: 0px;
+    top: 0;
+    border: ${props => props.selected ? "3px solid " + colors.green : "none"};
+    border-radius: 15px;
+    
     &:hover {
         cursor: pointer;
-        top: 2px;
+        transform: scale(1.10);
+        z-index: 5;
     }
 `;
 
@@ -24,16 +31,20 @@ const CardText = styled.span`
     bottom: 27px;
     width: 100%;
     text-align: center;
+    user-select: none;
 `;
 
 interface FieldCardProps {
     idx?: number;
     word?: string;
+    selected: boolean,
+    setSelected: () => void;
 }
 
-const FieldCard = ({ word }: FieldCardProps) => {
+const FieldCard = ({ word, selected, setSelected }: FieldCardProps) => {
+
     return (
-        <CardWrapper>
+        <CardWrapper selected={selected} onClick={setSelected}>
             {word && <CardText>{word.toUpperCase()}</CardText>}
         </CardWrapper>
     );

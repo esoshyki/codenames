@@ -1,6 +1,8 @@
 import { InGameUser, GameData, Sides, CollectionVote } from "@/store/game/game.types";
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
+import { getWords } from "@/utils/wordCollections";
+import { getGuesserData } from "@/utils/getGuesser";
 
 interface SocketUser {
     userName: string;
@@ -156,6 +158,19 @@ class ServerData implements SocketServerData {
         return this.gameData.collectionVotes;
     }
 
+    setFieldData(collectionIdx: number) {
+        const fieldData = getWords(collectionIdx);
+        this.gameData.fieldData = fieldData;
+    };
+
+    getFieldData = () => this.gameData.fieldData;
+
+    setGuesserData() {
+        const guesserData = getGuesserData();
+        this.gameData.guesserData = guesserData;
+    };
+
+    getGuesserData = () => this.gameData.guesserData;
 
 }
 

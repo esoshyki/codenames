@@ -93,8 +93,8 @@ const SelectCollection = () => {
                         >
                         {collection.title}
                         <VotedUsers>
-                            {getVotedContent(collection.idx) && getVotedContent(collection.idx).map((vote) => (
-                                <Voter>{vote.userName}</Voter>
+                            {getVotedContent(collection.idx) && getVotedContent(collection.idx).map((vote, id) => (
+                                <Voter key={"voter" + id}>{vote.userName}</Voter>
                             ))}
                         </VotedUsers>
                     </SelectCollectionItem>

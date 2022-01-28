@@ -10,6 +10,8 @@ export enum GameActions {
     TOGGLE_COLLECTION_VOTE_REQUEST = "Game/Toggle-Collection-Vote-Request",
     SET_COLLECTION_VOTES = "Game/Set-Collection-Votes",
     SET_COLLECTION = "Game/Set-Collection",
+    SET_FIELD_DATA = "Game/Set-Field-Data",
+    SET_GUESSER_DATA = "Game/Set-Guesser-Data"
 };
 
 export interface InGameUser {
@@ -45,10 +47,23 @@ interface Stage {
 export interface CollectionVote {
     collectionIdx: number;
     userName: string;
+};
+
+export enum GuesserTypes {
+    red = "red",
+    blue = "blue",
+    black = "black",
+    white = "white"
+}
+
+
+export interface GuesserType {
+    start: GuesserTypes.red | GuesserTypes.blue,
+    data: GuesserTypes[]
 }
 
 export interface GameData {
-    guesserData: string | null;
+    guesserData: GuesserType | null;
     startSide: Sides | null;
     fieldData: string[] | null,
     collection: Collection | null,

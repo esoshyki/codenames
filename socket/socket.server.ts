@@ -81,7 +81,21 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
 
             if (allDone) {
                 const collectionIdx = getCollectionWinner(votes);
-                io.emit(SocketServerActions.SET_COLLECTION, wordCollections[collectionIdx])
+                serverData.setFieldData(collectionIdx);
+                serverData.setGuesserData();
+                io.emit(SocketServerActions.SET_COLLECTION, wordCollections[collectionIdx]);
+                const fieldData = serverData.getFieldData()
+
+                if (fieldData) {
+                    io.emit(SocketServerActions.UPDATE_FIELD_DATA, fieldData)
+                };
+
+                const guesserData = serverData.getGuesserData();
+
+                if (guesserData) {
+                    io.emit(SocketServerActions.UPDATE_GUESSER_DATA, guesserData)
+                }
+ 
             } else {
                 io.emit(SocketServerActions.UPDATE_COLLECTION_VOTES, serverData.getCollectionVotes());
             }

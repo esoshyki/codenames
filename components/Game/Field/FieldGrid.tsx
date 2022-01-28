@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import FieldCard from "./FieldCard";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 const FieldGridWrapper = styled.div`
     position: fixed;
@@ -16,9 +16,16 @@ const FieldGridWrapper = styled.div`
 `;
 
 const FieldGrid = () => {
-    const { fieldData } = useSelector((state: IState) => state.game);
+
+    const fieldData = useSelector((state: IState) => state.game.gameData.fieldData);
 
     const data = fieldData || new Array(25).fill("");
+
+    const [selected, setSelected] = useState<number | null>(null);
+
+    const onClick = (idx: number) => {
+        setSelected(selected === idx ? null : idx);
+    };
 
     return (
         <FieldGridWrapper>
@@ -26,7 +33,10 @@ const FieldGrid = () => {
                 data.map((el, idx) => {
                     return (
                         <Fragment key={idx}>
-                            <FieldCard word={el} />
+                            <FieldCard 
+                                setSelected={() => onClick(idx)}
+                                selected={selected === idx} 
+                                word={el} />
                         </Fragment>
                     );
                 })}

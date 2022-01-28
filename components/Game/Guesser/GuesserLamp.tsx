@@ -1,17 +1,13 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
+import { GuesserTypes } from "./types";
 
 export enum LampPos {
     left = "left",
     right = "right",
     top = "top",
     bottom = "bottom"
-}
-
-enum LampColors {
-    red = "red",
-    blue = "blue"
 }
 
 const GuesserLampWrapper = styled.div`
@@ -26,13 +22,14 @@ interface GuesserLampProps {
 }
 
 const GuesserLamp = ({ position }: GuesserLampProps) => {
-    const { startSide } = useSelector((state: IState) => state.game);
+
+    const start = useSelector((state: IState) => state.game.gameData.guesserData?.start);
 
     const getBackgroundImage = () => {
-        switch (startSide) {
-            case LampColors.red:
+        switch (start) {
+            case GuesserTypes.red:
                 return `url(/images/Red_lamp.png)`;
-            case LampColors.blue:
+            case GuesserTypes.blue:
                 return `url(/images/Blue_lamp.png)`;
         }
     };

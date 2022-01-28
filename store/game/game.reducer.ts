@@ -59,7 +59,24 @@ const gameReducer = (
                     collection: payload
                 }
             });
-            
+
+        case GameActions.SET_FIELD_DATA:
+            return ({
+                ...state,
+                gameData: {
+                    ...state.gameData,
+                    fieldData: payload
+                }
+            });
+
+        case GameActions.SET_GUESSER_DATA:
+            return ({
+                ...state,
+                gameData: {
+                    ...state.gameData,
+                    guesserData: payload
+                }
+            });
 
 
         default:

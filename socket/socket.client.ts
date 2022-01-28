@@ -11,8 +11,8 @@ import { ServerData } from "@/types";
 import { showInfo } from "@/store/app/app.actions";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { addMessage } from "@/store/chat/chat.actions";
-import { CollectionVote, InGameUser, Sides } from "@/store/game/game.types";
-import { setCollection, setCollectionVotes, setGameMembers } from "@/store/game/game.actions";
+import { CollectionVote, GuesserType, InGameUser, Sides } from "@/store/game/game.types";
+import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGuesserData } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
 
 export const socket = io(
@@ -58,6 +58,14 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
 
     socket.on(SocketServerActions.SET_COLLECTION, (collection: Collection) => {
         dispatch(setCollection(collection))
+    });
+
+    socket.on(SocketServerActions.UPDATE_FIELD_DATA, (words: string[]) => {
+        dispatch(setFieldData(words));
+    });
+
+    socket.on(SocketServerActions.UPDATE_GUESSER_DATA, (guesserData: GuesserType) => {
+        dispatch(setGuesserData(guesserData))
     });
 }
 

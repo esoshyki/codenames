@@ -16,22 +16,19 @@ const GuesserWrapper = styled.div`
     border-radius: 15px;
 `;
 const Guesser = () => {
-    const { startSide, guesserData } = useSelector(
-        (state: IState) => state.game
-    );
 
-    console.log(guesserData);
+    const guesserData = useSelector((state: IState) => state.game.gameData.guesserData);
 
     return (
         <GuesserWrapper>
             {guesserData &&
-                guesserData.map((el, idx) => (
+                guesserData.data && guesserData.data.map((el, idx) => (
                     <Fragment key={idx}>
                         <GuessItem type={el} idx={idx} />
                     </Fragment>
                 ))}
 
-            {startSide && (
+            {guesserData?.start && (
                 <Fragment>
                     <GuesserLamp position={LampPos.left} />
                     <GuesserLamp position={LampPos.top} />

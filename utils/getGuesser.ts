@@ -1,6 +1,6 @@
-import { GuesserTypes } from "@/components/Game/Guesser/types";
+import { GuesserTypes, GuesserType } from "@/store/game/game.types";
 
-export const getGuesserData = () => {
+export const getGuesserData = () : GuesserType => {
     const red = GuesserTypes.red;
     const blue = GuesserTypes.blue;
     const white = GuesserTypes.white;
