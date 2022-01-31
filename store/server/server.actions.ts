@@ -1,8 +1,9 @@
+import { SocketServerData } from "@/socket/socket.data";
 import { ReduxAction, User } from "@/types";
 import { ServerActions } from "./server.types";
-import { ServerData } from "./server.types";
 
-export const setServerData = (serverData: ServerData): ReduxAction => ({
+
+export const setServerData = (serverData: SocketServerData): ReduxAction => ({
     type: ServerActions.SET_SERVER_DATA,
     payload: serverData
 });

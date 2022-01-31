@@ -7,13 +7,13 @@ import { setSockedId } from "@/store/app/app.actions";
 import { updateServerDataRequest } from "@/store/server/server.actions";
 import { SocketServerActions } from "./socket.types";
 import { updateOnlineUsers, setServerData } from "@/store/server/server.actions";
-import { ServerData } from "@/types";
 import { showInfo } from "@/store/app/app.actions";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { addMessage } from "@/store/chat/chat.actions";
 import { CollectionVote, GameStages, GuesserType, InGameUser, Sides } from "@/store/game/game.types";
 import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
+import { SocketServerData } from "./socket.data";
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
@@ -32,7 +32,7 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
         dispatch(updateOnlineUsers(users));
     });
 
-    socket.on(SocketServerActions.UPDATE_SERVER_DATA_RESPONSE, (serverData: ServerData) => {
+    socket.on(SocketServerActions.UPDATE_SERVER_DATA_RESPONSE, (serverData: SocketServerData) => {
         dispatch(setServerData(serverData));
     })
 

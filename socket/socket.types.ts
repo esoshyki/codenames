@@ -1,9 +1,9 @@
 import { User } from "@/types";
-import { ServerData } from '@/store/server/server.types';
 import { ChatMessage } from "@/store/chat/chat.types";
 import { CollectionVote, GameStages, GuesserType, InGameUser } from "@/store/game/game.types"
 import { Sides } from '@/store/game/game.types';
 import { Collection } from "@/utils/wordCollections";
+import { SocketServerData } from "./socket.data";
 
 interface SocketUser {
     userName: string;
@@ -51,7 +51,7 @@ export interface ServerToClientEvents {
     [SocketServerActions.CHANGE_ONLINE_USERS]: (users: User[]) => void;
     [SocketServerActions.LOGIN_RESPONSE]: (user: User) => void;
     [SocketServerActions.LOGOUT_RESPONSE]: (user: User) => void;
-    [SocketServerActions.UPDATE_SERVER_DATA_RESPONSE] : (serverData: ServerData) => void;
+    [SocketServerActions.UPDATE_SERVER_DATA_RESPONSE] : (serverData: SocketServerData) => void;
     [SocketServerActions.ADD_MESSAGE_RESPONSE]: (message: ChatMessage) => void;
     [SocketServerActions.START_GAME_RESPONSE] : (gameMembers: InGameUser[]) => void;
     [SocketServerActions.UPDATE_GAME_MEMBERS] : (gameMembers: InGameUser[]) => void;

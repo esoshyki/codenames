@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { IState } from "../../store/types";
 import Loading from "../Loading";
 import Info from "../Info";
+import Menu from "../Menu";
 
 interface LayoutProps {
     children: ReactNode;
@@ -13,6 +14,12 @@ interface LayoutProps {
 
 const Layout = ({ children, pageName }: LayoutProps) => {
     const processing = useSelector((state: IState) => state.app.processing);
+    const currentUser = useSelector((state: IState) => state.users.currentUser);
+    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
+
+    const isInGame = () => {
+        return gameMembers.some(member => member.userName === currentUser?.userName);
+    }
 
     return (
         <div className={classes.page_container}>
@@ -26,6 +33,7 @@ const Layout = ({ children, pageName }: LayoutProps) => {
             </Head>
             <main>
                 <Info />
+                {!isInGame() && <Menu />}
                 {children}
             </main>
             {processing && <Loading />}

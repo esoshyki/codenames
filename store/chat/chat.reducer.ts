@@ -3,7 +3,7 @@ import { ChatState, ChatActions } from "./chat.types";
 
 const initialState: ChatState = {
     messages: [],
-    hidden: true,
+    hidden: false,
 };
 
 const chatReducer = (state = initialState, { type, payload }: ReduxAction) : ChatState=> {

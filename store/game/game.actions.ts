@@ -1,3 +1,4 @@
+import { SocketServerData } from "@/socket/socket.data";
 import { ReduxAction, User } from "@/types";
 import { Collection } from "@/utils/wordCollections";
 import { CollectionVote, GameActions, GameStages, GuesserType, Sides } from "./game.types";
@@ -52,5 +53,10 @@ export const setFieldData = (words: string[]) : ReduxAction => ({
 export const setGuesserData = (guesserData: GuesserType | null) => ({
     type: GameActions.SET_GUESSER_DATA,
     payload: guesserData
+});
+
+export const setGameServerData = (serverData: SocketServerData) => ({
+    type: GameActions.SET_SERVER_DATA,
+    payload: serverData
 });
 

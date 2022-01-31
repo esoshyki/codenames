@@ -9,8 +9,11 @@ import { logoutRequest } from "@/store/users/users.actions";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
 import { startGameRequest } from "@/store/game/game.actions";
+import { GameStages } from "@/store/game/game.types";
 
 const MenuWrapper = styled.nav`
+    position: fixed;
+    z-index: 5000;
     height: 100%;
     width: 100%;
     display: flex;
@@ -27,6 +30,7 @@ const Menu = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector((state: IState) => state.users.currentUser);
     const { showLogin } = useSelector((state: IState) => state.app);
+    const round = useSelector((state: IState) => state.game.gameData.stage.round);
 
     const toogleLogin = () => {
         dispatch(showLogin ? hideLoginComponent() : showLoginComponent());
@@ -58,7 +62,7 @@ const Menu = () => {
 
             {currentUser && (
                 <MenuItem className="menu__item" onClick={() => dispatch(startGameRequest())}>
-                    Start Game
+                    {round === GameStages.noGame ? "Start Game" : "Join Game"}
                 </MenuItem>
             )}
 

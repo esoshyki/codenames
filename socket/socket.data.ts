@@ -10,7 +10,7 @@ interface SocketUser {
     socketId: string;
 };
 
-interface SocketServerData {
+export interface SocketServerData {
     onlineUsers: SocketUser[];
     chatMessages: ChatMessage[];
     gameData: GameData;
@@ -107,21 +107,11 @@ class ServerData implements SocketServerData {
         this.gameMembers = this.gameMembers.map(member => member.leader ? {...member, leader: undefined} : member);
     };
 
-    setTeam(user: User, side: Sides | null) {
-        const userIndex = this.getGameMemberIdx(user.userName);
-        if (userIndex >= 0) {
-            const currentSide = this.gameMembers[userIndex].team;
-            this.gameMembers[userIndex].team = side !== currentSide ? side : null;
-
-            if (!side) {
-                return;
-            }
-
-            if (this.gameMembers.filter(member => member.team === side && member.leader).length > 0) {
-                this.gameMembers[userIndex].leader = undefined;
-            }
-  
-        };
+    setTeam = (user: User, side: Sides | null) => {
+        console.log("server setTeam");
+        const member = this.gameMembers.find(member => member.userName === user.userName);
+        if (!member) return;
+        member.team = member.team === side ? null : side;
     };
 
     toggleLeader(user: User) {
@@ -173,7 +163,11 @@ class ServerData implements SocketServerData {
 
     getGuesserData = () => this.gameData.guesserData;
 
-    gameStateTrigger = () => {
+    setGameStage = (stage: GameStages) => {
+        this.gameData.stage.round = stage;
+    };
+
+    gameStageTrigger = () => {
 
         if (this.gameData.stage.round === GameStages.noGame) {
             if (this.gameMembers.length === 1) {

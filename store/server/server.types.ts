@@ -1,7 +1,8 @@
 import { User } from "@/types";
 
 export interface ServerData {
-    onlineUsers: User[],
+    processing: boolean;
+    onlineUsers: User[];
 };
 
 export enum ServerActions {

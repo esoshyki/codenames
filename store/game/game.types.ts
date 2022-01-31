@@ -11,7 +11,8 @@ export enum GameActions {
     SET_COLLECTION_VOTES = "Game/Set-Collection-Votes",
     SET_COLLECTION = "Game/Set-Collection",
     SET_FIELD_DATA = "Game/Set-Field-Data",
-    SET_GUESSER_DATA = "Game/Set-Guesser-Data"
+    SET_GUESSER_DATA = "Game/Set-Guesser-Data",
+    SET_SERVER_DATA = "Game/Set-Server-Data",
 };
 
 export interface InGameUser {

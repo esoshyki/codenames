@@ -21,13 +21,13 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
             cors: {
                 origin: "*",
                 methods: ["GET", "POST"]
-        }
+        }   
     });
 
     const checkStateTrigger = () => {
-        const trigger = serverData.gameStateTrigger();
-        console.log("trigger", trigger);
+        const trigger = serverData.gameStageTrigger();
         if (trigger) {
+            serverData.setGameStage(trigger);
             io.emit(SocketServerActions.SET_GAME_STAGE, trigger)
         };
     }
@@ -43,7 +43,9 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
         });
 
         socket.on(SocketClientActions.UPDATE_SERVER_DATA_REQUEST, () => {
+            console.log("UPDATE_SERVER_DATA_REQUEST");
             io.emit(SocketServerActions.UPDATE_SERVER_DATA_RESPONSE, serverData.getServerData())
+            checkStateTrigger();
         });
 
         socket.on(SocketClientActions.LOGIN_REQUEST, (user) => {
@@ -71,6 +73,7 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
         socket.on(SocketClientActions.SET_TEAM_REQUEST, (user: User, side: Sides | null) => {
             serverData.setTeam(user, side);
             io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+            console.log("game memvers", serverData.getGameMembers())
             checkStateTrigger();
         });
 

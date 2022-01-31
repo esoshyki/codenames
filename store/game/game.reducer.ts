@@ -1,6 +1,7 @@
 import { GameStages, IGameState } from "./game.types";
 import { GameActions } from "./game.types";
 import { ReduxAction } from "@/types";
+import { SocketServerData } from "@/socket/socket.data";
 
 const initialState: IGameState = {
     gameMembers: [],
@@ -78,6 +79,15 @@ const gameReducer = (
                 }
             });
 
+        case GameActions.SET_SERVER_DATA:
+
+            const serverData : SocketServerData = payload;
+
+            return ({
+                ...state,
+                gameData: {...serverData.gameData},
+                gameMembers: [...serverData.gameMembers]
+            })
 
         default:
             return state;
