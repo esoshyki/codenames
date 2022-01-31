@@ -1,8 +1,10 @@
 import { IState } from "@/store/types";
 import { colors } from "@/theme/colors";
-import { getUsersCards, getUserTeam } from "@/utils/user.ingame";
+import { getUsersCards, getUserTeam, isLeader } from "@/utils/user.ingame";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import CustomAction from "./PanelCustomAction";
+import LeaderAction from "./PanelLeaderAction";
 import UserPanelCards from "./UserPanelCards";
 
 const UserPanelWrapper = styled.div`
@@ -15,8 +17,8 @@ const UserPanelSpan = styled.span`
     font-size: 2rem;
     font-weight: 800;
     margin: auto 10px;
-    color: ${colors.yellow}
-`
+    color: ${colors.yellow};
+`;
 
 const UserPanel = () => {
 
@@ -39,6 +41,8 @@ const UserPanel = () => {
             {team && <UserPanelCards team={team} />}
             <UserPanelSpan> x </UserPanelSpan>
             <UserPanelSpan>{getCardsCount()}</UserPanelSpan>
+            {isLeader(gameMembers, currentUser) && <LeaderAction />}
+            {!isLeader(gameMembers, currentUser) && <CustomAction />}
         </UserPanelWrapper>
     )
 

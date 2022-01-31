@@ -27,6 +27,11 @@ export enum Sides {
     red = "red",
 };
 
+export enum Neutral {
+    white = "white",
+    black = "black"
+}
+
 export enum GameStages {
     noGame = "noGame",
     preStart = "preStart",
@@ -51,17 +56,9 @@ export interface CollectionVote {
     userName: string;
 };
 
-export enum GuesserTypes {
-    red = "red",
-    blue = "blue",
-    black = "black",
-    white = "white"
-}
-
-
 export interface GuesserType {
-    start: GuesserTypes.red | GuesserTypes.blue,
-    data: GuesserTypes[]
+    start: Sides.red | Sides.blue,
+    data: (Sides | Neutral)[]
 }
 
 export interface GameData {

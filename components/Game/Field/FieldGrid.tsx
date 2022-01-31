@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import FieldCard from "./FieldCard";
 import { Fragment } from "react";
@@ -19,6 +19,8 @@ const FieldGridWrapper = styled.div`
 
 const FieldGrid = () => {
 
+    const dispatch = useDispatch();
+
     const fieldData = useSelector((state: IState) => state.game.gameData.fieldData);
     const currentUser = useSelector((state: IState) => state.users.currentUser);
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
@@ -28,22 +30,24 @@ const FieldGrid = () => {
 
     const leaderSelect = (idx: number) => {
         if (selectedCards.includes(idx)) {
-            setSelectedCards(selectedCards.filter(el => el !== idx))
+            dispatch(setSelectedCards(selectedCards.filter(el => el !== idx)));
         } else {
-            setSelectedCards([...selectedCards, idx])
+            dispatch(setSelectedCards([...selectedCards, idx]));
         }
     };
 
     const customSelect = (idx: number) => {
         if (selectedCards.includes(idx)) {
-            setSelectedCards([])
+            dispatch(setSelectedCards([]));
         } else {
-            setSelectedCards([idx])
+            dispatch(setSelectedCards([idx]));
         }
     };
 
     const onClick = (idx: number) => {
+
         if (isLeader(gameMembers, currentUser)) {
+            console.log("leader");
             leaderSelect(idx)
         } else {
             customSelect(idx)

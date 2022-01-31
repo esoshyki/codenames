@@ -1,10 +1,10 @@
-import { GuesserTypes, GuesserType } from "@/store/game/game.types";
+import { Sides, Neutral, GuesserType } from "@/store/game/game.types";
 
 export const getGuesserData = () : GuesserType => {
-    const red = GuesserTypes.red;
-    const blue = GuesserTypes.blue;
-    const white = GuesserTypes.white;
-    const black = GuesserTypes.black;
+    const red = Sides.red;
+    const blue = Sides.blue;
+    const white = Neutral.white;
+    const black = Neutral.black;
 
     const start = Math.random() > 0.5 ? red : blue;
 
