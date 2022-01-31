@@ -19,7 +19,7 @@ const StyledOption = styled.option`
 const FieldChooseCollection = () => {
     const dispatch = useDispatch();
 
-    const collection = useSelector((state: IState) => state.game.collection);
+    const collection = useSelector((state: IState) => state.game.gameData.collection);
 
     const select = (e: any) => {
         const idx = e.target.value;
