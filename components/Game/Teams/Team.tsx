@@ -4,6 +4,7 @@ import { IState } from "@/store/types";
 import { setTeamRequest } from "@/store/game/game.actions";
 import { Sides } from "@/store/game/game.types";
 import { colors } from "@/theme/colors";
+import { getUserTeam } from "@/utils/user.ingame";
 
 const TeamWrapper = styled.div<{
     red: boolean,
@@ -11,11 +12,12 @@ const TeamWrapper = styled.div<{
 }>`
     position: relative;;
     width: 50%;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: ${props => props.red ? "rgba(200, 10, 10, 0.8)" : "rgba(10, 10, 200, 0.8)"};
+    background-image: ${props => props.red ? "url(/images/red_wood.jpg)" : "url(/images/blue_wood.jpg)"};
     transition: filter 0.3s ease-in;
     &:hover {
         cursor: pointer;
@@ -36,13 +38,10 @@ const TeamWrapper = styled.div<{
     }
 `;
 
-const TeamTitle = styled.h5`
-    font-size: 20px;
-    align-self: center;
 
-`;
-
-const UserWrapper = styled.div`
+const UserWrapper = styled.div<{
+    team: Sides | null
+}>`
     background-color: rgba(255, 255, 255, 0.4);
     display: flex;
     flex-direction: row;
@@ -50,11 +49,27 @@ const UserWrapper = styled.div`
     justify-content: flex-start;
     margin: 20px;
     padding: 20px;
-    padding-left: 50px;
+    padding-left: 100px;
     width: calc(100% - 40px);
     color: ${colors.yellow};
     position: relative;
-`;
+    &::after {
+        content: "";
+        position: absolute;
+        width: 75px;
+        height: 50px;
+        background-size: cover;
+        left: 10px;
+        background-image: ${props => {
+            switch (props.team) {
+                case Sides.blue:
+                    return "url(/images/blue_card.jpg)";
+                case Sides.red:
+                    return "url(/images/red_card.jpg)";
+            }
+        }
+    }
+}`
 
 const LeaderIcon = styled.div`
     position: absolute;
@@ -62,8 +77,8 @@ const LeaderIcon = styled.div`
     height: 20px;
     background-image: url(/icons/crown.png);
     background-size: cover;
-    left: 15px;
-    top: 10px;
+    right: 15px;
+    top: calc(50% - 10px);
 `
 
 interface TeamProps {
@@ -90,10 +105,9 @@ const Team = ({ team } : TeamProps ) => {
             leave={isUserInTeam()}
             onClick={handleClick}
             >
-            <TeamTitle>{team === Sides.red ? "Red Team" : "Blue Team"}</TeamTitle>
 
             {teamUsers && teamUsers.map((user, idx) => (
-                <UserWrapper key={idx}>
+                <UserWrapper team={team}  key={idx}>
                     {user.userName + (currentUser?.userName === user.userName ? " (You)" : "")}
                     {user.leader && <LeaderIcon />}
                 </UserWrapper>
