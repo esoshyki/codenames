@@ -4,7 +4,6 @@ import { IState } from "@/store/types";
 import { setTeamRequest } from "@/store/game/game.actions";
 import { Sides } from "@/store/game/game.types";
 import { colors } from "@/theme/colors";
-import { getUserTeam } from "@/utils/user.ingame";
 
 const TeamWrapper = styled.div<{
     red: boolean,
