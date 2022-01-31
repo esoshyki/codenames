@@ -6,13 +6,15 @@ import Field from "./Field";
 import PreStart from "./PreStart";
 import { GameStages } from "@/store/game/game.types";
 import SelectCollection from "./SelectCollection";
-import SelectLeader from "./SelectLeader";
 import Panel from "./Panel";
 
 const GameWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
+    background-image: url(/images/wood_table.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 `;
 
 const Game = () => {
@@ -29,23 +31,23 @@ const Game = () => {
     };
 
     const showField = () => {
-        if (GameStages.prepareField) return true;
-        if (GameStages.started) return true;
+        if (stage === GameStages.prepareField) return true;
+        if (stage === GameStages.started) return true;
         return false;
     };
 
     const showGuesser = () => {
         if (!isLeader()) return false;
-        if (GameStages.prepareField) return true;
-        if (GameStages.started) return true;
+        if (stage === GameStages.prepareField) return true;
+        if (stage === GameStages.started) return true;
         return false;
     };
 
     const showPanel = () => {
-        if (GameStages.prepareField) return true;
-        if (GameStages.started) return true;
+        if (stage === GameStages.prepareField) return true;
+        if (stage === GameStages.started) return true;
         return false;
-    }
+    };
 
     return (
         <GameWrapper>

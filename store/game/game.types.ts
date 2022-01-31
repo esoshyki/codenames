@@ -68,6 +68,7 @@ export interface GameData {
     guesserData: GuesserType | null;
     startSide: Sides | null;
     fieldData: string[] | null;
+    fieldPicks: number[],
     collection: Collection | null;
     collectionVotes: CollectionVote[];
     stage: GameStages;

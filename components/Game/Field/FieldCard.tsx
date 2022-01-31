@@ -1,4 +1,3 @@
-import { colors } from "@/theme/colors";
 import styled from "styled-components";
 
 const CardWrapper = styled.div<{
@@ -13,13 +12,12 @@ const CardWrapper = styled.div<{
     background-position-y: center;
     transition: 0.1s ease-in;
     top: 0;
-    border: ${props => props.selected ? "3px solid " + colors.green : "none"};
+    filter: ${props => props.selected ? "hue-rotate(60deg)" : "none"};
     border-radius: 15px;
     
     &:hover {
         cursor: pointer;
-        transform: scale(1.10);
-        z-index: 5;
+        filter: grayscale(1);
     }
 `;
 

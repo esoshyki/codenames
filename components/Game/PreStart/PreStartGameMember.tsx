@@ -13,9 +13,13 @@ const Wrapper = styled.div<{
     justify-content: center;
     background-color: #fff;
     border-radius: 15px;
-    font-size: 14px;
-    color: ${colors.blue};
+    font-size: 16px;
+    font-weight: 800;
+    color: #000;
     background-color: ${props => props.ready ? colors.green : "#fff"};
+    border: 5px solid ${colors.yellow};
+    border-inline-start-color: ${colors.blue};
+    border-inline-end-color: ${colors.blue};
     margin: 10px;
 `;
 

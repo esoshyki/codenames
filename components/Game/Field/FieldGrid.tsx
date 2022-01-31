@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import FieldCard from "./FieldCard";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import { isLeader } from "@/utils/user.ingame";
+import { setSelectedCards } from "@/store/app/app.actions";
 
 const FieldGridWrapper = styled.div`
     position: fixed;
@@ -18,13 +20,34 @@ const FieldGridWrapper = styled.div`
 const FieldGrid = () => {
 
     const fieldData = useSelector((state: IState) => state.game.gameData.fieldData);
+    const currentUser = useSelector((state: IState) => state.users.currentUser);
+    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
+    const selectedCards = useSelector((state: IState) => state.app.selectedCards);
 
     const data = fieldData || new Array(25).fill("");
 
-    const [selected, setSelected] = useState<number | null>(null);
+    const leaderSelect = (idx: number) => {
+        if (selectedCards.includes(idx)) {
+            setSelectedCards(selectedCards.filter(el => el !== idx))
+        } else {
+            setSelectedCards([...selectedCards, idx])
+        }
+    };
+
+    const customSelect = (idx: number) => {
+        if (selectedCards.includes(idx)) {
+            setSelectedCards([])
+        } else {
+            setSelectedCards([idx])
+        }
+    };
 
     const onClick = (idx: number) => {
-        setSelected(selected === idx ? null : idx);
+        if (isLeader(gameMembers, currentUser)) {
+            leaderSelect(idx)
+        } else {
+            customSelect(idx)
+        }
     };
 
     return (
@@ -35,15 +58,15 @@ const FieldGrid = () => {
                         <Fragment key={idx}>
                             <FieldCard 
                                 setSelected={() => onClick(idx)}
-                                selected={selected === idx} 
+                                selected={selectedCards.includes(idx)} 
                                 word={el} />
                         </Fragment>
                     );
                 })}
 
-                {data && selected && <button>
+                {/* {data && selected && <button>
                     {`Голосовать за ${data[selected]}`}
-                </button>}
+                </button>} */}
         </FieldGridWrapper>
     );
 };

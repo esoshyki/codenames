@@ -10,6 +10,17 @@ const AddMessageWrapper = styled.div`
     bottom: 20px ;
 `;
 
+const Input = styled.input`
+    background-color: transparent;
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid gray;
+    color: #fff;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+`
+
 const AddMessage = () => {
 
     const dispatch = useDispatch();
@@ -33,8 +44,7 @@ const AddMessage = () => {
 
     return (
         <AddMessageWrapper >
-            <input
-                className="input"
+            <Input
                 ref={inputRef}
                 placeholder="Write message..."
                 onKeyPress={(e) => {

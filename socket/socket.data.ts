@@ -25,6 +25,7 @@ class ServerData implements SocketServerData {
         guesserData: null,
         startSide: null,
         fieldData: null,
+        fieldPicks: [],
         collection: null,
         collectionVotes: [],
         stage: GameStages.noGame,

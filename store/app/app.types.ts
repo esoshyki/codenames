@@ -9,6 +9,7 @@ export enum AppActions {
     SET_SOCKET_ID = "App/Set-Socket-Id",
     SET_INFO = "App/Set-Info",
     SET_TIMER = "App/Set-Timer",
+    SET_SELECTED_CARDS = "App/Set-Selected-Cards",
 }
 
 export interface AppState {
@@ -18,4 +19,5 @@ export interface AppState {
     processing: boolean;
     info: string | null;
     timer: number | null;
+    selectedCards: number[];
 }

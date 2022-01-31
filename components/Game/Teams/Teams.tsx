@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import Team from "./Team";
-import { GameStages, Sides } from "@/store/game/game.types";
-import { colors } from "@/theme/colors";
+import { Sides } from "@/store/game/game.types";
 import { useDispatch, useSelector } from "react-redux";
-import { setGameStage, setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
+import { setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
 import { IState } from "@/store/types";
-import { allReady, teamsAreComplete } from "../PreStart/lib";
+import { teamsAreComplete } from "../PreStart/lib";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -30,8 +29,9 @@ const TeamsButton = styled.button`
     padding: 20px;
     background: none;
     border-radius: 20px;
-    border: 2px solid #fff;
+    border: 3px solid #fff;
     color: #fff;
+    font-weight: 900;
     transition: 0.3s ease-in;
     &:hover {
         cursor: pointer;

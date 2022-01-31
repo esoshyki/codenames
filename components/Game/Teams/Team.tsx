@@ -15,7 +15,7 @@ const TeamWrapper = styled.div<{
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: ${props => props.red ? "rgba(200, 10, 10, 0.5)" : "rgba(10, 10, 200, 0.5)"};
+    background-color: ${props => props.red ? "rgba(200, 10, 10, 0.8)" : "rgba(10, 10, 200, 0.8)"};
     transition: filter 0.3s ease-in;
     &:hover {
         cursor: pointer;

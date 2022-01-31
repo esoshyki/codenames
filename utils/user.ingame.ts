@@ -31,3 +31,7 @@ export const getUserTeam = (gameMembers: InGameUser[], currentUser: User | null)
 
     return member.team
 };
+
+export const getUsersCards = (fieldVotes: number[], guesserData: string[], side: Sides) : number => {
+    return guesserData.filter((guesserSide, idx) => guesserSide === side && !fieldVotes.includes(idx)).length;
+};

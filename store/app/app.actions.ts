@@ -48,4 +48,9 @@ export const hideInfo = () : ReduxAction => ({
 export const setTimer = (timer: number | null) => ({
     type: AppActions.SET_TIMER,
     payload: timer
-})
+});
+
+export const setSelectedCards = (selected: number[]) => ({
+    type: AppActions.SET_SELECTED_CARDS,
+    payload: selected
+});

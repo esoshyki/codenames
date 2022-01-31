@@ -9,6 +9,7 @@ const initialState: IGameState = {
         guesserData: null,
         startSide: null,
         fieldData: null,
+        fieldPicks: [],
         collection: null,
         collectionVotes: [],
         stage: GameStages.noGame,

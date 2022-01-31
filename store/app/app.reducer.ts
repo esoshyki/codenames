@@ -7,7 +7,8 @@ const initialState: AppState = {
     showGame: false,
     processing: false,
     info: null,
-    timer: null
+    timer: null,
+    selectedCards: [],
 };
 
 export const appReducer = (
@@ -68,6 +69,12 @@ export const appReducer = (
                 ...state,
                 timer: payload
             });
+
+        case AppActions.SET_SELECTED_CARDS:
+            return ({
+                ...state,
+                selectedCards: payload
+            })
 
         default:
             return state;
