@@ -24,6 +24,14 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
         }
     });
 
+    const checkStateTrigger = () => {
+        const trigger = serverData.gameStateTrigger();
+        console.log("trigger", trigger);
+        if (trigger) {
+            io.emit(SocketServerActions.SET_GAME_STAGE, trigger)
+        };
+    }
+
     io.sockets.on("connection", (socket) => {
         socket.on(SocketClientActions.DISCONNECTING, () => {
             serverData.disconnectUser(socket.id);
@@ -56,22 +64,26 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
 
         socket.on(SocketClientActions.START_GAME_REQUEST, (user: User) => {
             serverData.startGame(user);
-            io.emit(SocketServerActions.START_GAME_RESPONSE, serverData.getGameMembers())
+            io.emit(SocketServerActions.START_GAME_RESPONSE, serverData.getGameMembers());
+            checkStateTrigger();
         });
 
         socket.on(SocketClientActions.SET_TEAM_REQUEST, (user: User, side: Sides | null) => {
             serverData.setTeam(user, side);
-            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+            checkStateTrigger();
         });
 
         socket.on(SocketClientActions.SET_LEADER_REQUEST, (user: User) => {
             serverData.toggleLeader(user);
-            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+            checkStateTrigger();
         });
 
         socket.on(SocketClientActions.TOGGLE_READY_REQUEST, (userName: string) => {
             serverData.toggleReady(userName);
-            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers())
+            io.emit(SocketServerActions.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+            checkStateTrigger();
         });
 
         socket.on(SocketClientActions.TOOGLE_COLLECTION_VOTE_REQUEST, (userName: string, collectionIdx: number) => {
@@ -94,7 +106,8 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
 
                 if (guesserData) {
                     io.emit(SocketServerActions.UPDATE_GUESSER_DATA, guesserData)
-                }
+                };
+                checkStateTrigger()
  
             } else {
                 io.emit(SocketServerActions.UPDATE_COLLECTION_VOTES, serverData.getCollectionVotes());

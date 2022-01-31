@@ -4,9 +4,19 @@ import { IState } from "@/store/types";
 import PreStartGameMember from "./PreStartGameMember";
 
 const PreStartGameMembersWrapper = styled.div`
-    position: absolute;
-    left: 0;
-`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
+const MembersContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
 const PreStartTitle = styled.h5`
     font-size: 22px;
@@ -25,9 +35,12 @@ const PreStartGameMembers = () => {
                 Game members
             </PreStartTitle>
 
-            {gameMembers && gameMembers.map((gameMember,idx) => (
-                <PreStartGameMember key={idx} user={gameMember}/>
-            ))}
+            <MembersContainer>
+                {gameMembers && gameMembers.map((gameMember,idx) => (
+                    <PreStartGameMember key={idx} user={gameMember}/>
+                ))}
+            </MembersContainer>
+            
         </PreStartGameMembersWrapper>
     )
 

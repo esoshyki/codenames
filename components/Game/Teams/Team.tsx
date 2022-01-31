@@ -6,8 +6,10 @@ import { Sides } from "@/store/game/game.types";
 import { colors } from "@/theme/colors";
 
 const TeamWrapper = styled.div<{
-    red: boolean
+    red: boolean,
+    leave: boolean
 }>`
+    position: relative;;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -17,7 +19,20 @@ const TeamWrapper = styled.div<{
     transition: filter 0.3s ease-in;
     &:hover {
         cursor: pointer;
-        filter: hue-rotate(20deg)
+        filter: hue-rotate(20deg);
+        &::after {
+            content: "${props => `${props.leave ? "Leave" : "Join"} ${props.red ? "red" : "blue"} team`}";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
     }
 `;
 
@@ -64,16 +79,22 @@ const Team = ({ team } : TeamProps ) => {
     };
 
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
+    const currentUser = useSelector((state: IState) => state.users.currentUser);
     const teamUsers = gameMembers.filter(user => user.team === team);
 
+    const isUserInTeam = () => Boolean(teamUsers.find(user => user.userName === currentUser?.userName));
 
     return (
-        <TeamWrapper red={team === Sides.red} onClick={handleClick}>
+        <TeamWrapper 
+            red={team === Sides.red} 
+            leave={isUserInTeam()}
+            onClick={handleClick}
+            >
             <TeamTitle>{team === Sides.red ? "Red Team" : "Blue Team"}</TeamTitle>
 
             {teamUsers && teamUsers.map((user, idx) => (
                 <UserWrapper key={idx}>
-                    {user.userName}
+                    {user.userName + (currentUser?.userName === user.userName ? " (You)" : "")}
                     {user.leader && <LeaderIcon />}
                 </UserWrapper>
             ))}

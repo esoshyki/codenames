@@ -5,7 +5,7 @@ import { colors } from "@/theme/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { setGameStage, setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
 import { IState } from "@/store/types";
-import { allReady, teamsAreComplete } from "../lib";
+import { allReady, teamsAreComplete } from "../PreStart/lib";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -14,16 +14,24 @@ const TeamsWrapper = styled.div`
     flex-direction: row;
     margin-top: 10px;
     flex-wrap: wrap;
+`;
+
+const TeamsButtonsWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 `
 
 const TeamsButton = styled.button`
     width: calc(100% - 40px);
+    max-width: 300px;
     margin: 20px;
     padding: 20px;
     background: none;
     border-radius: 20px;
-    border: 1px solid ${colors.green};
-    color: ${colors.green};
+    border: 2px solid #fff;
+    color: #fff;
     transition: 0.3s ease-in;
     &:hover {
         cursor: pointer;
@@ -47,18 +55,25 @@ const Teams = () => {
         dispatch(toggleReadyRequest())
     };
 
+    const isUserALeader = () => gameUsers.find(user => user.userName === currentUser?.userName)?.leader;
+
     return (
         <TeamsWrapper>
+
             <Team team={Sides.red} />
             <Team team={Sides.blue} />
 
-            <TeamsButton onClick={makeMeALeader}>
-                Make me leader
-            </TeamsButton>
+            <TeamsButtonsWrapper>
 
-            {teamsAreComplete(gameUsers) && <TeamsButton onClick={toogleReady}>
-                {gameUsers.some(user => user.userName === currentUser?.userName && user.ready) ? "Not ready" : "Get Ready"}
-            </TeamsButton>}
+                <TeamsButton onClick={makeMeALeader}>
+                    {isUserALeader() ? "Don't be a leader" : "Make me a leader"}
+                </TeamsButton>
+
+                {teamsAreComplete(gameUsers) && <TeamsButton onClick={toogleReady}>
+                    {gameUsers.some(user => user.userName === currentUser?.userName && user.ready) ? "Not ready" : "Get Ready"}
+                </TeamsButton>}
+
+            </TeamsButtonsWrapper>
 
         
         </TeamsWrapper>

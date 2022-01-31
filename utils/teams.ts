@@ -7,6 +7,13 @@ export const teamsAreComplete = (gameMembers: InGameUser[]) => {
     return redTeamCount >= 2 && blueTeamCount >= 2;
 };
 
+export const teamHasLeaders = (gameMembers: InGameUser[]) : boolean => {
+    return (
+        gameMembers.filter(user => user.team === Sides.red && user.leader).length === 1 && 
+        gameMembers.filter(user => user.team === Sides.blue && user.leader).length === 1
+    )
+};
+
 export const allReady = (gameMembers: InGameUser[]) => {
     return gameMembers.every((member) => member.ready)
 };

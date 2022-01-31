@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import PreStartHeader from "./PreStartHeader";
 import PreStartGameMembers from "./PreStartGameMembers";
-import Teams from "./Teams";
+import Teams from "../Teams";
 import { Sides } from "@/store/game/game.types";
 import { teamsAreComplete } from "./lib";
 
@@ -11,7 +11,6 @@ const PreStartWrapper = styled.div`
     width: 100vw;
     min-height: 100vh;
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +28,7 @@ const PreStart = () => {
             return "Teams are not complete"
         };
 
-        return "Get ready to start"
+        return "Teams are complete. Get ready to start"
     };
 
     return (

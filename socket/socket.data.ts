@@ -1,8 +1,9 @@
-import { InGameUser, GameData, Sides, CollectionVote } from "@/store/game/game.types";
+import { InGameUser, GameData, Sides, CollectionVote, GameStages } from "@/store/game/game.types";
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { getWords } from "@/utils/wordCollections";
 import { getGuesserData } from "@/utils/getGuesser";
+import { allCollectionVotesDone, allReady, teamHasLeaders, teamsAreComplete } from "@/utils/teams";
 
 interface SocketUser {
     userName: string;
@@ -27,7 +28,7 @@ class ServerData implements SocketServerData {
         collection: null,
         collectionVotes: [],
         stage: {
-            round: 0,
+            round: GameStages.noGame,
             side: null,
             votes: []
         }
@@ -171,6 +172,33 @@ class ServerData implements SocketServerData {
     };
 
     getGuesserData = () => this.gameData.guesserData;
+
+    gameStateTrigger = () => {
+
+        if (this.gameData.stage.round === GameStages.noGame) {
+            if (this.gameMembers.length === 1) {
+                return GameStages.preStart;
+            }
+        }
+
+        if (this.gameData.stage.round === GameStages.preStart) {
+            if (
+                teamsAreComplete(this.gameMembers) &&
+                teamHasLeaders(this.gameMembers) &&
+                allReady(this.gameMembers) 
+                ) {
+                    return GameStages.selectCollection;
+                }
+        };
+
+        if (this.gameData.stage.round === GameStages.selectCollection) {
+            if (allCollectionVotesDone(this.gameData.collectionVotes, this.gameMembers)) {
+                return GameStages.prepareField;
+            }
+        }
+
+        return null;
+    }
 
 }
 

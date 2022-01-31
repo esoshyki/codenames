@@ -40,6 +40,10 @@ const FieldGrid = () => {
                         </Fragment>
                     );
                 })}
+
+                {data && selected && <button>
+                    {`Голосовать за ${data[selected]}`}
+                </button>}
         </FieldGridWrapper>
     );
 };

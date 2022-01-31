@@ -1,7 +1,7 @@
 import { User } from "@/types";
 import { ServerData } from '@/store/server/server.types';
 import { ChatMessage } from "@/store/chat/chat.types";
-import { CollectionVote, GuesserType, InGameUser } from "@/store/game/game.types"
+import { CollectionVote, GameStages, GuesserType, InGameUser } from "@/store/game/game.types"
 import { Sides } from '@/store/game/game.types';
 import { Collection } from "@/utils/wordCollections";
 
@@ -29,6 +29,7 @@ export enum SocketServerActions {
     SET_COLLECTION = "Socket-Server/Set-Collection",
     UPDATE_FIELD_DATA = "Socket-Server/Update-Field-Data",
     UPDATE_GUESSER_DATA = "Socket-Server/Update-Guesser-Data",
+    SET_GAME_STAGE = "Socket-Server/Set-Game-Stage",
 }
 
 export enum SocketClientActions {
@@ -58,6 +59,8 @@ export interface ServerToClientEvents {
     [SocketServerActions.SET_COLLECTION] : (collection: Collection) => void;
     [SocketServerActions.UPDATE_FIELD_DATA] : (words: string[]) => void;
     [SocketServerActions.UPDATE_GUESSER_DATA] : (guesserData: GuesserType) => void;
+    [SocketServerActions.SET_GAME_STAGE] : (stage: GameStages) => void;
+    
 };
 
 export interface ClientToServerEvents {
