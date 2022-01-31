@@ -14,7 +14,6 @@ import { CollectionVote, GameStages, GuesserType, InGameUser, Sides } from "@/st
 import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
-import { time } from "console";
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
