@@ -1,5 +1,5 @@
 import { ReduxAction } from "@/types";
-import { takeEvery, select, call, put } from "redux-saga/effects";
+import { takeEvery, select, call } from "redux-saga/effects";
 import clientSocket from "socket/socket.client";
 import { IState } from "../types";
 import { GameActions } from "./game.types";
