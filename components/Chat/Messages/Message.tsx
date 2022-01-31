@@ -1,4 +1,3 @@
-import { colors } from '@/theme/colors';
 import styled from 'styled-components';
 
 const Message = styled.div`
