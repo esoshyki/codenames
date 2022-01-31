@@ -3,7 +3,7 @@ import { SocketClientActions } from "./socket.types";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { io } from "socket.io-client";
-import { setSockedId } from "@/store/app/app.actions";
+import { setSockedId, setTimer } from "@/store/app/app.actions";
 import { updateServerDataRequest } from "@/store/server/server.actions";
 import { SocketServerActions } from "./socket.types";
 import { updateOnlineUsers, setServerData } from "@/store/server/server.actions";
@@ -72,6 +72,10 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
         console.log("setGameStage");
         dispatch(setGameStage(gameStage))
     });
+
+    socket.on(SocketServerActions.SET_TIMER, (timer: number | null) => {
+        setTimer(timer)
+    })
 }
 
 const startGameRequest = (user: User) => {

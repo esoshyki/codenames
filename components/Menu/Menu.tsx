@@ -30,7 +30,7 @@ const Menu = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector((state: IState) => state.users.currentUser);
     const { showLogin } = useSelector((state: IState) => state.app);
-    const round = useSelector((state: IState) => state.game.gameData.stage.round);
+    const stage = useSelector((state: IState) => state.game.gameData.stage);
 
     const toogleLogin = () => {
         dispatch(showLogin ? hideLoginComponent() : showLoginComponent());
@@ -62,7 +62,7 @@ const Menu = () => {
 
             {currentUser && (
                 <MenuItem className="menu__item" onClick={() => dispatch(startGameRequest())}>
-                    {round === GameStages.noGame ? "Start Game" : "Join Game"}
+                    {stage === GameStages.noGame ? "Start Game" : "Join Game"}
                 </MenuItem>
             )}
 

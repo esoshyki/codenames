@@ -31,7 +31,8 @@ export enum GameStages {
     noGame = "noGame",
     preStart = "preStart",
     selectCollection = "selectConnection",
-    prepareField = "prepareField"
+    prepareField = "prepareField",
+    started = "started",
 };
 
 interface RoundVote {
@@ -39,8 +40,8 @@ interface RoundVote {
     userName: string;
 };
 
-interface Stage {
-    round: GameStages | number;
+interface Round {
+    number: number;
     side: Sides | null,
     votes: RoundVote[]
 };
@@ -66,10 +67,11 @@ export interface GuesserType {
 export interface GameData {
     guesserData: GuesserType | null;
     startSide: Sides | null;
-    fieldData: string[] | null,
-    collection: Collection | null,
-    collectionVotes: CollectionVote[],
-    stage: Stage
+    fieldData: string[] | null;
+    collection: Collection | null;
+    collectionVotes: CollectionVote[];
+    stage: GameStages;
+    round: Round;
 };
 
 export interface IGameState {

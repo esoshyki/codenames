@@ -6,7 +6,7 @@ import { SocketClientActions, SocketServerActions } from "./socket.types";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { User } from '@/types';
 import ServerData from "./socket.data";
-import { Sides } from "@/store/game/game.types";
+import { GameStages, Sides } from "@/store/game/game.types";
 import { allCollectionVotesDone, getCollectionWinner } from "@/utils/teams";
 import { wordCollections } from "@/utils/wordCollections";
 
@@ -24,11 +24,32 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
         }   
     });
 
+    const timerEmitter = (time: number) => {
+        io.emit(SocketServerActions.SET_TIMER, time);
+    }
+
     const checkStateTrigger = () => {
         const trigger = serverData.gameStageTrigger();
         if (trigger) {
             serverData.setGameStage(trigger);
-            io.emit(SocketServerActions.SET_GAME_STAGE, trigger)
+            io.emit(SocketServerActions.SET_GAME_STAGE, trigger);
+
+            if (trigger === GameStages.prepareField) {
+                let timer = 5;
+
+                
+                
+                const interval = setInterval(() => {
+                    timerEmitter(timer)
+                    timer --;
+
+                    if (timer <= 0) {
+                        clearInterval(interval);
+                        io.emit(SocketServerActions.SET_TIMER, null);
+                        io.emit(SocketServerActions.SET_GAME_STAGE, GameStages.started)
+                    }
+                }, 1000)
+            }
         };
     }
 

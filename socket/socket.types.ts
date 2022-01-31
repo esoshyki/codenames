@@ -30,6 +30,7 @@ export enum SocketServerActions {
     UPDATE_FIELD_DATA = "Socket-Server/Update-Field-Data",
     UPDATE_GUESSER_DATA = "Socket-Server/Update-Guesser-Data",
     SET_GAME_STAGE = "Socket-Server/Set-Game-Stage",
+    SET_TIMER = "Socket-Server/Set-Timer"
 }
 
 export enum SocketClientActions {
@@ -60,7 +61,7 @@ export interface ServerToClientEvents {
     [SocketServerActions.UPDATE_FIELD_DATA] : (words: string[]) => void;
     [SocketServerActions.UPDATE_GUESSER_DATA] : (guesserData: GuesserType) => void;
     [SocketServerActions.SET_GAME_STAGE] : (stage: GameStages) => void;
-    
+    [SocketServerActions.SET_TIMER] : (timer: number | null) => void;    
 };
 
 export interface ClientToServerEvents {

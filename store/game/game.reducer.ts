@@ -11,8 +11,9 @@ const initialState: IGameState = {
         fieldData: null,
         collection: null,
         collectionVotes: [],
-        stage: {
-            round: GameStages.noGame,
+        stage: GameStages.noGame,
+        round: {
+            number: 1,
             side: null,
             votes: []
         }
@@ -36,10 +37,7 @@ const gameReducer = (
                 ...state,
                 gameData: {
                     ...state.gameData,
-                    stage: {
-                        ...state.gameData.stage,
-                        round: payload
-                    }
+                    stage: payload
                 }
             });
 

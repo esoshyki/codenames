@@ -44,3 +44,8 @@ export const hideInfo = () : ReduxAction => ({
     type: AppActions.SET_INFO,
     payload: null
 });
+
+export const setTimer = (timer: number | null) => ({
+    type: AppActions.SET_TIMER,
+    payload: timer
+})

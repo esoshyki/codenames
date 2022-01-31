@@ -2,8 +2,7 @@ import { ReduxAction } from "@/types";
 import { takeEvery, select, call, put } from "redux-saga/effects";
 import clientSocket from "socket/socket.client";
 import { IState } from "../types";
-import { setGameStage } from "./game.actions";
-import { GameActions, GameStages, InGameUser } from "./game.types";
+import { GameActions } from "./game.types";
 
 function* startGameRequestWorker() {
     const state : IState = yield select();

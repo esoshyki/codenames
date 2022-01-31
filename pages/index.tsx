@@ -11,7 +11,7 @@ import { GameStages } from "@/store/game/game.types";
 const Home: NextPage = () => {
     const dispatch = useDispatch();
 
-    const round = useSelector((state: IState) => state.game.gameData.stage.round);
+    const stage = useSelector((state: IState) => state.game.gameData.stage);
 
     useEffect(() => {
         connectSocket(dispatch);
@@ -19,8 +19,8 @@ const Home: NextPage = () => {
 
     return (
         <Layout>
-            {round === GameStages.noGame && <Menu />}
-            {round !== GameStages.noGame && <Game />}
+            {stage === GameStages.noGame && <Menu />}
+            {stage !== GameStages.noGame && <Game />}
         </Layout>
     );
 };

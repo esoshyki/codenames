@@ -6,7 +6,8 @@ const initialState: AppState = {
     socketId: null,
     showGame: false,
     processing: false,
-    info: null
+    info: null,
+    timer: null
 };
 
 export const appReducer = (
@@ -60,6 +61,12 @@ export const appReducer = (
             return ({
                 ...state,
                 info: payload
+            });
+
+        case AppActions.SET_TIMER:
+            return ({
+                ...state,
+                timer: payload
             })
 
         default:

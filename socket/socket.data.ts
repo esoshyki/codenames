@@ -27,8 +27,9 @@ class ServerData implements SocketServerData {
         fieldData: null,
         collection: null,
         collectionVotes: [],
-        stage: {
-            round: GameStages.noGame,
+        stage: GameStages.noGame,
+        round: {
+            number: 1,
             side: null,
             votes: []
         }
@@ -164,18 +165,18 @@ class ServerData implements SocketServerData {
     getGuesserData = () => this.gameData.guesserData;
 
     setGameStage = (stage: GameStages) => {
-        this.gameData.stage.round = stage;
+        this.gameData.stage = stage;
     };
 
     gameStageTrigger = () => {
 
-        if (this.gameData.stage.round === GameStages.noGame) {
+        if (this.gameData.stage === GameStages.noGame) {
             if (this.gameMembers.length === 1) {
                 return GameStages.preStart;
             }
         }
 
-        if (this.gameData.stage.round === GameStages.preStart) {
+        if (this.gameData.stage === GameStages.preStart) {
             if (
                 teamsAreComplete(this.gameMembers) &&
                 teamHasLeaders(this.gameMembers) &&
@@ -185,7 +186,7 @@ class ServerData implements SocketServerData {
                 }
         };
 
-        if (this.gameData.stage.round === GameStages.selectCollection) {
+        if (this.gameData.stage === GameStages.selectCollection) {
             if (allCollectionVotesDone(this.gameData.collectionVotes, this.gameMembers)) {
                 return GameStages.prepareField;
             }

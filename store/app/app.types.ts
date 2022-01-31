@@ -7,7 +7,8 @@ export enum AppActions {
     HIDE_GAME_COMPONENT = "App/Hide-Game-Component",
     CHANGE_SOCKET_ID_REQUEST = "App/Change-Socket-Id-Request",
     SET_SOCKET_ID = "App/Set-Socket-Id",
-    SET_INFO = "App/Set-Info"
+    SET_INFO = "App/Set-Info",
+    SET_TIMER = "App/Set-Timer",
 }
 
 export interface AppState {
@@ -16,4 +17,5 @@ export interface AppState {
     showGame: boolean;
     processing: boolean;
     info: string | null;
+    timer: number | null;
 }

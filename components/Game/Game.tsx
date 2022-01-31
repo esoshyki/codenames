@@ -33,19 +33,17 @@ const Game = () => {
         return users.length === 0;
     }
 
-    const round = stage.round;
-
     return (
         <GameWrapper>
 
-            {round === GameStages.preStart && <PreStart />}
+            {stage === GameStages.preStart && <PreStart />}
 
-            {round === GameStages.selectCollection && <SelectCollection />}
+            {stage === GameStages.selectCollection && <SelectCollection />}
  
-            {round === GameStages.prepareField && <Field />}
-            {round === GameStages.prepareField && isLeader() && <Guesser />}
+            {stage === GameStages.prepareField && <Field />}
+            {stage === GameStages.prepareField && isLeader() && <Guesser />}
 
-            {round === GameStages.prepareField && noLeader() && <SelectLeader />} 
+            {stage === GameStages.prepareField && noLeader() && <SelectLeader />} 
 
         </GameWrapper>
     );

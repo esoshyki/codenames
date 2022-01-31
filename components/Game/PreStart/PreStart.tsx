@@ -4,7 +4,6 @@ import { IState } from "@/store/types";
 import PreStartHeader from "./PreStartHeader";
 import PreStartGameMembers from "./PreStartGameMembers";
 import Teams from "../Teams";
-import { Sides } from "@/store/game/game.types";
 import { teamsAreComplete } from "./lib";
 
 const PreStartWrapper = styled.div`
