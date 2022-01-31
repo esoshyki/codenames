@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from '@/theme/colors';
 
 const MessageHeader = styled.div`
     width: 100%;
