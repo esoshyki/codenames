@@ -7,8 +7,10 @@ import PreStart from "./PreStart";
 import { GameStages } from "@/store/game/game.types";
 import SelectCollection from "./SelectCollection";
 import SelectLeader from "./SelectLeader";
+import Panel from "./Panel";
 
 const GameWrapper = styled.div`
+    position: relative;
     width: 100%;
     height: 100%;
 `;
@@ -26,11 +28,23 @@ const Game = () => {
         return user?.leader
     };
 
-    const noLeader = () => {
-        const user = gameMembers.find(member => member.userName === currentUser?.userName);
-        const users = gameMembers.filter(member => member.team === user?.team && member.leader);
+    const showField = () => {
+        if (GameStages.prepareField) return true;
+        if (GameStages.started) return true;
+        return false;
+    };
 
-        return users.length === 0;
+    const showGuesser = () => {
+        if (!isLeader()) return false;
+        if (GameStages.prepareField) return true;
+        if (GameStages.started) return true;
+        return false;
+    };
+
+    const showPanel = () => {
+        if (GameStages.prepareField) return true;
+        if (GameStages.started) return true;
+        return false;
     }
 
     return (
@@ -40,10 +54,9 @@ const Game = () => {
 
             {stage === GameStages.selectCollection && <SelectCollection />}
  
-            {stage === GameStages.prepareField && <Field />}
-            {stage === GameStages.prepareField && isLeader() && <Guesser />}
-
-            {stage === GameStages.prepareField && noLeader() && <SelectLeader />} 
+            {showField() && <Field />}
+            {showGuesser() && <Guesser />}
+            {showPanel() && <Panel />}
 
         </GameWrapper>
     );

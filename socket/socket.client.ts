@@ -14,6 +14,7 @@ import { CollectionVote, GameStages, GuesserType, InGameUser, Sides } from "@/st
 import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
+import { time } from "console";
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
@@ -69,14 +70,13 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     });
 
     socket.on(SocketServerActions.SET_GAME_STAGE, (gameStage: GameStages) => {
-        console.log("setGameStage");
         dispatch(setGameStage(gameStage))
     });
 
     socket.on(SocketServerActions.SET_TIMER, (timer: number | null) => {
-        setTimer(timer)
+        dispatch(setTimer(timer));
     })
-}
+};
 
 const startGameRequest = (user: User) => {
     socket.emit(SocketClientActions.START_GAME_REQUEST, user);

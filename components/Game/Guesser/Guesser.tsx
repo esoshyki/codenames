@@ -8,7 +8,7 @@ import GuessItem from "./GuessItem";
 
 const GuesserWrapper = styled.div`
     position: fixed;
-    bottom: 0;
+    bottom: 150px;
     left: calc(50vw - 109px);
     height: 218px;
     width: 218px;

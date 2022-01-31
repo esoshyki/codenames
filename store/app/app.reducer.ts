@@ -67,7 +67,7 @@ export const appReducer = (
             return ({
                 ...state,
                 timer: payload
-            })
+            });
 
         default:
             return state;

@@ -25,6 +25,7 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
     });
 
     const timerEmitter = (time: number) => {
+        console.log(`time`, time);
         io.emit(SocketServerActions.SET_TIMER, time);
     }
 
@@ -42,6 +43,7 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
                 const interval = setInterval(() => {
                     timerEmitter(timer)
                     timer --;
+                    
 
                     if (timer <= 0) {
                         clearInterval(interval);
