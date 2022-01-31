@@ -3,7 +3,7 @@ import { colors } from '@/theme/colors';
 
 const MessageBody = styled.div`
     border: none;
-    color: ${colors.blue};
+    color: #fff;
     padding: 5px;
 `;
 

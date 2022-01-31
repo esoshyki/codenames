@@ -1,12 +1,15 @@
+import { colors } from '@/theme/colors';
 import styled from 'styled-components';
 
 const Message = styled.div`
     width: 95%;
     margin: 5px auto;
-    border-radius: 5px;
+    background-color: #00b0c2;
+    border-radius: 30px;
+    color: #fff;
     overflow: hidden;
-    box-shadow: 1px 1px 5px #000;
     min-height: 60px;
+    padding: 10px 30px;
 `;
 
 export default Message;

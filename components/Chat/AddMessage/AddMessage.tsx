@@ -4,6 +4,7 @@ import { ChatMessage } from "@/store/chat/chat.types";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { addMessageRequest } from "@/store/chat/chat.actions";
+import { colors } from "@/theme/colors";
 
 const AddMessageWrapper = styled.div`
     position: absolute;
@@ -15,10 +16,13 @@ const Input = styled.input`
     width: 100%;
     height: 40px;
     border: none;
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid ${colors.blue};
     color: #fff;
     padding: 5px 10px;
     margin-bottom: 10px;
+    &:focus {
+        outline: none;
+    }
 `
 
 const AddMessage = () => {

@@ -68,9 +68,6 @@ const FieldGrid = () => {
                     );
                 })}
 
-                {/* {data && selected && <button>
-                    {`Голосовать за ${data[selected]}`}
-                </button>} */}
         </FieldGridWrapper>
     );
 };

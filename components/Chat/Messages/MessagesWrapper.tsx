@@ -7,7 +7,8 @@ const MessagesWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: #fff;
+    background-image: url(/images/granite.jpg);
+    background-size: cover;
     border-radius: 10px;
     width: 100%;
     padding-top: 40px;
