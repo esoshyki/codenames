@@ -57,3 +57,11 @@ export const getOppositeCardsRest = (
 ) : string => {
     return "" + getUsersCards(fieldPicks, guesserData, team)
 };
+
+export const whosCheck = (roundNumber: number, startTeam?: Sides,) => {
+    if (!startTeam) return null;
+    const secondTeam = startTeam === Sides.blue ? Sides.red : Sides.blue;
+    const activeTeam = roundNumber % 2 ? startTeam : secondTeam;
+    return activeTeam;
+}
+

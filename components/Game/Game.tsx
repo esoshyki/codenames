@@ -7,6 +7,7 @@ import PreStart from "./PreStart";
 import { GameStages } from "@/store/game/game.types";
 import SelectCollection from "./SelectCollection";
 import Panel from "./Panel";
+import Mystery from "./Mystery";
 
 const GameWrapper = styled.div`
     position: relative;
@@ -59,6 +60,7 @@ const Game = () => {
             {showField() && <Field />}
             {showGuesser() && <Guesser />}
             {showPanel() && <Panel />}
+            <Mystery />
 
         </GameWrapper>
     );
