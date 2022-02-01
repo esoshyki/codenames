@@ -13,6 +13,9 @@ export enum GameActions {
     SET_FIELD_DATA = "Game/Set-Field-Data",
     SET_GUESSER_DATA = "Game/Set-Guesser-Data",
     SET_SERVER_DATA = "Game/Set-Server-Data",
+    MAKE_MYSTERY_REQUEST = "Game/Make-Mystery-Request",
+    SET_MISTERY = "Game/Set-Mystery",
+
 };
 
 export interface InGameUser {
@@ -45,9 +48,15 @@ interface RoundVote {
     userName: string;
 };
 
+export interface Mystery {
+    words: number[];
+    keyWord: string;
+}
+
 export interface Round {
     number: number;
-    votes: RoundVote[]
+    votes: RoundVote[];
+    mystery: Mystery | null;
 };
 
 export interface CollectionVote {

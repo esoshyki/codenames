@@ -1,6 +1,6 @@
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
-import { CollectionVote, GameStages, GuesserType, InGameUser, Round } from "@/store/game/game.types"
+import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, Round } from "@/store/game/game.types"
 import { Sides } from '@/store/game/game.types';
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
@@ -32,6 +32,7 @@ export enum SocketServer {
     SET_GAME_STAGE = "Socket-Server/Set-Game-Stage",
     SET_TIMER = "Socket-Server/Set-Timer",
     SET_ROUND = "Socket-Server/Set-Round",
+    SET_MYSTERY = "Socket-Server-Set-Mystery"
 }
 
 export enum SocketClient {
@@ -46,6 +47,7 @@ export enum SocketClient {
     SET_LEADER_REQUEST = "Socket-Client/Set-Loader-Request",
     TOGGLE_READY_REQUEST = "Socket-Client/Toggle-Ready-Request",
     TOOGLE_COLLECTION_VOTE_REQUEST = "Socket-Client/Toggle-Collection-Vote-Request",
+    MAKE_MISTERY_REQUEST = "Socket-Client/Make-Mystery-Request",
 };
 
 export interface ServerToClient {
@@ -64,6 +66,7 @@ export interface ServerToClient {
     [SocketServer.SET_GAME_STAGE] : (stage: GameStages) => void;
     [SocketServer.SET_TIMER] : (timer: number | null) => void;
     [SocketServer.SET_ROUND] : (round: Round) => void;
+    [SocketServer.SET_MYSTERY] : (mystery: Mystery | null) => void;
     
 };
 
@@ -78,6 +81,7 @@ export interface ClientToServer {
     [SocketClient.SET_LEADER_REQUEST]: (user: User) => void;
     [SocketClient.TOGGLE_READY_REQUEST]: (userName: string) => void;
     [SocketClient.TOOGLE_COLLECTION_VOTE_REQUEST] : (userName: string, collectionIdx: number) => void;
+    [SocketClient.MAKE_MISTERY_REQUEST] : (mystery: Mystery | null) => void;
 };
 
 export interface InterServerEvents {

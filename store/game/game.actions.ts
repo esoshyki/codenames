@@ -1,7 +1,7 @@
 import { SocketServerData } from "@/socket/socket.data";
 import { ReduxAction, User } from "@/types";
 import { Collection } from "@/utils/wordCollections";
-import { CollectionVote, GameActions, GameStages, GuesserType, Sides } from "./game.types";
+import { CollectionVote, GameActions, GameStages, GuesserType, Mystery, Sides } from "./game.types";
 
 export const startGameRequest = () : ReduxAction => ({
     type: GameActions.START_GAME_REQUEST
@@ -60,3 +60,12 @@ export const setGameServerData = (serverData: SocketServerData) => ({
     payload: serverData
 });
 
+export const makeMysteryRequest = (mystery: Mystery | null) : ReduxAction => ({
+    type: GameActions.MAKE_MYSTERY_REQUEST,
+    payload: mystery
+});
+
+export const setMystery = (mystery: Mystery | null) : ReduxAction => ({
+    type: GameActions.SET_MISTERY,
+    payload: mystery
+})

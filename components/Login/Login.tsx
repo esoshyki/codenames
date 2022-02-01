@@ -27,10 +27,10 @@ const LoginInput = styled.input`
     font-weight: 700;
     transition: 0.1s ease-in;
     &::placeholder {
-        color: #fff;
+        color: transparent;
     }
     &:focus {
-        border-color: ${colors.yellow} 
+        border-color: ${colors.yellow};
     }
 `
 
@@ -74,6 +74,8 @@ const Login = () => {
     return (
         <LoginWrapper>
             <LoginInput
+                id="login-input"
+                name="login"
                 placeholder="Имя"
                 ref={inputRef}
                 onKeyPress={handleClick}

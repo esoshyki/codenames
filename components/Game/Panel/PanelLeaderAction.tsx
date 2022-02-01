@@ -1,9 +1,10 @@
-import { Sides } from "@/store/game/game.types";
+import { makeMysteryRequest } from "@/store/game/game.actions";
+import {  Mystery, Sides } from "@/store/game/game.types";
 import { IState } from "@/store/types";
 import { colors } from "@/theme/colors";
 import { getUserTeam } from "@/utils/user.ingame";
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PanelActionButton from "./PanelActionButton";
 import PanelActionWrapper from "./PanelActionWrapper";
@@ -35,6 +36,8 @@ const KeyWordInput = styled.input`
 
 const LeaderAction = () => {
 
+    const dispatch = useDispatch();
+
     const selectedCards = useSelector((state: IState) => state.app.selectedCards);
     const fieldData = useSelector((state: IState) => state.game.gameData.fieldData);
     const currentUser = useSelector((state: IState) => state.users.currentUser);
@@ -56,7 +59,16 @@ const LeaderAction = () => {
         if (!!selectedCards.length && inputRef.current) {
             inputRef.current.focus();
         }
-    }, [selectedCards])
+    }, [selectedCards]);
+
+    const makeMystery = () => {
+        if (!inputRef.current) return;
+        const mystery : Mystery = {
+            words: [...selectedCards],
+            keyWord: inputRef.current.value
+        }
+        dispatch(makeMysteryRequest(mystery));
+    };
 
     return (
         <PanelActionWrapper>
@@ -72,7 +84,7 @@ const LeaderAction = () => {
                 <KeyWordInput ref={inputRef} />
             </WrordsContainer>
 
-            {isMyCheck() ? <PanelActionButton>
+            {isMyCheck() ? <PanelActionButton onClick={makeMystery}>
                 Загадать
             </PanelActionButton> : <PanelDescriptionSpan>Очередь соперника</PanelDescriptionSpan>} 
         </PanelActionWrapper>

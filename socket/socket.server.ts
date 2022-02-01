@@ -6,7 +6,7 @@ import { SocketClient, SocketServer } from "./socket.types";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { User } from '@/types';
 import ServerData from "./socket.data";
-import { GameStages, Sides } from "@/store/game/game.types";
+import { GameStages, Mystery, Sides } from "@/store/game/game.types";
 import { allCollectionVotesDone, getCollectionWinner } from "./socket.server.utils";
 import { wordCollections } from "@/utils/wordCollections";
 
@@ -64,7 +64,7 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
                         io.emit(SocketServer.SET_TIMER, null);
                         io.emit(SocketServer.SET_GAME_STAGE, GameStages.started);
                         setNextRound();
-                        setRoundInterval(100);
+                        setRoundInterval(3600);
                     }
                 }, 1000)
             }
@@ -72,6 +72,12 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
     }
 
     io.sockets.on("connection", (socket) => {
+
+        socket.on(SocketClient.MAKE_MISTERY_REQUEST, (mystery: Mystery | null) => {
+            serverData.setMystery(mystery);
+            io.emit(SocketServer.SET_MYSTERY, serverData.getMystery())
+        })
+
         socket.on(SocketClient.DISCONNECTING, () => {
             serverData.disconnectUser(socket.id);
             io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());

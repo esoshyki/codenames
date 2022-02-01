@@ -1,4 +1,4 @@
-import { InGameUser, GameData, Sides, CollectionVote, GameStages } from "@/store/game/game.types";
+import { InGameUser, GameData, Sides, CollectionVote, GameStages, Mystery } from "@/store/game/game.types";
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { getGuesserData, 
@@ -35,7 +35,8 @@ class ServerData implements SocketServerData {
         stage: GameStages.noGame,
         round: {
             number: 1,
-            votes: []
+            votes: [],
+            mystery: null
         }
     };
 
@@ -202,7 +203,8 @@ class ServerData implements SocketServerData {
     setRound = (numb: number ) => {
         this.gameData.round = {
             number: numb,
-            votes: []
+            votes: [],
+            mystery: null
         };
     };
 
@@ -214,6 +216,12 @@ class ServerData implements SocketServerData {
     getCurrentRound = () => this.gameData.round;
 
     getCurrentRoundNumber = () => this.gameData.round.number;
+
+    setMystery = (mystery: Mystery | null) => {
+        this.gameData.round.mystery = mystery;
+    };
+
+    getMystery = () => this.gameData.round.mystery;
 
 }
 

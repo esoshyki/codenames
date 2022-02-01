@@ -2,7 +2,7 @@ import { ReduxAction } from "@/types";
 import { takeEvery, select, call } from "redux-saga/effects";
 import clientSocket from "socket/socket.client";
 import { IState } from "../types";
-import { GameActions } from "./game.types";
+import { GameActions, Mystery } from "./game.types";
 
 function* startGameRequestWorker() {
     const state : IState = yield select();
@@ -48,7 +48,14 @@ function* collectionVoteRequestWorker ({payload} : ReduxAction) {
     if (currentUser) {
         yield call(clientSocket.toogleCollectionVoteRequest, currentUser.userName, collectionIdx)
     };
+};
 
+function* makeMysteryRequestWorker ({payload} : ReduxAction) {
+    const mystery : Mystery | null = payload;
+
+    if (mystery) {
+        yield call(clientSocket.makeMysteryRequest, mystery)
+    };
 };
 
 export default function* gameSagas() {
@@ -57,4 +64,5 @@ export default function* gameSagas() {
     yield takeEvery(GameActions.SET_LEADER_REQUEST, setLeaderRequestWorker);
     yield takeEvery(GameActions.TOGGLE_READY_REQUEST, toggleReadyRequest);
     yield takeEvery(GameActions.TOGGLE_COLLECTION_VOTE_REQUEST, collectionVoteRequestWorker);
+    yield takeEvery(GameActions.MAKE_MYSTERY_REQUEST, makeMysteryRequestWorker);
 }

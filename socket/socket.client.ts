@@ -10,8 +10,8 @@ import { updateOnlineUsers, setServerData } from "@/store/server/server.actions"
 import { showInfo } from "@/store/app/app.actions";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { addMessage } from "@/store/chat/chat.actions";
-import { CollectionVote, GameStages, GuesserType, InGameUser, Sides } from "@/store/game/game.types";
-import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData } from "@/store/game/game.actions";
+import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, Sides } from "@/store/game/game.types";
+import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData, setMystery } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
 
@@ -74,7 +74,11 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
 
     socket.on(SocketServer.SET_TIMER, (timer: number | null) => {
         dispatch(setTimer(timer));
-    })
+    });
+
+    socket.on(SocketServer.SET_MYSTERY, (mystery: Mystery | null) => {
+        dispatch(setMystery(mystery))
+    });
 };
 
 const startGameRequest = (user: User) => {
@@ -97,12 +101,17 @@ const toogleCollectionVoteRequest = (userName: string, collectionIdx: number) =>
     socket.emit(SocketClient.TOOGLE_COLLECTION_VOTE_REQUEST, userName, collectionIdx);
 };
 
+const makeMysteryRequest = (mystery: Mystery | null) => {
+    socket.emit(SocketClient.MAKE_MISTERY_REQUEST, mystery)
+};
+
 const clientSocket = {
     startGameRequest,
     setTeamRequest,
     setLeaderRequest,
     toggleReadyRequest,
-    toogleCollectionVoteRequest
+    toogleCollectionVoteRequest,
+    makeMysteryRequest
 };
 
 export default clientSocket;

@@ -15,8 +15,8 @@ const initialState: IGameState = {
         stage: GameStages.noGame,
         round: {
             number: 1,
-            side: null,
-            votes: []
+            votes: [],
+            mystery: null
         }
     }
 };
@@ -86,6 +86,18 @@ const gameReducer = (
                 ...state,
                 gameData: {...serverData.gameData},
                 gameMembers: [...serverData.gameMembers]
+            });
+
+        case GameActions.SET_MISTERY:
+            return ({
+                ...state,
+                gameData: {
+                    ...state.gameData,
+                    round: {
+                        ...state.gameData.round,
+                        mystery: payload
+                    }
+                }
             })
 
         default:
