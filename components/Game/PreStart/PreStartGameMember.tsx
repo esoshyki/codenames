@@ -31,7 +31,7 @@ const Wrapper = styled.div<{
         }
     }};
     background-size: cover;
-    border: 4px solid ${colors.yellow};
+    border: 4px solid ${props => props.ready ? colors.green : colors.yellow};
     margin: 10px;
 `;
 
@@ -41,10 +41,8 @@ interface Props {
 
 const PreStartGameMember = ({user} : Props) => {
 
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-
-    const team = getUserTeam(gameMembers, currentUser);
+    const team = getUserTeam(gameMembers, user);
 
     return (
         <Wrapper ready={user.ready} team={team}>

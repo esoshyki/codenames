@@ -1,6 +1,6 @@
 import { IState } from "@/store/types";
 import { colors } from "@/theme/colors";
-import { getUsersCards, getUserTeam, isLeader } from "@/utils/user.ingame";
+import { getUserCardsRest, getUserTeam, isLeader } from "@/utils/user.ingame";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CustomAction from "./PanelCustomAction";
@@ -29,11 +29,11 @@ const UserPanel = () => {
     const team = getUserTeam(gameMembers, currentUser);
 
     const getCardsCount = () => {
-        if (!guesserData) return "";
-        const side = getUserTeam(gameMembers, currentUser);
-        if (!side) return "";
-        const count = getUsersCards(fieldPicks, guesserData.data, side);
-        return count;
+        if (guesserData?.data) {
+            return getUserCardsRest(fieldPicks, guesserData.data, gameMembers, currentUser);
+        }
+
+        return "";
     }
 
     return (

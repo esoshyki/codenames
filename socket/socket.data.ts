@@ -1,9 +1,13 @@
 import { InGameUser, GameData, Sides, CollectionVote, GameStages } from "@/store/game/game.types";
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
-import { getWords } from "@/utils/wordCollections";
-import { getGuesserData } from "@/utils/getGuesser";
-import { allCollectionVotesDone, allReady, teamHasLeaders, teamsAreComplete } from "@/utils/teams";
+import { getGuesserData, 
+    allCollectionVotesDone, 
+    allReady, 
+    teamHasLeaders, 
+    teamsAreComplete,
+    getWords
+} from "./socket.server.utils";
 
 interface SocketUser {
     userName: string;
@@ -31,7 +35,6 @@ class ServerData implements SocketServerData {
         stage: GameStages.noGame,
         round: {
             number: 1,
-            side: null,
             votes: []
         }
     };
@@ -194,7 +197,23 @@ class ServerData implements SocketServerData {
         }
 
         return null;
-    }
+    };
+
+    setRound = (numb: number ) => {
+        this.gameData.round = {
+            number: numb,
+            votes: []
+        };
+    };
+
+    setNextRound = () => {
+        const currentRound = this.getCurrentRoundNumber();
+        this.setRound(currentRound  + 1);
+    };
+
+    getCurrentRound = () => this.gameData.round;
+
+    getCurrentRoundNumber = () => this.gameData.round.number;
 
 }
 

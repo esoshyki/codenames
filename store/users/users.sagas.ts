@@ -5,7 +5,7 @@ import { setCurrentUser, setLoginError } from "./users.actions";
 import { hideLoginComponent } from "../app/app.actions";
 import { socket } from "../../socket/socket.client";
 import { IState } from "../types";
-import { SocketClientActions } from "@/socket/socket.types";
+import { SocketClient } from "@/socket/socket.types";
 
 function* loginRequestWorker({ payload }: ReduxAction) {
     const state: IState = yield select();
@@ -16,7 +16,7 @@ function* loginRequestWorker({ payload }: ReduxAction) {
         yield put(setLoginError("User exists"));
     } else {
         yield call(() => {
-            socket.emit(SocketClientActions.LOGIN_REQUEST, {
+            socket.emit(SocketClient.LOGIN_REQUEST, {
                 userName: payload,
                 socketId
             });
@@ -31,7 +31,7 @@ function* logoutRequestWorker({ payload }: ReduxAction) {
     const socketId = state.app.socketId;
 
     yield call(() => {
-        socket.emit(SocketClientActions.LOGOUT_REQUEST, {
+        socket.emit(SocketClient.LOGOUT_REQUEST, {
             userName: payload,
             socketId
         });

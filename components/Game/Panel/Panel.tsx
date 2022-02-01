@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import UserPanel from "./UserPanel";
+import Timer from "@/components/Timer";
+import PanelEnemy from "./PanelEnemy";
 
 const PanelWrapper = styled.div`
-    position: -webkit-sticky;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     position: absolute;
     bottom: 0px;
     height: 100px;
@@ -18,6 +23,8 @@ const Panel = () => {
     return (
         <PanelWrapper>
            <UserPanel />
+           <PanelEnemy />
+           <Timer />
         </PanelWrapper>
     )
 };

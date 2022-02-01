@@ -21,7 +21,7 @@ const LoginInput = styled.input`
     padding: 15px 15px;
     border: none;
     outline: none;
-    background-color: ${colors.blue};
+    background-color: transparent;
     color: #fff;
     border: 1px solid #fff;
     font-weight: 700;

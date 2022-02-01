@@ -45,9 +45,8 @@ interface RoundVote {
     userName: string;
 };
 
-interface Round {
+export interface Round {
     number: number;
-    side: Sides | null,
     votes: RoundVote[]
 };
 

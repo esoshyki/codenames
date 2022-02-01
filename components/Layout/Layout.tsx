@@ -6,7 +6,6 @@ import { IState } from "../../store/types";
 import Loading from "../Loading";
 import Info from "../Info";
 import Menu from "../Menu";
-import Timer from "../Timer";
 
 interface LayoutProps {
     children: ReactNode;
@@ -36,7 +35,6 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 <Info />
                 {!isInGame() && <Menu />}
                 {children}
-                <Timer />
             </main>
             {processing && <Loading />}
         </div>

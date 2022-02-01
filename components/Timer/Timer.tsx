@@ -5,16 +5,9 @@ import { useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 
 const TimerWrapper = styled.div`
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 7000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 4px;
     color: ${colors.yellow};
 `;
 

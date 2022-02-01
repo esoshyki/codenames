@@ -2,7 +2,7 @@ import { takeEvery, put, call } from "redux-saga/effects";
 import { ServerActions } from "./server.types";
 import { hideLoading } from "../app/app.actions";
 import { socket } from "../../socket/socket.client";
-import { SocketClientActions } from "@/socket/socket.types";
+import { SocketClient } from "@/socket/socket.types";
 import { ReduxAction } from "@/types";
 import { SocketServerData } from "@/socket/socket.data";
 import { setGameServerData } from "../game/game.actions";
@@ -20,13 +20,13 @@ function* setServerDataWorker({payload} : ReduxAction) {
 
 function* updateOnlineUsersWorker() {
     yield call(() => {
-        socket.emit(SocketClientActions.UPDATE_ONLINE_USERS_REQUEST);
+        socket.emit(SocketClient.UPDATE_ONLINE_USERS_REQUEST);
     });
 };
 
 function* updateServerDataRequestWorker() {
     yield call(() => {
-        socket.emit(SocketClientActions.UPDATE_SERVER_DATA_REQUEST)
+        socket.emit(SocketClient.UPDATE_SERVER_DATA_REQUEST)
     })
 }
 
