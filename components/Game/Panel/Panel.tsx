@@ -10,11 +10,11 @@ const PanelWrapper = styled.div`
     justify-content: flex-start;
     position: absolute;
     bottom: 0px;
-    height: 100px;
     width: 100%;
     background-image: url(https://jooinn.com/images/stone-background-14.jpg);
     background-size: cover;
     box-shadow: 2px 2px 10px #000;
+    padding-right: 20%
 `
 
 

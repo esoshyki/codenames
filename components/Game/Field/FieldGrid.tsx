@@ -5,6 +5,7 @@ import FieldCard from "./FieldCard";
 import { Fragment } from "react";
 import { isLeader } from "@/utils/user.ingame";
 import { setSelectedCards } from "@/store/app/app.actions";
+import { getRoundVotes } from "@/store/game/game.selectors";
 
 const FieldGridWrapper = styled.div`
     position: fixed;
@@ -25,6 +26,7 @@ const FieldGrid = () => {
     const currentUser = useSelector((state: IState) => state.users.currentUser);
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
     const selectedCards = useSelector((state: IState) => state.app.selectedCards);
+    const votes = useSelector(getRoundVotes);
 
     const data = fieldData || new Array(25).fill("");
 
@@ -54,6 +56,15 @@ const FieldGrid = () => {
         }
     };
 
+    const getVotedBy = (idx: number) : string[] | null => {
+        const users = votes.filter(vote => vote.cardIdx === idx);
+        if (users.length) {
+            return users.map(user => user.userName);
+        };
+
+        return null
+    }
+
     return (
         <FieldGridWrapper>
             {data &&
@@ -61,6 +72,7 @@ const FieldGrid = () => {
                     return (
                         <Fragment key={idx}>
                             <FieldCard 
+                                votedBy={getVotedBy(idx)}
                                 setSelected={() => onClick(idx)}
                                 selected={selectedCards.includes(idx)} 
                                 word={el} />

@@ -63,5 +63,11 @@ export const whosCheck = (roundNumber: number, startTeam?: Sides,) => {
     const secondTeam = startTeam === Sides.blue ? Sides.red : Sides.blue;
     const activeTeam = roundNumber % 2 ? startTeam : secondTeam;
     return activeTeam;
+};
+
+export const isMyCheck = (roundNumber: number,  myTeam: Sides | null, startTeam?: Sides,) => {
+    const activeTeam = whosCheck(roundNumber, startTeam);
+    console.log(activeTeam);
+    return myTeam === activeTeam;
 }
 

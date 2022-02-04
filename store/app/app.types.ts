@@ -10,6 +10,7 @@ export enum AppActions {
     SET_INFO = "App/Set-Info",
     SET_TIMER = "App/Set-Timer",
     SET_SELECTED_CARDS = "App/Set-Selected-Cards",
+    CUSTOM_CARD_VOTE_REQUEST = "App/Custom-Card-Vote-Request",
 }
 
 export interface AppState {

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import FieldVotedBy from "./FieldVotedBy";
 
 const CardWrapper = styled.div<{
     selected: boolean
@@ -37,13 +38,15 @@ interface FieldCardProps {
     word?: string;
     selected: boolean,
     setSelected: () => void;
+    votedBy: string[] | null
 }
 
-const FieldCard = ({ word, selected, setSelected }: FieldCardProps) => {
+const FieldCard = ({ word, selected, setSelected, votedBy }: FieldCardProps) => {
 
     return (
         <CardWrapper selected={selected} onClick={setSelected}>
             {word && <CardText>{word.toUpperCase()}</CardText>}
+            {votedBy && <FieldVotedBy voters={votedBy}/>}
         </CardWrapper>
     );
 };

@@ -1,4 +1,4 @@
-import { InGameUser, GameData, Sides, CollectionVote, GameStages, Mystery } from "@/store/game/game.types";
+import { InGameUser, GameData, Sides, CollectionVote, GameStages, Mystery, RoundVote } from "@/store/game/game.types";
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { getGuesserData, 
@@ -222,6 +222,16 @@ class ServerData implements SocketServerData {
     };
 
     getMystery = () => this.gameData.round.mystery;
+
+    getRoundVotes = () => this.gameData.round.votes;
+
+    toggleRoundVote = (vote: RoundVote) => {
+        const { userName } = vote;
+        this.gameData.round.votes = [
+            ...this.gameData.round.votes.filter(vote => vote.userName !== userName), 
+            vote
+        ];
+    }
 
 }
 

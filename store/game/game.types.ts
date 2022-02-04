@@ -15,6 +15,7 @@ export enum GameActions {
     SET_SERVER_DATA = "Game/Set-Server-Data",
     MAKE_MYSTERY_REQUEST = "Game/Make-Mystery-Request",
     SET_MISTERY = "Game/Set-Mystery",
+    SET_ROUND_VOTES = "Game/Set-Round-Votes"
 
 };
 
@@ -43,7 +44,7 @@ export enum GameStages {
     started = "started",
 };
 
-interface RoundVote {
+export interface RoundVote {
     cardIdx: number;
     userName: string;
 };

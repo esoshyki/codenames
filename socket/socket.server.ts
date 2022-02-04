@@ -160,6 +160,11 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
             } else {
                 io.emit(SocketServer.UPDATE_COLLECTION_VOTES, serverData.getCollectionVotes());
             }
+        });
+
+        socket.on(SocketClient.MAKE_CUSTOM_CARD_VOTE_REQUEST, (cardId, user) => {
+            serverData.toggleRoundVote({cardIdx: cardId, userName: user.userName});
+            socket.emit(SocketServer.SET_CUSTOM_CARD_VOTES, serverData.getRoundVotes())
         })
     });
 

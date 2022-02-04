@@ -1,6 +1,6 @@
 import { User } from "@/types";
 import { ChatMessage } from "@/store/chat/chat.types";
-import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, Round } from "@/store/game/game.types"
+import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, Round, RoundVote } from "@/store/game/game.types"
 import { Sides } from '@/store/game/game.types';
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
@@ -32,7 +32,8 @@ export enum SocketServer {
     SET_GAME_STAGE = "Socket-Server/Set-Game-Stage",
     SET_TIMER = "Socket-Server/Set-Timer",
     SET_ROUND = "Socket-Server/Set-Round",
-    SET_MYSTERY = "Socket-Server-Set-Mystery"
+    SET_MYSTERY = "Socket-Server/Set-Mystery",
+    SET_CUSTOM_CARD_VOTES = "Socket-Server/Set-Custom-Vote"
 }
 
 export enum SocketClient {
@@ -48,6 +49,7 @@ export enum SocketClient {
     TOGGLE_READY_REQUEST = "Socket-Client/Toggle-Ready-Request",
     TOOGLE_COLLECTION_VOTE_REQUEST = "Socket-Client/Toggle-Collection-Vote-Request",
     MAKE_MISTERY_REQUEST = "Socket-Client/Make-Mystery-Request",
+    MAKE_CUSTOM_CARD_VOTE_REQUEST = "Socket-Client/Make-Custom-Card-Vote-Request",
 };
 
 export interface ServerToClient {
@@ -67,7 +69,7 @@ export interface ServerToClient {
     [SocketServer.SET_TIMER] : (timer: number | null) => void;
     [SocketServer.SET_ROUND] : (round: Round) => void;
     [SocketServer.SET_MYSTERY] : (mystery: Mystery | null) => void;
-    
+    [SocketServer.SET_CUSTOM_CARD_VOTES] : (votes: RoundVote[]) => void;
 };
 
 export interface ClientToServer {
@@ -82,6 +84,7 @@ export interface ClientToServer {
     [SocketClient.TOGGLE_READY_REQUEST]: (userName: string) => void;
     [SocketClient.TOOGLE_COLLECTION_VOTE_REQUEST] : (userName: string, collectionIdx: number) => void;
     [SocketClient.MAKE_MISTERY_REQUEST] : (mystery: Mystery | null) => void;
+    [SocketClient.MAKE_CUSTOM_CARD_VOTE_REQUEST] : (cardId: number, user: User) => void;
 };
 
 export interface InterServerEvents {

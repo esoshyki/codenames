@@ -10,8 +10,8 @@ import { updateOnlineUsers, setServerData } from "@/store/server/server.actions"
 import { showInfo } from "@/store/app/app.actions";
 import { ChatMessage } from "@/store/chat/chat.types";
 import { addMessage } from "@/store/chat/chat.actions";
-import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, Sides } from "@/store/game/game.types";
-import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData, setMystery } from "@/store/game/game.actions";
+import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, RoundVote, Sides } from "@/store/game/game.types";
+import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData, setMystery, setRoundVotes } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
 
@@ -79,6 +79,10 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     socket.on(SocketServer.SET_MYSTERY, (mystery: Mystery | null) => {
         dispatch(setMystery(mystery))
     });
+
+    socket.on(SocketServer.SET_CUSTOM_CARD_VOTES, (votes: RoundVote[]) => {
+        dispatch(setRoundVotes(votes))
+    })
 };
 
 const startGameRequest = (user: User) => {
@@ -105,13 +109,18 @@ const makeMysteryRequest = (mystery: Mystery | null) => {
     socket.emit(SocketClient.MAKE_MISTERY_REQUEST, mystery)
 };
 
+const makeCustomVoteRequest = (cardId: number, user: User) => {
+    socket.emit(SocketClient.MAKE_CUSTOM_CARD_VOTE_REQUEST, cardId, user)
+}
+
 const clientSocket = {
     startGameRequest,
     setTeamRequest,
     setLeaderRequest,
     toggleReadyRequest,
     toogleCollectionVoteRequest,
-    makeMysteryRequest
+    makeMysteryRequest,
+    makeCustomVoteRequest
 };
 
 export default clientSocket;

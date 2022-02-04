@@ -1,9 +1,10 @@
 import { makeMysteryRequest } from "@/store/game/game.actions";
+import { getMystery } from "@/store/game/game.selectors";
 import {  Mystery, Sides } from "@/store/game/game.types";
 import { IState } from "@/store/types";
 import { colors } from "@/theme/colors";
 import { getUserTeam } from "@/utils/user.ingame";
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PanelActionButton from "./PanelActionButton";
@@ -44,6 +45,7 @@ const LeaderAction = () => {
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
     const roundNumber= useSelector((state: IState) => state.game.gameData.round.number);
     const startTeam = useSelector((state: IState) => state.game.gameData.guesserData?.start);
+    const mystery = useSelector(getMystery);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -72,21 +74,24 @@ const LeaderAction = () => {
 
     return (
         <PanelActionWrapper>
-            <WrordsContainer>
-                <div>
-                    <PanelDescriptionSpan>
-                        {"Связать слова "}
-                    </PanelDescriptionSpan>
-                    <PanelSelectedSpan>
-                        {fieldData && selectedCards.map((idx) => fieldData[idx]).join(", ")}
-                    </PanelSelectedSpan>
-                </div>
-                <KeyWordInput ref={inputRef} />
-            </WrordsContainer>
 
-            {isMyCheck() ? <PanelActionButton onClick={makeMystery}>
-                Загадать
-            </PanelActionButton> : <PanelDescriptionSpan>Очередь соперника</PanelDescriptionSpan>} 
+            {!mystery && <Fragment>
+                <WrordsContainer>
+                    <div>
+                        <PanelDescriptionSpan>
+                            {"Связать слова "}
+                        </PanelDescriptionSpan>
+                        <PanelSelectedSpan>
+                            {fieldData && selectedCards.map((idx) => fieldData[idx]).join(", ")}
+                        </PanelSelectedSpan>
+                    </div>
+                    <KeyWordInput ref={inputRef} />
+                </WrordsContainer>
+
+                {isMyCheck() ? <PanelActionButton onClick={makeMystery}>
+                    Загадать
+                </PanelActionButton> : <PanelDescriptionSpan>Очередь соперника</PanelDescriptionSpan>}
+            </Fragment>}
         </PanelActionWrapper>
     )
 

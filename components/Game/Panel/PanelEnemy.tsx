@@ -9,6 +9,8 @@ import { colors } from "@/theme/colors";
 const PaneylEnemyWrapper = styled.div`
     display: flex;
     height: 100%;
+    width: 40%;
+    position: relative;
     padding: 0px 20px;
     justify-self: flex-end;
 `;

@@ -11,6 +11,7 @@ const UserPanelWrapper = styled.div`
     display: flex;
     height: 100%;
     padding: 0px 20px;
+    width: 60%;
 `;
 
 const UserPanelSpan = styled.span`

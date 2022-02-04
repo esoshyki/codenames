@@ -54,3 +54,8 @@ export const setSelectedCards = (selected: number[]) => ({
     type: AppActions.SET_SELECTED_CARDS,
     payload: selected
 });
+
+export const customCardVoteRequest = (id: number) => ({
+    type: AppActions.CUSTOM_CARD_VOTE_REQUEST,
+    payload: id
+});
