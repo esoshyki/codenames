@@ -15,6 +15,7 @@ const MenuWrapper = styled.nav`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
 
     *  {
         transition: 0.2s ease-in;
@@ -23,7 +24,11 @@ const MenuWrapper = styled.nav`
 
 const Menu = () => {
 
+    const dispatch = useDispatch();
+
     const currentUser = useSelector(getCurrentUser);
+
+    
 
     return (
         <MenuWrapper>

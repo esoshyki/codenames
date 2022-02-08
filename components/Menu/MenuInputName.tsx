@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { colors
  } from '@/theme/colors';
+import { useDispatch } from 'react-redux';
+import { useRef } from 'react';
 
 const InputWrapper = styled.div`
     height: 50px;
@@ -46,11 +48,15 @@ const InputError = styled.span`
 
 const MenuInputName = () => {
 
+    const dispatch = useDispatch();
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
 
     return (
         <InputWrapper>
             <InputLabel>Введите имя</InputLabel>
-            <Input />
+            <Input ref={inputRef}/>
             <InputError />
         </InputWrapper>
     )
