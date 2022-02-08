@@ -1,15 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IState } from "../../store/types";
 import Login from "../Login";
-import {
-    hideLoginComponent,
-    showLoginComponent
-} from "@/store/app/app.actions";
-import { logoutRequest } from "@/store/users/users.actions";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
-import { startGameRequest } from "@/store/game/game.actions";
-import { GameStages } from "@/store/game/game.types";
+import { getCurrentUser } from "@/store/app/app.selectors";
+import MenuInputName from "./MenuInputName";
 
 const MenuWrapper = styled.nav`
     position: fixed;
@@ -27,44 +22,15 @@ const MenuWrapper = styled.nav`
 `;
 
 const Menu = () => {
-    const dispatch = useDispatch();
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
-    const { showLogin } = useSelector((state: IState) => state.app);
-    const stage = useSelector((state: IState) => state.game.gameData.stage);
 
-    const toogleLogin = () => {
-        dispatch(showLogin ? hideLoginComponent() : showLoginComponent());
-    };
-
-    const logout = () => {
-
-        if (currentUser) {
-            dispatch(logoutRequest(currentUser.userName));
-        }
-
-    };
+    const currentUser = useSelector(getCurrentUser);
 
     return (
         <MenuWrapper>
-            {!currentUser && (
-                <MenuItem  onClick={toogleLogin}>
-                    {showLogin ? "Back" : "Login"}
-                </MenuItem>
-            )}
 
-            {showLogin && <Login />}
+            {!currentUser && <MenuInputName />}
 
-            {currentUser && (
-                <MenuItem className="menu__item" onClick={logout}>
-                    Logout
-                </MenuItem>
-            )}
-
-            {currentUser && (
-                <MenuItem className="menu__item" onClick={() => dispatch(startGameRequest())}>
-                    {stage === GameStages.noGame ? "Start Game" : "Join Game"}
-                </MenuItem>
-            )}
+            {currentUser && <MenuItem>Начать игру</MenuItem>}
 
         </MenuWrapper>
     );

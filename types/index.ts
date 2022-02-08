@@ -1,19 +1,10 @@
-export interface User {
-    userName: string;
-}
+import { IApp } from "./app";
+import { IChat } from "./chat";
+import { IGame } from "./game";
 
 export interface ReduxAction {
     type: string;
     payload?: any;
-}
-
-export interface GameData {
-    members: User[];
-}
-
-export interface ServerData {
-    onlineUsers: User[];
-    gameData: GameData;
 }
 
 export interface APIResponse {
@@ -21,7 +12,8 @@ export interface APIResponse {
     error?: string;
 }
 
-export interface FireBaseResponse {
-    result?: any;
-    error?: string;
-};
+export interface IState {
+    app: IApp;
+    game: IGame;
+    chat: IChat;
+} 

@@ -2,7 +2,7 @@ import { AppState } from "./app/app.types";
 import { UsersState } from "./users/users.types";
 import { IGameState } from "./game/game.types";
 import { ServerData } from "@/types";
-import { ChatState } from "./chat/chat.types";
+import { ChatState } from "./chat/chat.selectors";
 
 export interface IAction {
     type: string;

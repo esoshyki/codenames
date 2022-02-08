@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import type { NextPage } from "next";
 import Layout from "../components/Layout";
 import Menu from "../components/Menu";
-import Game from "@/components/Game";
-import { IState } from "@/store/types";
 import { connectSocket } from "@/socket/socket.client";
-import { GameStages } from "@/store/game/game.types";
+import { AppStages } from "@/types/app";
+import { getAppStage } from "@/store/app/app.selectors";
+import PreStart from "@/components/PreStart";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
 
-    const stage = useSelector((state: IState) => state.game.gameData.stage);
+    const stage = useSelector(getAppStage);
 
     useEffect(() => {
         connectSocket(dispatch);
@@ -19,8 +19,10 @@ const Home: NextPage = () => {
 
     return (
         <Layout>
-            {stage === GameStages.noGame && <Menu />}
-            {stage !== GameStages.noGame && <Game />}
+            {stage === AppStages.nogame && <Menu />}
+            {/* {stage === AppStages.prestart && <PreStart />} */}
+
+            {/* {stage !== GameStages.noGame && <Game />} */}
         </Layout>
     );
 };

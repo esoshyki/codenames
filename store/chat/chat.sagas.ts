@@ -1,5 +1,5 @@
 import { call, takeEvery } from "redux-saga/effects";
-import { ChatActions } from "./chat.types";
+import { actions } from "@/types/actions";
 import { socket } from "@/socket/socket.client";
 import { SocketClient } from "@/socket/socket.types";
 import { ReduxAction } from "@/types";
@@ -12,5 +12,5 @@ function* addMessageRequestWorker ({ payload } : ReduxAction ) {
 };
 
 export default function* chatSagas() {
-    yield takeEvery(ChatActions.ADD_MESSAGE_REQUEST, addMessageRequestWorker)
+    yield takeEvery(actions.addChatMessageRequest, addMessageRequestWorker)
 }

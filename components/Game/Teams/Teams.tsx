@@ -4,7 +4,7 @@ import { Sides } from "@/store/game/game.types";
 import { useDispatch, useSelector } from "react-redux";
 import { setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
 import { IState } from "@/store/types";
-import { teamsAreComplete } from "../PreStart/lib";
+import { teamsAreComplete } from "../../PreStart/lib";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;

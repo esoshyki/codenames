@@ -1,22 +1,23 @@
 import { ReduxAction } from "@/types";
-import { ChatState, ChatActions } from "./chat.types";
+import { IChat } from "@/types/chat";
+import { actions } from "@/types/actions";
 
-const initialState: ChatState = {
+const initialState: IChat = {
     messages: [],
     hidden: false,
 };
 
-const chatReducer = (state = initialState, { type, payload }: ReduxAction) : ChatState=> {
+const chatReducer = (state = initialState, { type, payload }: ReduxAction) : IChat => {
 
     switch (type) {
         
-        case ChatActions.SET_CHAT_HIDDEN:
+        case actions.setChatHidden:
             return ({
                 ...state,
                 hidden: payload
-            });
+            })
 
-        case ChatActions.ADD_NEW_MESSAGE:
+        case actions.addChatMessageResponse:
             return ({
                 ...state,
                 messages: [...state.messages, payload]

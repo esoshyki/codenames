@@ -3,7 +3,7 @@ import Guesser from "./Guesser";
 import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import Field from "./Field";
-import PreStart from "./PreStart";
+import PreStart from "../PreStart";
 import { GameStages } from "@/store/game/game.types";
 import SelectCollection from "./SelectCollection";
 import Panel from "./Panel";

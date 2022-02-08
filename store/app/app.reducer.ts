@@ -1,81 +1,47 @@
-import { AppState, AppActions } from "./app.types";
 import { IAction } from "../types";
+import { AppStages, IApp } from "@/types/app";
+import { actions } from "@/types/actions";
 
-const initialState: AppState = {
-    showLogin: false,
-    socketId: null,
-    showGame: false,
-    processing: false,
-    info: null,
-    timer: null,
-    selectedCards: [],
+const initialState: IApp = {
+    stage: AppStages.nogame,
+    usersOnline: [],
+    socketId: "",
 };
 
-export const appReducer = (
-    state = initialState,
-    { type, payload }: IAction
-): AppState => {
+export const appReducer = (state = initialState, { type, payload }: IAction): IApp => {
+
     switch (type) {
-        case AppActions.SHOW_LOADING:
-            return {
-                ...state,
-                processing: true
-            };
 
-        case AppActions.HIDE_LOADING:
-            return {
-                ...state,
-                processing: false
-            };
-
-        case AppActions.SHOW_LOGIN_COMPONENT:
-            return {
-                ...state,
-                showLogin: true
-            };
-
-        case AppActions.HIDE_LOGIN_COMPONENT:
-            return {
-                ...state,
-                showLogin: false
-            };
-
-        case AppActions.SHOW_GAME_COMPONENT:
-            return {
-                ...state,
-                showGame: true
-            };
-
-        case AppActions.HIDE_GAME_COMPONENT:
-            return {
-                ...state,
-                showGame: false
-            };
-
-        case AppActions.SET_SOCKET_ID:
-            return {
-                ...state,
-                socketId: payload
-            };
-
-        case AppActions.SET_INFO:
+        case actions.setOnlineUsers:
             return ({
                 ...state,
-                info: payload
-            });
-
-        case AppActions.SET_TIMER:
-            return ({
-                ...state,
-                timer: payload
-            });
-
-        case AppActions.SET_SELECTED_CARDS:
-            return ({
-                ...state,
-                selectedCards: payload
+                usersOnline: payload
             })
 
+        case actions.setAppStage:
+            return ({
+                ...state,
+                stage: payload
+            })
+
+        case actions.setSocketId:
+            return ({
+                ...state,
+                socketId: payload
+            })
+
+        case actions.setCurrentUser:
+            return ({
+                ...state,
+                currentUser: payload
+            });
+
+        case actions.setAppError:
+            return ({
+                ...state,
+                error: payload
+            })
+ 
         default:
             return state;
     }

@@ -1,22 +1,23 @@
 import { ReduxAction } from "@/types";
-import { ChatMessage, ChatActions } from "./chat.types";
+import { IMessage } from "@/types/chat";
+import { actions } from "@/types/actions";
 
 export const showChat = () : ReduxAction => ({
-    type: ChatActions.SET_CHAT_HIDDEN,
+    type: actions.setChatHidden,
     payload: false
 });
 
 export const hideChat = () : ReduxAction => ({
-    type: ChatActions.SET_CHAT_HIDDEN,
+    type: actions.setChatHidden,
     payload: true
 });
 
-export const addMessageRequest = (message: ChatMessage) : ReduxAction => ({
-    type: ChatActions.ADD_MESSAGE_REQUEST,
-    payload: message
+export const addChatMessageRequest = (payload: IMessage) : ReduxAction => ({
+    type: actions.addChatMessageRequest,
+    payload
 });
 
-export const addMessage = (message: ChatMessage) : ReduxAction => ({
-    type: ChatActions.ADD_NEW_MESSAGE,
+export const addChatMessageResponse = (message: IMessage) : ReduxAction => ({
+    type: actions.addChatMessageResponse,
     payload: message
 });

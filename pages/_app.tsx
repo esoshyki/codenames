@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <ThemeProvider theme={myTheme}>
-                    <Chat />
+                    {/* <Chat /> */}
                     <Component {...pageProps} />
                 </ThemeProvider>
             </PersistGate>

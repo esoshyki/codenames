@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { IState } from "@/store/types";
 import PreStartHeader from "./PreStartHeader";
 import PreStartGameMembers from "./PreStartGameMembers";
-import Teams from "../Teams";
+import Teams from "../Game/Teams";
 import { teamsAreComplete } from "./lib";
 
 const PreStartWrapper = styled.div`
