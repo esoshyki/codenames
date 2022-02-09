@@ -1,9 +1,8 @@
-import { IUser } from "@/types/users";
-import { SClient } from "../socket.types";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { io } from "socket.io-client";
 import { setSocketId } from "@/store/app/app.actions";
+import { connectionEmitters } from "./emitters/connection";
 
 
 export const socket = io(
@@ -17,20 +16,10 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     socket.on("connect", () => {
         dispatch(setSocketId(socket.id));
     });
-
-};
-
-const setSocketIdRequest = (user: IUser) => {
-    socket.emit(SClient.setSocketRequest, user);
-};
-
-const setUserNameRequest = (user: IUser) => {
-    socket.emit(SClient.setUserNameRequest, user.userName)
 };
 
 const clientSocket = {
-    setSocketIdRequest,
-    setUserNameRequest
-};
+    connection: connectionEmitters
+}
 
 export default clientSocket;

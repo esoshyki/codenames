@@ -1,6 +1,6 @@
 import { Sides } from "./game";
 
-export interface IUser {
+export type IUser = {
     userName?: string;
     team?: Sides,
     leader?: true,

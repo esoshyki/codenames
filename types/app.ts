@@ -1,5 +1,3 @@
-import { IUser } from "./users";
-
 export enum AppStages {
     nogame = "nogame",
     prestart = "prestart",
@@ -18,8 +16,6 @@ export interface ISystemInfo {
 
 export interface IApp {
     stage: AppStages;
-    usersOnline: IUser[];
-    currentUser: IUser;
     error?: IError;
     systemInfo: ISystemInfo;
 }

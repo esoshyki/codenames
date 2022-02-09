@@ -1,52 +1,27 @@
 import { AppStages, IApp } from "@/types/app";
-import { actions, IAction } from "@/types/actions";
+import { Actions, IAction } from "@/types/actions";
 
 const initialState: IApp = {
     stage: AppStages.nogame,
-    usersOnline: [],
     systemInfo: {
         version: "1.1",
         connectionStatus: "disconnected",
     },
-    currentUser: {
-        
-    }
 };
 
-export const appReducer = (state = initialState, { type, payload }: IAction): IApp => {
+const actions = Actions.app;
+
+export const appReducer = (state = initialState, action : IAction): IApp => {
+
+    const { type, payload } = action;
 
     switch (type) {
 
-        case actions.setOnlineUsers:
-            return ({
-                ...state,
-                usersOnline: payload
-            })
-
-        case actions.setAppStage:
+       case actions.setAppStage:
             return ({
                 ...state,
                 stage: payload
             })
-
-        case actions.setSocketId:
-            return ({
-                ...state,
-                currentUser: {
-                    userName: state.currentUser?.userName,
-                    socketId: payload
-                },
-                systemInfo: {
-                    ...state.systemInfo,
-                    connectionStatus: payload ? "connected" : "disconnected"
-                }
-            })
-
-        case actions.setCurrentUser:
-            return ({
-                ...state,
-                currentUser: payload
-            });
 
         case actions.setAppError:
             return ({
