@@ -9,6 +9,8 @@ export enum actions {
     setCurrentUserRequest = "App/Set-Current-User-Request",
     setCurrentUser = "App/Set-Current-User",
     setAppError = "App/Set-Error",
+    setUserConnected = "App/Set-User-Connected",
+    setUserDisconnected = "App/Set-User-Disconnected", 
     
     //CHAT
     addChatMessageRequest = "Chat/Add-Message-Response",

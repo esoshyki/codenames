@@ -4,8 +4,8 @@ import Head from "next/head";
 // import { useSelector } from "react-redux";
 // import { IState } from "../../store/types";
 // import Loading from "../Loading";
-import Info from "../Info";
 import Menu from "../Menu";
+import SystemInfo from "../SystemInfo";
 
 interface LayoutProps {
     children: ReactNode;
@@ -35,6 +35,7 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 {/* <Info /> */}
                 <Menu />
                 {children}
+                <SystemInfo />
             </main>
             {/* {processing && <Loading />} */}
         </div>

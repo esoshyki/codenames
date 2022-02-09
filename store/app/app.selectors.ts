@@ -1,6 +1,16 @@
 import { IState } from "@/types";
 
-export const getOnlineUsers = (state: IState) => state.app.usersOnline;
-export const getAppStage = (state: IState) => state.app.stage;
-export const getCurrentUser = (state: IState) => state.app.currentUser;
-export const getAppError = (state: IState) => state.app.error;
+const usersOnline = (state: IState) => state.app.usersOnline;
+const stage = (state: IState) => state.app.stage;
+const currentUser = (state: IState) => state.app.currentUser;
+const error = (state: IState) => state.app.error;
+const systemInfo = (state: IState) => state.app.systemInfo;
+
+export const appSelector = {
+    usersOnline,
+    stage,
+    currentUser,
+    error,
+    systemInfo
+};
+

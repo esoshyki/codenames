@@ -8,6 +8,8 @@ const myTheme: DefaultTheme = {
         main: "cyan",
         secondary: "magenta",
     },
+
+    
 };
 
 export { myTheme };

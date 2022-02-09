@@ -5,7 +5,13 @@ import { actions } from "@/types/actions";
 const initialState: IApp = {
     stage: AppStages.nogame,
     usersOnline: [],
-    socketId: "",
+    systemInfo: {
+        version: "1.1",
+        connectionStatus: "disconnected",
+    },
+    currentUser: {
+        
+    }
 };
 
 export const appReducer = (state = initialState, { type, payload }: IAction): IApp => {
@@ -27,7 +33,14 @@ export const appReducer = (state = initialState, { type, payload }: IAction): IA
         case actions.setSocketId:
             return ({
                 ...state,
-                socketId: payload
+                currentUser: {
+                    userName: state.currentUser?.userName,
+                    socketId: payload
+                },
+                systemInfo: {
+                    ...state.systemInfo,
+                    connectionStatus: payload ? "connected" : "disconnected"
+                }
             })
 
         case actions.setCurrentUser:

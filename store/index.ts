@@ -10,7 +10,7 @@ const persistConfig = {
     key: "codenames",
     storage,
     whitelist: [],
-    blacklist: ["users", "chat", "game", "server", "app"]
+    // blacklist: ["users", "chat", "game", "server", "app"]
 };
 
 const sagaMiddleware = createSagaMiddleware();

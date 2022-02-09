@@ -3,7 +3,7 @@ import { IState } from "../../store/types";
 import Login from "../Login";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
-import { getCurrentUser } from "@/store/app/app.selectors";
+import { select } from '@/store/select';
 import MenuInputName from "./MenuInputName";
 
 const MenuWrapper = styled.nav`
@@ -26,16 +26,14 @@ const Menu = () => {
 
     const dispatch = useDispatch();
 
-    const currentUser = useSelector(getCurrentUser);
-
-    
-
+    const currentUser = useSelector(select.app.currentUser);
+   
     return (
         <MenuWrapper>
 
-            {!currentUser && <MenuInputName />}
+            {!currentUser.userName && <Login />}
 
-            {currentUser && <MenuItem>Начать игру</MenuItem>}
+            {currentUser.userName && <MenuItem>Начать игру</MenuItem>}
 
         </MenuWrapper>
     );

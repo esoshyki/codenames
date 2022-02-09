@@ -1,11 +1,12 @@
 import { KeyboardEvent, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IState } from "../../store/types";
-import { loginRequest, setLoginError } from "@/store/users/users.actions";
+import { select } from '@/store/select'
 import styled from "styled-components";
 import { colors } from "@/theme/colors";
+import { setAppError, setCurrentUserRequest } from "@/store/app/app.actions";
 
-const LoginWrapper = styled.span`
+const LoginWrapper = styled.div`
     height: 50px;
     position: absolute;
     display: flex;
@@ -14,6 +15,11 @@ const LoginWrapper = styled.span`
     justify-content: center;
     position: relative;
 `;
+
+const InputLabel = styled.span`
+    font-size: 20px;
+    margin-bottom: 20px;
+`
 
 const LoginInput = styled.input`
     width: 400px;
@@ -32,7 +38,7 @@ const LoginInput = styled.input`
     &:focus {
         border-color: ${colors.yellow};
     }
-`
+`;
 
 const LoginError = styled.span`
     color: red;
@@ -47,7 +53,7 @@ const Login = () => {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const loginError = useSelector((state: IState) => state.users.loginError);
+    const error = useSelector(select.app.error);
 
     const submit = async () => {
         const userName = inputRef.current?.value || null;
@@ -56,7 +62,7 @@ const Login = () => {
             return;
         }
 
-        dispatch(loginRequest(userName));
+        dispatch(setCurrentUserRequest({userName}));
     };
 
     const handleClick = (e: KeyboardEvent) => {
@@ -66,13 +72,14 @@ const Login = () => {
     };
 
     const handleChange = () => {
-        if (loginError) {
-            dispatch(setLoginError());
+        if (error) {
+            dispatch(setAppError());
         }
     };
 
     return (
         <LoginWrapper>
+            <InputLabel>Как ваше имя?</InputLabel>
             <LoginInput
                 id="login-input"
                 name="login"
@@ -81,7 +88,7 @@ const Login = () => {
                 onKeyPress={handleClick}
                 onChange={handleChange}
             />
-            {loginError && <LoginError>{loginError}</LoginError>}
+            {error && <LoginError>{error}</LoginError>}
         </LoginWrapper>
     );
 };

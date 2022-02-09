@@ -8,6 +8,7 @@ import { CollectionVote, GameStages, GuesserType, InGameUser, Mystery, RoundVote
 import { setCollection, setCollectionVotes, setFieldData, setGameMembers, setGameStage, setGuesserData, setMystery, setRoundVotes } from "@/store/game/game.actions";
 import { Collection } from "@/utils/wordCollections";
 import { SocketServerData } from "./socket.data";
+import { setSocketId } from "@/store/app/app.actions";
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
@@ -17,10 +18,10 @@ export const socket = io(
 );
 
 export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
-//     socket.on("connect", () => {
-//         dispatch(setSockedId(socket.id));
-//         dispatch(updateServerDataRequest());
-//     });
+    socket.on("connect", () => {
+        dispatch(setSocketId(socket.id));
+        // dispatch(updateServerDataRequest());
+    });
 
 //     socket.on(SocketServer.CHANGE_ONLINE_USERS, (users: User[]) => {
 //         dispatch(updateOnlineUsers(users));

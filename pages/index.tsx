@@ -5,13 +5,13 @@ import Layout from "../components/Layout";
 import Menu from "../components/Menu";
 import { connectSocket } from "@/socket/socket.client";
 import { AppStages } from "@/types/app";
-import { getAppStage } from "@/store/app/app.selectors";
+import { select } from "@/store/select";
 import PreStart from "@/components/PreStart";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
 
-    const stage = useSelector(getAppStage);
+    const stage = useSelector(select.app.stage);
 
     useEffect(() => {
         connectSocket(dispatch);

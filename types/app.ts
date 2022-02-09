@@ -11,10 +11,15 @@ export interface IError {
     message: string
 };
 
+export interface ISystemInfo {
+    version: string;
+    connectionStatus: "connected" | "disconnected";
+}
+
 export interface IApp {
     stage: AppStages;
     usersOnline: IUser[];
-    socketId: string;
-    currentUser?: IUser;
+    currentUser: IUser;
     error?: IError;
+    systemInfo: ISystemInfo;
 }

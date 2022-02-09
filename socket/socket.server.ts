@@ -4,7 +4,7 @@ import { ClientToServer, ServerToClient, InterServerEvents, SocketData} from "./
 import { NextApiResponseServerIO } from "@/types/next";
 import { SocketClient, SocketServer } from "./socket.types";
 import { ChatMessage } from "@/store/chat/chat.types";
-import { User } from '@/types';
+import { IUser } from '@/types/users';
 import ServerData from "./socket.data";
 import { GameStages, Mystery, Sides } from "@/store/game/game.types";
 import { allCollectionVotesDone, getCollectionWinner } from "./socket.server.utils";
@@ -73,99 +73,99 @@ export const creatseServerSocket = (res: NextApiResponseServerIO) => {
 
     io.sockets.on("connection", (socket) => {
 
-        socket.on(SocketClient.MAKE_MISTERY_REQUEST, (mystery: Mystery | null) => {
-            serverData.setMystery(mystery);
-            io.emit(SocketServer.SET_MYSTERY, serverData.getMystery())
-        })
+        // socket.on(SocketClient.MAKE_MISTERY_REQUEST, (mystery: Mystery | null) => {
+        //     serverData.setMystery(mystery);
+        //     io.emit(SocketServer.SET_MYSTERY, serverData.getMystery())
+        // })
 
-        socket.on(SocketClient.DISCONNECTING, () => {
-            serverData.disconnectUser(socket.id);
-            io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
-        });
+        // socket.on(SocketClient.DISCONNECTING, () => {
+        //     serverData.disconnectUser(socket.id);
+        //     io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
+        // });
 
-        socket.on(SocketClient.UPDATE_ONLINE_USERS_REQUEST, () => {
-            io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
-        });
+        // socket.on(SocketClient.UPDATE_ONLINE_USERS_REQUEST, () => {
+        //     io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
+        // });
 
-        socket.on(SocketClient.UPDATE_SERVER_DATA_REQUEST, () => {
-            console.log("UPDATE_SERVER_DATA_REQUEST");
-            io.emit(SocketServer.UPDATE_SERVER_DATA_RESPONSE, serverData.getServerData())
-            checkStateTrigger();
-        });
+        // socket.on(SocketClient.UPDATE_SERVER_DATA_REQUEST, () => {
+        //     console.log("UPDATE_SERVER_DATA_REQUEST");
+        //     io.emit(SocketServer.UPDATE_SERVER_DATA_RESPONSE, serverData.getServerData())
+        //     checkStateTrigger();
+        // });
 
-        socket.on(SocketClient.LOGIN_REQUEST, (user) => {
-            serverData.loginUser(user);
-            io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
-            io.emit(SocketServer.LOGIN_RESPONSE, user)
-        });
+        // socket.on(SocketClient.LOGIN_REQUEST, (user) => {
+        //     serverData.loginUser(user);
+        //     io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
+        //     io.emit(SocketServer.LOGIN_RESPONSE, user)
+        // });
 
-        socket.on(SocketClient.LOGOUT_REQUEST, (user) => {
-            serverData.disconnectUser(user.socketId);
-            io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
-        });
+        // socket.on(SocketClient.LOGOUT_REQUEST, (user) => {
+        //     serverData.disconnectUser(user.socketId);
+        //     io.emit(SocketServer.CHANGE_ONLINE_USERS, serverData.getOnlineUsers());
+        // });
 
-        socket.on(SocketClient.ADD_MESSAGE_REQUEST, (message: ChatMessage) => {
-            serverData.addMessage(message);
-            io.emit(SocketServer.ADD_MESSAGE_RESPONSE, message);
-        });
+        // socket.on(SocketClient.ADD_MESSAGE_REQUEST, (message: ChatMessage) => {
+        //     serverData.addMessage(message);
+        //     io.emit(SocketServer.ADD_MESSAGE_RESPONSE, message);
+        // });
 
-        socket.on(SocketClient.START_GAME_REQUEST, (user: User) => {
-            serverData.startGame(user);
-            io.emit(SocketServer.START_GAME_RESPONSE, serverData.getGameMembers());
-            checkStateTrigger();
-        });
+        // socket.on(SocketClient.START_GAME_REQUEST, (user: User) => {
+        //     serverData.startGame(user);
+        //     io.emit(SocketServer.START_GAME_RESPONSE, serverData.getGameMembers());
+        //     checkStateTrigger();
+        // });
 
-        socket.on(SocketClient.SET_TEAM_REQUEST, (user: User, side: Sides | null) => {
-            serverData.setTeam(user, side);
-            io.emit(SocketServer.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
-            console.log("game memvers", serverData.getGameMembers())
-            checkStateTrigger();
-        });
+        // socket.on(SocketClient.SET_TEAM_REQUEST, (user: User, side: Sides | null) => {
+        //     serverData.setTeam(user, side);
+        //     io.emit(SocketServer.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+        //     console.log("game memvers", serverData.getGameMembers())
+        //     checkStateTrigger();
+        // });
 
-        socket.on(SocketClient.SET_LEADER_REQUEST, (user: User) => {
-            serverData.toggleLeader(user);
-            io.emit(SocketServer.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
-            checkStateTrigger();
-        });
+        // socket.on(SocketClient.SET_LEADER_REQUEST, (user: User) => {
+        //     serverData.toggleLeader(user);
+        //     io.emit(SocketServer.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+        //     checkStateTrigger();
+        // });
 
-        socket.on(SocketClient.TOGGLE_READY_REQUEST, (userName: string) => {
-            serverData.toggleReady(userName);
-            io.emit(SocketServer.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
-            checkStateTrigger();
-        });
+        // socket.on(SocketClient.TOGGLE_READY_REQUEST, (userName: string) => {
+        //     serverData.toggleReady(userName);
+        //     io.emit(SocketServer.UPDATE_GAME_MEMBERS, serverData.getGameMembers());
+        //     checkStateTrigger();
+        // });
 
-        socket.on(SocketClient.TOOGLE_COLLECTION_VOTE_REQUEST, (userName: string, collectionIdx: number) => {
-            serverData.toggleCollectionVote(userName, collectionIdx);
-            const votes = serverData.getCollectionVotes();
-            const allDone = allCollectionVotesDone(votes, serverData.getGameMembers());
+        // socket.on(SocketClient.TOOGLE_COLLECTION_VOTE_REQUEST, (userName: string, collectionIdx: number) => {
+        //     serverData.toggleCollectionVote(userName, collectionIdx);
+        //     const votes = serverData.getCollectionVotes();
+        //     const allDone = allCollectionVotesDone(votes, serverData.getGameMembers());
 
-            if (allDone) {
-                const collectionIdx = getCollectionWinner(votes);
-                serverData.setFieldData(collectionIdx);
-                serverData.setGuesserData();
-                io.emit(SocketServer.SET_COLLECTION, wordCollections[collectionIdx]);
-                const fieldData = serverData.getFieldData()
+        //     if (allDone) {
+        //         const collectionIdx = getCollectionWinner(votes);
+        //         serverData.setFieldData(collectionIdx);
+        //         serverData.setGuesserData();
+        //         io.emit(SocketServer.SET_COLLECTION, wordCollections[collectionIdx]);
+        //         const fieldData = serverData.getFieldData()
 
-                if (fieldData) {
-                    io.emit(SocketServer.UPDATE_FIELD_DATA, fieldData)
-                };
+        //         if (fieldData) {
+        //             io.emit(SocketServer.UPDATE_FIELD_DATA, fieldData)
+        //         };
 
-                const guesserData = serverData.getGuesserData();
+        //         const guesserData = serverData.getGuesserData();
 
-                if (guesserData) {
-                    io.emit(SocketServer.UPDATE_GUESSER_DATA, guesserData)
-                };
-                checkStateTrigger()
+        //         if (guesserData) {
+        //             io.emit(SocketServer.UPDATE_GUESSER_DATA, guesserData)
+        //         };
+        //         checkStateTrigger()
  
-            } else {
-                io.emit(SocketServer.UPDATE_COLLECTION_VOTES, serverData.getCollectionVotes());
-            }
-        });
+        //     } else {
+        //         io.emit(SocketServer.UPDATE_COLLECTION_VOTES, serverData.getCollectionVotes());
+        //     }
+        // });
 
-        socket.on(SocketClient.MAKE_CUSTOM_CARD_VOTE_REQUEST, (cardId, user) => {
-            serverData.toggleRoundVote({cardIdx: cardId, userName: user.userName});
-            socket.emit(SocketServer.SET_CUSTOM_CARD_VOTES, serverData.getRoundVotes())
-        })
+        // socket.on(SocketClient.MAKE_CUSTOM_CARD_VOTE_REQUEST, (cardId, user) => {
+        //     serverData.toggleRoundVote({cardIdx: cardId, userName: user.userName});
+        //     socket.emit(SocketServer.SET_CUSTOM_CARD_VOTES, serverData.getRoundVotes())
+        // })
     });
 
     return io;

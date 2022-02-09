@@ -41,3 +41,4 @@ export const setCurrentUser = (payload: IUser) => ({
     type: actions.setCurrentUser,
     payload
 });
+
