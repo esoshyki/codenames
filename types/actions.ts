@@ -22,6 +22,9 @@ export enum actions {
     getFieldResponse = "Game/Get-Field-Response",
     addPlayerToTeamRequest = "Game/Add-Player-To-Team-Request",
     addPlayerToTeamResponse = "Game/Add-Player-To-Team-Response",
+};
 
-
+export interface IAction {
+    type: string;
+    payload?: any
 };

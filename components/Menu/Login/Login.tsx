@@ -1,10 +1,11 @@
 import { KeyboardEvent, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IState } from "../../store/types";
+import { IState } from "../../../store/types";
 import { select } from '@/store/select'
 import styled from "styled-components";
 import { colors } from "@/theme/colors";
 import { setAppError, setCurrentUserRequest } from "@/store/app/app.actions";
+import ButtonPrimary from "@/components/Layout/Buttons/Primary";
 
 const LoginWrapper = styled.div`
     height: 50px;
@@ -89,6 +90,8 @@ const Login = () => {
                 onChange={handleChange}
             />
             {error && <LoginError>{error}</LoginError>}
+
+            <ButtonPrimary>ОК</ButtonPrimary>
         </LoginWrapper>
     );
 };

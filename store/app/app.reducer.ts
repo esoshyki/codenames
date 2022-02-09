@@ -1,6 +1,5 @@
-import { IAction } from "../types";
 import { AppStages, IApp } from "@/types/app";
-import { actions } from "@/types/actions";
+import { actions, IAction } from "@/types/actions";
 
 const initialState: IApp = {
     stage: AppStages.nogame,

@@ -8,6 +8,9 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@emotion/react": "^11.7.1",
+        "@emotion/styled": "^11.6.0",
+        "@mui/material": "^5.4.1",
         "@types/socket.io": "^3.0.2",
         "@types/styled-components": "^5.1.20",
         "@types/styled-components-react-native": "^5.1.3",

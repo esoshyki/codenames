@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IState } from "../../store/types";
-import Login from "../Login";
+import Login from "./Login";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
 import { select } from '@/store/select';

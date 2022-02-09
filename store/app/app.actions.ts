@@ -1,7 +1,7 @@
 import { ReduxAction } from "@/types";
 import { actions } from "@/types/actions";
 import { AppStages, IError } from "@/types/app";
-import { IUser } from "../types";
+import { IUser } from "@/types/users";
 
 export const updateOnlineUsersRequest = () : ReduxAction => ({
     type: actions.updateOnlineUsersRequest

@@ -1,6 +1,6 @@
 import { NextApiRequest } from "next";
 import { NextApiResponseServerIO } from "../../types/next";
-import { creatseServerSocket } from "@/socket/socket.server";
+import { createIo } from "@/socket/server";
 
 export const config = {
     api: {
@@ -16,7 +16,7 @@ export default async function socketIO(
 
     if (!res.socket.server.io) {
 
-        const io = creatseServerSocket(res);
+        const io = createIo(res);
 
  
         res.socket.server.io = io;
