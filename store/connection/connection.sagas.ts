@@ -1,7 +1,7 @@
 import { takeEvery, call, put, select } from "redux-saga/effects";
 import { Actions, IAction } from "@/types/actions";
 import clientSocket from "@/socket/client";
-import { setSocketId } from "./connection.actions";
+import { setSocketId, setUserName } from "./connection.actions";
 import { IState } from "@/types";
 
 function* socketConnectedWorker({ payload } : IAction) {
@@ -18,10 +18,14 @@ function* userLoggedWorker({ payload } : IAction) {
     const state : IState = yield select();
     const currentUser = state.connection.currentUser;
 
+    console.log(currentUser);
+
     yield call(clientSocket.connection.setUserNameRequest, {
         ...currentUser,
         userName
-    })
+    });
+
+    yield put(setUserName(userName));
 };
 
 export default function* connectionSagas() {

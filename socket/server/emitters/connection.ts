@@ -20,6 +20,11 @@ export const addConnectionsEmiters =
         socket.on("disconnecting", () => {
             server.connection.disconnectUser(socket.id);
             io.emit(SServer.updateOnlineUsers, server.connection.getAllUsers());
+        });
+
+        socket.on(SClient.setUserNameRequest, (user: IUser) => {
+            server.connection.setUserName(user);
+            io.emit(SServer.updateOnlineUsers, server.connection.getAllUsers());
         })
 
 } 

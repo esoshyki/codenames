@@ -7,7 +7,7 @@ const setSocketIdRequest = (user: IUser) => {
 };
 
 const setUserNameRequest = (user: IUser) => {
-    socket.emit(SClient.setUserNameRequest, user.userName)
+    socket.emit(SClient.setUserNameRequest, user)
 };
 
 export const connectionEmitters = {

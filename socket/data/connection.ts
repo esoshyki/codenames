@@ -24,18 +24,31 @@ export class Connection {
     };
 
     removeUserBySocketId = (socketId: string) => {
-        this.users = this.users.filter(user => user.socketId === socketId);
+        this.users = this.users.filter(user => user.socketId !== socketId);
     }
 
     disconnectUser = (socketId: string) => {
+        console.log(`this.users before disconnected`, this.users)
         const user = this.users.find(user => user.socketId === socketId);
         if (user) {
             if (!user.userName) {
                 this.removeUserBySocketId(socketId)
             } else {
-                user.socketId = socketId;
+                user.socketId = undefined;
             }
         };
-    }; 
+        console.log(`this.users after disconnected`, this.users)
+    };
+
+    setUserName = (user: IUser) => {
+        const onlineUser = this.users.find(ouser => ouser.socketId === user.socketId);
+        console.log(onlineUser);
+        if (onlineUser) {
+            onlineUser.userName = user.userName;
+        };
+        console.log(this.users);
+    };
+
+
 };
 

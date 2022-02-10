@@ -17,8 +17,10 @@ const Title = styled.span`
     margin-right: 20px;
 `
 
-const UserNameWrapper = styled.span`
-    color: ${colors.blue};
+const UserNameWrapper = styled.span<{
+    connected: boolean
+}>`
+    color: ${props => props.connected ? colors.green : colors.red};
     font-size: 12px;
     margin: 0 10px;
 `
@@ -31,9 +33,15 @@ const SystemInfoOnlineUsers = () => {
     return (
         <OnlineUsersWrapper>
             <Title>В сети: </Title>
+
             {onlineUsers.map((user, idx) => (
-                <UserNameWrapper key={idx}>{user.userName}</UserNameWrapper>
+                <UserNameWrapper 
+                    connected={Boolean(user.socketId)} 
+                    key={idx}>
+                        {user.userName}
+                </UserNameWrapper>
             ))}
+            
         </OnlineUsersWrapper>
     )
 };
