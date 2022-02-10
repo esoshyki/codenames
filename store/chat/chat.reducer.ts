@@ -1,11 +1,13 @@
 import { ReduxAction } from "@/types";
 import { IChat } from "@/types/chat";
-import { actions } from "@/types/actions";
+import { Actions } from "@/types/actions";
 
 const initialState: IChat = {
     messages: [],
     hidden: false,
 };
+
+const actions = Actions.chat;
 
 const chatReducer = (state = initialState, { type, payload }: ReduxAction) : IChat => {
 

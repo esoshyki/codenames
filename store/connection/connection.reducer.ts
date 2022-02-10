@@ -1,5 +1,6 @@
 import { IConnectionState } from "@/types/connection";
 import { Actions, IAction } from "@/types/actions";
+import { IUser } from "@/types/users";
 
 const initialState: IConnectionState = {
     onlineUsers: [],
@@ -16,7 +17,6 @@ export const connectionReducer =
     switch (type) {
 
         case Actions.connection.setUserName:
-
             return {
                 ...state,
                 currentUser: {
@@ -26,14 +26,25 @@ export const connectionReducer =
             }
 
         case Actions.connection.setSocketId:
-
-        return {
-            ...state,
-            currentUser: {
-                ...state.currentUser,
-                socketId: payload
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    socketId: payload
+                }
             }
-        }      
+
+        case Actions.connection.updateOnlineUsers:
+            return {
+                ...state,
+                onlineUsers: payload
+            };
+
+        case Actions.connection.setError:
+            return {
+                ...state,
+                connectionError: payload
+            }
 
         default: 
             return {

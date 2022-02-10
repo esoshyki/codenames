@@ -1,6 +1,8 @@
 import { ReduxAction } from "@/types";
 import { IMessage } from "@/types/chat";
-import { actions } from "@/types/actions";
+import { Actions } from "@/types/actions";
+
+const actions = Actions.chat;
 
 export const showChat = () : ReduxAction => ({
     type: actions.setChatHidden,

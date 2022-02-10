@@ -4,7 +4,7 @@ import { IState } from "../../../store/types";
 import { select } from '@/store/select'
 import styled from "styled-components";
 import { colors } from "@/theme/colors";
-import { setAppError, setCurrentUserRequest } from "@/store/app/app.actions";
+import { setConnectionError, userLogged } from "@/store/connection/connection.actions";
 import ButtonPrimary from "@/components/Layout/Buttons/Primary";
 
 const LoginWrapper = styled.div`
@@ -54,7 +54,7 @@ const Login = () => {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const error = useSelector(select.app.error);
+    const connectionError = useSelector(select.connection.connectionError);
 
     const submit = async () => {
         const userName = inputRef.current?.value || null;
@@ -63,7 +63,7 @@ const Login = () => {
             return;
         }
 
-        dispatch(setCurrentUserRequest({userName}));
+        dispatch(userLogged(userName));
     };
 
     const handleClick = (e: KeyboardEvent) => {
@@ -73,8 +73,8 @@ const Login = () => {
     };
 
     const handleChange = () => {
-        if (error) {
-            dispatch(setAppError());
+        if (connectionError) {
+            dispatch(setConnectionError(connectionError));
         }
     };
 
@@ -89,7 +89,7 @@ const Login = () => {
                 onKeyPress={handleClick}
                 onChange={handleChange}
             />
-            {error && <LoginError>{error}</LoginError>}
+            {connectionError && <LoginError>{connectionError}</LoginError>}
 
             <ButtonPrimary>ОК</ButtonPrimary>
         </LoginWrapper>

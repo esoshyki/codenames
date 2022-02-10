@@ -3,7 +3,7 @@ import { IUser } from "@/types/users";
 
 export enum SServer {
     connected = "connected",
-    updateOneUserData = "updateOneUserData"
+    updateOnlineUsers = "updateOnlineUsers"
 }
 
 export enum SClient {
@@ -12,8 +12,7 @@ export enum SClient {
 };
 
 export interface ServerToClient {
-
-
+    [SServer.updateOnlineUsers]: (users: IUser[]) => void;
 };
 
 export interface ClientToServer {

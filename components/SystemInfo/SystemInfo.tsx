@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { colors } from "@/theme/colors";
 import { Fragment } from "react";
+import { SystemInfo } from "@/types/system";
+import SystemInfoOnlineUsers from "./SystemInfoOnlineUsers";
 
 const SystemInfoWrapper = styled.div`
     position: absolute;
@@ -23,19 +25,23 @@ const SystemInfoConnected = styled.span<{
     margin: 10px;
 `;
 
+const SystemInfoComponent = () => {
 
-const SystemInfo = () => {
+    const currentUser = useSelector(select.connection.currentUser);
 
-    const sytemInfo = useSelector(select.app.systemInfo);
+    const systemInfo: SystemInfo = {
+        version: "1.1",
+        connectionStatus: currentUser.socketId ? "connected" : "disconnected"
+    };
 
     const getContent = () => {
         
         return (
             <Fragment>
-                <SystemInfoVersion>{`Version ${sytemInfo.version}`}</SystemInfoVersion>
+                <SystemInfoVersion>{`Version ${systemInfo.version}`}</SystemInfoVersion>
 
-                <SystemInfoConnected connected={sytemInfo.connectionStatus === "connected"}>
-                    {sytemInfo.connectionStatus}
+                <SystemInfoConnected connected={systemInfo.connectionStatus === "connected"}>
+                    {systemInfo.connectionStatus}
                 </SystemInfoConnected>
 
             </Fragment>
@@ -43,10 +49,15 @@ const SystemInfo = () => {
     };
 
     return (
-        <SystemInfoWrapper>
-            {getContent()}
-        </SystemInfoWrapper>
+        <Fragment>
+            <SystemInfoWrapper>
+                {getContent()}
+            </SystemInfoWrapper>
+
+            <SystemInfoOnlineUsers />
+        </Fragment>
+
     )
 };
 
-export default SystemInfo
+export default SystemInfoComponent;

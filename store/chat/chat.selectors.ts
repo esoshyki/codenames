@@ -1,4 +1,9 @@
 import { IState } from "@/types";
 
-export const getChatHidden = (state: IState) => state.chat.hidden;
-export const getChatMessages = (state: IState) => state.chat.messages;
+const chatIsHidden = (state: IState) => state.chat.hidden;
+const chatMessages = (state: IState) => state.chat.messages;
+
+export const chatSelectors = {
+    chatIsHidden,
+    chatMessages
+};

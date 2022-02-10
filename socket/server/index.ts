@@ -2,7 +2,6 @@ import { NextApiResponseServerIO } from "@/types/next"
 import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
 import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../socket.types";
-import { Server } from "../data";
 import { addConnectionsEmiters } from "./emitters/connection";
 
 export const createIo = (res: NextApiResponseServerIO) => {
@@ -15,9 +14,8 @@ export const createIo = (res: NextApiResponseServerIO) => {
                 methods: ["GET", "POST"]
         }   
     });
-    const server = new Server();
     io.sockets.on("connection", (socket) => {
-        addConnectionsEmiters(socket, server, io);
+        addConnectionsEmiters(socket, io);
     })
 
     return io

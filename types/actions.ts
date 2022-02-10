@@ -4,12 +4,20 @@ enum ConnectionActions {
     userLogged = "Connection/User-Logged",
     setUserName = "Connection/Set-User-Name",
     setSocketId = "Connection/Set-Socket-Id",
+    updateOnlineUsers = "Connection/Update-Online-Users",
+    setError = "Connection/Set-Error",
 };
 
 enum AppActions {
     setAppStage = "App/Set-App-Stage",
     setAppError = "App/Set-App-Error",
-}
+};
+
+enum ChatActions {
+    addChatMessageRequest = "Chat/Add-Message-Response",
+    addChatMessageResponse = "Chat/Add-Message-Response",
+    setChatHidden = "Chat/Set-Hidden",  
+};
 
 // export enum actions {
 //     //APP
@@ -42,6 +50,7 @@ enum AppActions {
 export const Actions = {
     connection: ConnectionActions,
     app: AppActions,
+    chat: ChatActions
 };
 
 export interface IAction {

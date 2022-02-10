@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { IState } from "../../store/types";
 import Login from "./Login";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
 import { select } from '@/store/select';
-import MenuInputName from "./MenuInputName";
 
 const MenuWrapper = styled.nav`
     position: fixed;
@@ -26,7 +24,7 @@ const Menu = () => {
 
     const dispatch = useDispatch();
 
-    const currentUser = useSelector(select.app.currentUser);
+    const currentUser = useSelector(select.connection.currentUser);
    
     return (
         <MenuWrapper>

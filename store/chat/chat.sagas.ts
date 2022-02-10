@@ -1,8 +1,8 @@
 import { call, takeEvery } from "redux-saga/effects";
-import { actions } from "@/types/actions";
-import { socket } from "@/socket/client";
-import { SClient } from "@/socket/socket.types";
+import { Actions } from "@/types/actions";
 import { ReduxAction } from "@/types";
+
+const actions = Actions.chat;
 
 function* addMessageRequestWorker ({ payload } : ReduxAction ) {
 

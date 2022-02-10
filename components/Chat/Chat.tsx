@@ -6,6 +6,7 @@ import Messages from "./Messages";
 import UsersOnline from "./UsersOnline";
 import styled, { keyframes } from "styled-components";
 import { colors } from "@/theme/colors";
+import { select } from "@/store/select";
 
 const roll = keyframes`
     0% {
@@ -35,9 +36,9 @@ const ChatIcon = styled.div`
 `;
 
 const ChatWrapper = styled.div<{
-    _hidden: boolean
+    hidden: boolean
 }>`
-    right: ${props => props._hidden ? "-300px" : "0px"};
+    right: ${props => props.hidden ? "-300px" : "0px"};
     position: fixed;
     width: 300px;
     height: 100vh;
@@ -63,17 +64,17 @@ const ChatConnectedIcon = styled.div<{
 const Chat = () => {
     const dispatch = useDispatch();
 
-    const { hidden } = useSelector((state: IState) => state.chat);
+    const chatIsHidden = useSelector(select.chat.chatIsHidden);
     const { socketId } = useSelector((state: IState) => state.app);
 
     const onIconClick = () => {
-        hidden ? dispatch(showChat()) : dispatch(hideChat());
+        chatIsHidden ? dispatch(showChat()) : dispatch(hideChat());
     };
 
     return (
         <Fragment>
             <ChatIcon onClick={onIconClick} />
-            <ChatWrapper _hidden={hidden}>
+            <ChatWrapper hidden={chatIsHidden}>
                 <ChatConnectedIcon connected={!!socketId}/>
                 <Messages />
                 <UsersOnline />

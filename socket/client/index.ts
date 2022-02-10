@@ -1,8 +1,10 @@
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { io } from "socket.io-client";
-import { setSocketId } from "@/store/app/app.actions";
+import { socketConnected, socketDisconnected, updateOnlineUsers } from "@/store/connection/connection.actions";
 import { connectionEmitters } from "./emitters/connection";
+import { SServer } from "../socket.types";
+import { IUser } from "@/types/users";
 
 
 export const socket = io(
@@ -14,8 +16,17 @@ export const socket = io(
 
 export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     socket.on("connect", () => {
-        dispatch(setSocketId(socket.id));
+        dispatch(socketConnected(socket.id));
     });
+
+    socket.on("disconnect", () => {
+        dispatch(socketDisconnected())
+    })
+
+    socket.on(SServer.updateOnlineUsers, (users: IUser[]) => {
+        console.log("users", users);
+        dispatch(updateOnlineUsers(users))
+    })
 };
 
 const clientSocket = {

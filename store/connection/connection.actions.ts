@@ -8,9 +8,9 @@ export const socketConnected = (payload: string) : IAction => ({
     payload
 });
 
-export const userLogged = (payload: string) => ({
+export const userLogged = (userName: string) => ({
     type: Actions.connection.userLogged,
-    payload
+    payload: userName
 });
 
 export const socketDisconnected = () : IAction => ({
@@ -27,5 +27,15 @@ export const setUserName = (payload: IUser) => ({
 export const setSocketId = (payload?: string) => ({
     type: Actions.connection.setSocketId,
     payload
-})
+});
+
+export const updateOnlineUsers = (payload: IUser[]) => ({
+    type: Actions.connection.updateOnlineUsers,
+    payload
+});
+
+export const setConnectionError = (payload?: string) => ({
+    type: Actions.connection.setError,
+    payload
+});
 
