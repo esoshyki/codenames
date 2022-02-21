@@ -1,6 +1,5 @@
 import { KeyboardEvent, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IState } from "../../../store/types";
 import { select } from '@/store/select'
 import styled from "styled-components";
 import { colors } from "@/theme/colors";
@@ -91,7 +90,7 @@ const Login = () => {
             />
             {connectionError && <LoginError>{connectionError}</LoginError>}
 
-            <ButtonPrimary>ОК</ButtonPrimary>
+            <ButtonPrimary onClick={submit}>ОК</ButtonPrimary>
         </LoginWrapper>
     );
 };

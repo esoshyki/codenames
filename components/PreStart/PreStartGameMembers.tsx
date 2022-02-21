@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { IState } from "@/store/types";
+import { IState } from "@/types";
 import PreStartGameMember from "./PreStartGameMember";
+import { IUser } from "@/types/users";
 
 const PreStartGameMembersWrapper = styled.div`
     width: 100%;
@@ -36,7 +37,7 @@ const PreStartGameMembers = () => {
             </PreStartTitle>
 
             <MembersContainer>
-                {gameMembers && gameMembers.map((gameMember,idx) => (
+                {gameMembers && gameMembers.map((gameMember : IUser, idx: number) => (
                     <PreStartGameMember key={idx} user={gameMember}/>
                 ))}
             </MembersContainer>

@@ -26,7 +26,10 @@ enum ChatActions {
 };
 
 enum GameActions {
+    StartGameRequest = "Game/Start-Game-Request",
     Reset = "Game/Reset",
+    SetGameMembers = "Game/Set-Game-Members",
+    UpdateGameMembersRequest = "Game/Update-Game-Members-Request",
 }
 
 export const Actions = {

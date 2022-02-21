@@ -6,6 +6,7 @@ import Menu from "../components/Menu";
 import { connectSocket } from "@/socket/client";
 import { AppStages } from "@/types/app";
 import { select } from "@/store/select";
+import PreStart from "@/components/PreStart";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
     return (
         <Layout>
             {stage === AppStages.nogame && <Menu />}
-            {/* {stage === AppStages.prestart && <PreStart />} */}
+            {stage === AppStages.prestart && <PreStart />}
 
             {/* {stage !== GameStages.noGame && <Game />} */}
         </Layout>

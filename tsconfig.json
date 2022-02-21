@@ -30,7 +30,8 @@
             "@/firebase/*": ["firebase/*"],
             "@/api": ["api"],
             "@/utils/*": ["utils/*"],
-            "@/socket/*": ["socket/*"]
+            "@/socket/*": ["socket/*"],
+            "@/t": ["translate"]
         },
         "incremental": true
     },

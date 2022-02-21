@@ -3,6 +3,11 @@ import Login from "./Login";
 import MenuItem from "./MenuItem";
 import styled from "styled-components";
 import { select } from '@/store/select';
+import { startGameRequest } from "@/store/game/game.actions";
+import t from '@/t';
+import { getLocale } from "translate/locales";
+import { useRouter } from "next/router";
+import { MenuContent } from "translate/menu";
 
 const MenuWrapper = styled.nav`
     position: fixed;
@@ -23,11 +28,12 @@ const MenuWrapper = styled.nav`
 const Menu = () => {
 
     const dispatch = useDispatch();
+    const locale = getLocale(useRouter().locale);
 
     const currentUser = useSelector(select.connection.currentUser);
 
     const startGame = () => {
-        
+        dispatch(startGameRequest())
     };
    
     return (
@@ -35,7 +41,11 @@ const Menu = () => {
 
             {!currentUser.userName && <Login />}
 
-            {currentUser.userName && <MenuItem onClick={startGame}>Начать игру</MenuItem>}
+            {currentUser.userName && (
+                <MenuItem onClick={startGame}>
+                    {t.menu(locale, MenuContent.beginGame)}
+                </MenuItem>
+            )}
 
         </MenuWrapper>
     );

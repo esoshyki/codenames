@@ -1,3 +1,5 @@
+import { Locales } from "translate/locales";
+
 export enum AppStages {
     nogame = "nogame",
     prestart = "prestart",
@@ -15,6 +17,7 @@ export interface ISystemInfo {
 }
 
 export interface IApp {
+    locale: Locales,
     stage: AppStages;
     error?: IError;
     systemInfo: ISystemInfo;

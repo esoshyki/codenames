@@ -4,7 +4,6 @@ import Head from "next/head";
 // import { useSelector } from "react-redux";
 // import { IState } from "../../store/types";
 // import Loading from "../Loading";
-import Menu from "../Menu";
 import SystemInfo from "../SystemInfo";
 import { isDevelop } from "@/utils/isDevelop";
 import Reset from "./Reset";
@@ -29,7 +28,6 @@ const Layout = ({ children, pageName }: LayoutProps) => {
             <main>
 
                 {isDevelop() && <Reset />}
-                <Menu />
                 {children}
                 <SystemInfo />
             </main>

@@ -1,5 +1,6 @@
 import { AppStages, IApp } from "@/types/app";
 import { Actions, IAction } from "@/types/actions";
+import { Locales } from "translate/locales";
 
 const initialState: IApp = {
     stage: AppStages.nogame,
@@ -7,6 +8,7 @@ const initialState: IApp = {
         version: "1.1",
         connectionStatus: "disconnected",
     },
+    locale: Locales.be
 };
 
 const actions = Actions.app;

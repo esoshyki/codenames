@@ -37,6 +37,12 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
                 gameMembers: []
             }
 
+        case Actions.game.SetGameMembers:
+            return {
+                ...state,
+                gameMembers: payload
+            }
+
         default:
             return state
     }

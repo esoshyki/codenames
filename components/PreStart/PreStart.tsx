@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { IState } from "@/store/types";
 import PreStartHeader from "./PreStartHeader";
 import PreStartGameMembers from "./PreStartGameMembers";
-import Teams from "../Game/Teams";
-import { teamsAreComplete } from "./lib";
+import { select } from "@/store/select";
+import Teams from "./Teams";
+import { useRouter } from "next/router";
+import { PrestartContent, preStartContent } from "translate/prestart";
+import { getLocale, Locales } from "translate/locales";
+import { t } from '../../translate';
 
 const PreStartWrapper = styled.div`
     width: 100vw;
@@ -19,13 +22,11 @@ const PreStartWrapper = styled.div`
 
 const PreStart = () => {
 
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
+    const locale = getLocale(useRouter().locale);
+
+    const gameMembers = useSelector(select.game.gameMembers);
 
     const getHeaderContent = () : string => {
-
-        if (!teamsAreComplete(gameMembers)) {
-            return "Teams are not complete"
-        };
 
         return "Teams are complete. Get ready to start"
     };
@@ -34,7 +35,7 @@ const PreStart = () => {
         <PreStartWrapper>
             {gameMembers.length < 4 && (
                 <PreStartHeader>
-                    Waiting for players
+                    {t.prestart(locale, PrestartContent.waitingForPlayers)}
                 </PreStartHeader>
             )}
 

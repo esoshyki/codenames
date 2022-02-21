@@ -1,13 +1,11 @@
-import { InGameUser, Sides } from "@/store/game/game.types";
-import { IState } from "@/store/types";
+import { Sides } from "@/types/game";
 import { colors } from "@/theme/colors";
-import { getUserTeam } from "@/utils/user.ingame";
-import { useSelector } from "react-redux";
+import { IUser } from "@/types/users";
 import styled from "styled-components";
 
 const Wrapper = styled.div<{
-    ready: boolean,
-    team: Sides | null
+    ready?: true,
+    team?: Sides
 }>`
     width: 200px;
     height: 130px;
@@ -36,16 +34,13 @@ const Wrapper = styled.div<{
 `;
 
 interface Props {
-    user: InGameUser
+    user: IUser
 }
 
 const PreStartGameMember = ({user} : Props) => {
 
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-    const team = getUserTeam(gameMembers, user);
-
     return (
-        <Wrapper ready={user.ready} team={team}>
+        <Wrapper ready={user.ready} team={user.team}>
             {user.userName}
         </Wrapper>
     )

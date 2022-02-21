@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Team from "./Team";
-import { Sides } from "@/store/game/game.types";
 import { useDispatch, useSelector } from "react-redux";
-import { setLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
-import { IState } from "@/store/types";
-import { teamsAreComplete } from "../../PreStart/lib";
+import { teamsComplete } from "./utils/teams.complete";
+import { select } from "@/store/select";
+import { Sides } from "@/types/game";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -44,24 +43,26 @@ const Teams = () => {
 
     const dispatch = useDispatch();
 
-    const gameUsers = useSelector((state: IState) => state.game.gameMembers);
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
+    const gameMembers = useSelector(select.game.gameMembers);
+    const currentUser = useSelector(select.connection.currentUser);
+    const redTeam = useSelector(select.game.redTeam);
+    const blueTeam = useSelector(select.game.blueTeam);
 
     const makeMeALeader = () => {
-        dispatch(setLeaderRequest())
+
     };
 
     const toogleReady = () => {
-        dispatch(toggleReadyRequest())
+
     };
 
-    const isUserALeader = () => gameUsers.find(user => user.userName === currentUser?.userName)?.leader;
+    const isUserALeader = () => gameMembers.find(user => user.userName === currentUser?.userName)?.leader;
 
     return (
         <TeamsWrapper>
 
-            <Team team={Sides.red} />
-            <Team team={Sides.blue} />
+            <Team side={Sides.red} />
+            <Team side={Sides.blue} />
 
             <TeamsButtonsWrapper>
 
@@ -69,9 +70,11 @@ const Teams = () => {
                     {isUserALeader() ? "Don't be a leader" : "Make me a leader"}
                 </TeamsButton>
 
-                {teamsAreComplete(gameUsers) && <TeamsButton onClick={toogleReady}>
-                    {gameUsers.some(user => user.userName === currentUser?.userName && user.ready) ? "Not ready" : "Get Ready"}
-                </TeamsButton>}
+                {teamsComplete(blueTeam, redTeam) && (
+                    <TeamsButton onClick={toogleReady}>
+                        {currentUser.ready ? "Not ready" : "Ready"}
+                    </TeamsButton>
+                )}
 
             </TeamsButtonsWrapper>
 

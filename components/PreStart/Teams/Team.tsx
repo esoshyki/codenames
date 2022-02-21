@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { IState } from "@/store/types";
-import { setTeamRequest } from "@/store/game/game.actions";
-import { Sides } from "@/store/game/game.types";
+import { IState } from "@/types";
+import { Sides } from "@/types/game";
 import { colors } from "@/theme/colors";
+import { select } from "@/store/select";
 
 const TeamWrapper = styled.div<{
     red: boolean,
@@ -81,32 +81,33 @@ const LeaderIcon = styled.div`
 `
 
 interface TeamProps {
-    team: Sides
+    side: Sides
 };
 
-const Team = ({ team } : TeamProps ) => {
+const Team = ({ side } : TeamProps ) => {
 
     const dispatch = useDispatch();
 
     const handleClick = () => {
-        dispatch(setTeamRequest(team))
+
     };
 
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
-    const teamUsers = gameMembers.filter(user => user.team === team);
+    const gameMembers = useSelector(select.game.gameMembers);
+    const currentUser = useSelector(select.connection.currentUser);
+    const team = useSelector(side === Sides.blue ? select.game.blueTeam : select.game.redTeam);
+    const teamUsers = team.members;
 
     const isUserInTeam = () => Boolean(teamUsers.find(user => user.userName === currentUser?.userName));
 
     return (
         <TeamWrapper 
-            red={team === Sides.red} 
+            red={team.side === Sides.red} 
             leave={isUserInTeam()}
             onClick={handleClick}
             >
 
             {teamUsers && teamUsers.map((user, idx) => (
-                <UserWrapper team={team}  key={idx}>
+                <UserWrapper team={team.side}  key={idx}>
                     {user.userName + (currentUser?.userName === user.userName ? " (You)" : "")}
                     {user.leader && <LeaderIcon />}
                 </UserWrapper>

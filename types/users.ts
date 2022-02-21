@@ -4,7 +4,8 @@ export type IUser = {
     userName?: string;
     team?: Sides,
     leader?: true,
-    socketId?: string
+    socketId?: string,
+    ready?: true,
 };
 
 export interface ITeam {
