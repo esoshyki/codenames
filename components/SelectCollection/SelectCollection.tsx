@@ -97,7 +97,9 @@ const SelectCollection = () => {
                         >
                         {collection.title}
                         <VotedUsers>
-                            {collectionVotes && collectionVotes.map((vote, id) => (
+                            {collectionVotes && collectionVotes
+                                .filter(member => member.collectionIdx === collection.idx)
+                                .map((vote, id) => (
                                 <Voter key={"voter" + id}>{vote?.voter}</Voter>
                             ))}
                         </VotedUsers>
