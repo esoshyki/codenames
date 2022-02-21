@@ -1,5 +1,5 @@
 import { SServer } from "@/socket/socket.types";
-import { allReadyRequest, updateGameMembersRequest } from "@/store/game/game.actions";
+import { allReadyRequest, setFieldRequest, updateGameMembersRequest } from "@/store/game/game.actions";
 import { IField } from "@/types/game";
 import { IUser } from "@/types/users";
 import { Dispatch } from "react";
@@ -16,6 +16,6 @@ export const setGameListeners = (dispatch: Dispatch<AnyAction>) => {
     });
 
     socket.on(SServer.SetField, (field: IField) => {
-        
-    })
+        dispatch(setFieldRequest(field))
+    });
 }

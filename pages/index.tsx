@@ -13,6 +13,11 @@ const Home: NextPage = () => {
     const dispatch = useDispatch();
 
     const stage = useSelector(select.app.stage);
+    const currentUser = useSelector(select.connection.currentUser);
+    const gameMembers = useSelector(select.game.gameMembers);
+
+
+    const showMenu = () => !(gameMembers.some(member => member.userName === currentUser.userName));
 
     useEffect(() => {
         connectSocket(dispatch);
@@ -20,7 +25,7 @@ const Home: NextPage = () => {
 
     return (
         <Layout>
-            {stage === AppStages.nogame && <Menu />}
+            {showMenu() && <Menu />}
             {stage === AppStages.prestart && <PreStart />}
             {stage === AppStages.CollectionVote && <SelectCollection />}
 
