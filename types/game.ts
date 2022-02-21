@@ -1,4 +1,4 @@
-import { ITeam, IUser  } from "./users";
+import { IUser  } from "./users";
 
 export enum Sides {
     red = "red",
@@ -41,6 +41,10 @@ export interface IUserStats {
 export interface IStatistics {
     users: IUserStats[]
 };
+
+export interface ITeam {
+    members: IUser[]
+}
 
 export interface IGame {
     field: IField;

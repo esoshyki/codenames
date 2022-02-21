@@ -6,8 +6,14 @@ import { isDevelop } from "@/utils/isDevelop";
 const startGameRequest = (user: IUser) => {
     isDevelop() && console.log("Socket-Client/startGameRequest, data: ", user);
     socket.emit(SClient.StartGameRequest, user);
-};
+}
+
+const updateGameMember = (user: IUser) => {
+    isDevelop() && console.log("Socket-Client/updateGameMember, data: ", user);
+    socket.emit(SClient.UpdateGameMember, user)
+}
 
 export const gameEmitters = {
-    startGameRequest
-};
+    startGameRequest,
+    updateGameMember
+}

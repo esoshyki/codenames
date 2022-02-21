@@ -8,11 +8,9 @@ const initialState: IGame = {
     },
     redTeam: {
         members: [],
-        side: Sides.red
     },
     blueTeam: {
         members: [],
-        side: Sides.blue
     },
     gameMembers: []
 };
@@ -28,11 +26,9 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
                 },
                 redTeam: {
                     members: [],
-                    side: Sides.red
                 },
                 blueTeam: {
                     members: [],
-                    side: Sides.blue
                 },
                 gameMembers: []
             }
@@ -41,6 +37,24 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
             return {
                 ...state,
                 gameMembers: payload
+            }
+
+        case Actions.game.SetBlueTeam:
+            return {
+                ...state,
+                blueTeam: {
+                    ...state.blueTeam,
+                    members: payload
+                }
+            }
+
+        case Actions.game.SetRedTeam:
+            return {
+                ...state,
+                redTeam: {
+                    ...state.redTeam,
+                    members: payload
+                }
             }
 
         default:

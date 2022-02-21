@@ -53,6 +53,15 @@ export const connectionReducer =
                 }
             }
 
+        case Actions.connection.SetCurrentUserTeam:
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    team: payload
+                }
+            }
+
         default: 
             return {
                 ...state

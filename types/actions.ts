@@ -7,6 +7,7 @@ enum ConnectionActions {
     updateOnlineUsers = "Connection/Update-Online-Users",
     setError = "Connection/Set-Error",
     Reset = "Connection/Reset",
+    SetCurrentUserTeam = "Connection/Set-Current-User-Team",
 };
 
 enum AppActions {
@@ -31,6 +32,9 @@ enum GameActions {
     Reset = "Game/Reset",
     SetGameMembers = "Game/Set-Game-Members",
     UpdateGameMembersRequest = "Game/Update-Game-Members-Request",
+    ToggleTeamRequest = "Game/Toggle-Team-Request",
+    SetRedTeam = "Game/Set-Red-Team",
+    SetBlueTeam = "Game/Set-Blue-Team",
 }
 
 export const Actions = {

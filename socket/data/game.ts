@@ -4,7 +4,7 @@ export class GameData {
     private gameMembers: IUser[];
 
     constructor () {
-        this.gameMembers = []
+        this.gameMembers = [];
     }
 
     addGameMember = (user: IUser) => {
@@ -20,6 +20,13 @@ export class GameData {
     reset = () => {
         this.gameMembers = [];
         console.log("ServerData.gameData.reset");
+    };
+
+    updateGameMember = (user: IUser) => {
+        const index = this.gameMembers.findIndex(usr => usr.userName === user.userName);
+        if (index >= 0) {
+        this.gameMembers[index] = user; 
+        }
     }
 
 }

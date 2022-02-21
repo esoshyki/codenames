@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { IState } from "@/types";
 import { Sides } from "@/types/game";
 import { colors } from "@/theme/colors";
 import { select } from "@/store/select";
 import { Locales } from "translate/locales";
 import t from "@/t";
 import { PrestartContent } from "translate/prestart";
+import { toggleTeamRequest } from "@/store/game/game.actions";
 
 const TeamWrapper = styled.div<{
     red: boolean,
@@ -104,7 +104,7 @@ const Team = ({ side } : TeamProps ) => {
     const dispatch = useDispatch();
 
     const handleClick = () => {
-
+        dispatch(toggleTeamRequest(side))
     };
 
     const gameMembers = useSelector(select.game.gameMembers);
@@ -117,14 +117,14 @@ const Team = ({ side } : TeamProps ) => {
 
     return (
         <TeamWrapper 
-            red={team.side === Sides.red} 
+            red={side === Sides.red} 
             leave={isUserInTeam()}
             onClick={handleClick}
             locale={locale}
             >
 
             {teamUsers && teamUsers.map((user, idx) => (
-                <UserWrapper team={team.side}  key={idx}>
+                <UserWrapper team={side}  key={idx}>
                     {user.userName + (currentUser?.userName === user.userName ? " (You)" : "")}
                     {user.leader && <LeaderIcon />}
                 </UserWrapper>

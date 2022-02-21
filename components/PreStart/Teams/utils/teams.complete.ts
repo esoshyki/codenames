@@ -1,4 +1,4 @@
-import { ITeam } from "@/types/users";
+import { ITeam } from "@/types/game";
 
 export const teamsComplete = (
     blueTeam: ITeam, 

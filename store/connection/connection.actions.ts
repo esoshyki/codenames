@@ -1,5 +1,6 @@
 import { ReduxAction } from "@/types";
 import { Actions, IAction } from "@/types/actions"
+import { Sides } from "@/types/game";
 import { IUser } from "@/types/users";
 
 // SAGAS //
@@ -44,3 +45,7 @@ export const connectionReset = () : ReduxAction => ({
     type: Actions.connection.Reset
 })
 
+export const setCurrentUserTeam = (payload?: Sides) : IAction => ({
+    type: Actions.connection.SetCurrentUserTeam,
+    payload
+})

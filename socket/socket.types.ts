@@ -12,7 +12,8 @@ export enum SClient {
     setSocketRequest = "setSocketRequest",
     setUserNameRequest = "setUserNameRequest",
     StartGameRequest = "startGameRequest",
-    ResetServerData = "ResetServerData"
+    ResetServerData = "ResetServerData",
+    UpdateGameMember = "UpdateGameMember",
 };
 
 export interface ServerToClient {
@@ -26,6 +27,7 @@ export interface ClientToServer {
     [SClient.setUserNameRequest]: (userName?: string) => void;
     [SClient.StartGameRequest]: (user: IUser) => void;
     [SClient.ResetServerData]: () => void;
+    [SClient.UpdateGameMember] : (user: IUser) => void;
 };
 
 export interface InterServerEvents {

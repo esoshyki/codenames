@@ -13,6 +13,12 @@ export const addGameEmitters =
         socket.on(SClient.StartGameRequest, (user: IUser) => {
             serverData.game.addGameMember(user);
             io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
+        });
+
+        socket.on(SClient.UpdateGameMember, (user: IUser) => {
+            console.log("Server/Update-Game-Member", (user));
+            serverData.game.updateGameMember(user);
+            io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
         })
 
 } 
