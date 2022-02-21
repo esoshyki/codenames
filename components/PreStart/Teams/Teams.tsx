@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { teamsComplete } from "./utils/teams.complete";
 import { select } from "@/store/select";
 import { Sides } from "@/types/game";
+import t from "@/t";
+import { PrestartContent } from "translate/prestart";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -47,6 +49,7 @@ const Teams = () => {
     const currentUser = useSelector(select.connection.currentUser);
     const redTeam = useSelector(select.game.redTeam);
     const blueTeam = useSelector(select.game.blueTeam);
+    const locale = useSelector(select.app.locale);
 
     const makeMeALeader = () => {
 
@@ -67,12 +70,17 @@ const Teams = () => {
             <TeamsButtonsWrapper>
 
                 <TeamsButton onClick={makeMeALeader}>
-                    {isUserALeader() ? "Don't be a leader" : "Make me a leader"}
+                    {isUserALeader() ? 
+                        t.preStart(locale, PrestartContent.dontBeALeader) :
+                        t.preStart(locale, PrestartContent.makeMeALeader)}
                 </TeamsButton>
 
                 {teamsComplete(blueTeam, redTeam) && (
                     <TeamsButton onClick={toogleReady}>
-                        {currentUser.ready ? "Not ready" : "Ready"}
+                        {currentUser.ready ? 
+                    t.preStart(locale, PrestartContent.ready) :
+                    t.preStart(locale, PrestartContent.notReady)    
+                    }
                     </TeamsButton>
                 )}
 

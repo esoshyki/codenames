@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import { IState } from "@/types";
 import PreStartGameMember from "./PreStartGameMember";
 import { IUser } from "@/types/users";
+import t from "@/t";
+import { select } from "@/store/select";
+import { PrestartContent } from "translate/prestart";
 
 const PreStartGameMembersWrapper = styled.div`
     width: 100%;
@@ -28,12 +31,14 @@ const PreStartGameMembers = () => {
 
     const gameMembers = useSelector((state: IState) => state.game.gameMembers);
 
+    const locale = useSelector(select.app.locale);
+
 
     return (
         <PreStartGameMembersWrapper>
 
             <PreStartTitle>
-                Game members
+                {t.preStart(locale, PrestartContent.gameMembers)}
             </PreStartTitle>
 
             <MembersContainer>

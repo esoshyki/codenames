@@ -1,8 +1,8 @@
 import { getMenuContent } from "./menu";
-import { getPrestartContent } from "./prestart";
+import { getPreStartContent } from "./prestart";
 
 const t = {
-    prestart: getPrestartContent,
+    preStart: getPreStartContent,
     menu: getMenuContent,
 };
 

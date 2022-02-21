@@ -16,6 +16,7 @@ enum AppActions {
     RestartRequest = "App/Restart-Request",
     Restart = "App/Restart",
     Reset = "App/Reset",
+    SetLocale = "App/Set-Locale"
 };
 
 enum ChatActions {

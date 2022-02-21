@@ -30,6 +30,12 @@ export const appReducer = (state = initialState, action : IAction): IApp => {
                 ...state,
                 error: payload
             })
+
+        case actions.SetLocale:
+            return {
+                ...state,
+                locale: payload
+            }
  
         default:
             return state;

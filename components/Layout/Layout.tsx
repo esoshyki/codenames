@@ -1,12 +1,15 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import classes from "./Layout.module.sass";
 import Head from "next/head";
-// import { useSelector } from "react-redux";
-// import { IState } from "../../store/types";
-// import Loading from "../Loading";
 import SystemInfo from "../SystemInfo";
 import { isDevelop } from "@/utils/isDevelop";
 import Reset from "./Reset";
+import { useDispatch, useSelector } from "react-redux";
+import { select } from "@/store/select";
+import { useRouter } from "next/router";
+import { setLocale } from "@/store/app/app.actions";
+import { getLocale } from "translate/locales";
+import Language from "./Language";
 
 interface LayoutProps {
     children: ReactNode;
@@ -14,6 +17,17 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, pageName }: LayoutProps) => {
+
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    const locale = router.locale;
+
+
+    useEffect(() => {
+        console.log(locale);
+        dispatch(setLocale(getLocale(locale)))
+    }, [dispatch, locale])
 
     return (
         <div className={classes.page_container}>
@@ -30,6 +44,7 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 {isDevelop() && <Reset />}
                 {children}
                 <SystemInfo />
+                <Language />
             </main>
             {/* {processing && <Loading />} */}
         </div>

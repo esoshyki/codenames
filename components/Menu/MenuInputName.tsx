@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 import { colors
  } from '@/theme/colors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
+import { getLocale } from 'translate/locales';
+import { useRouter } from 'next/router';
+import t from '@/t';
+import { menuContent, MenuContent } from 'translate/menu';
+import { select } from '@/store/select';
 
 const InputWrapper = styled.div`
     height: 50px;
@@ -48,14 +53,18 @@ const InputError = styled.span`
 
 const MenuInputName = () => {
 
-    const dispatch = useDispatch();
-
     const inputRef = useRef<HTMLInputElement>(null);
+    const locale = useSelector(select.app.locale)
 
+    const content = menuContent[locale];
+
+    console.log(content);
 
     return (
         <InputWrapper>
-            <InputLabel>Введите имя</InputLabel>
+            <InputLabel>
+                {content.yourName}
+            </InputLabel>
             <Input ref={inputRef}/>
             <InputError />
         </InputWrapper>

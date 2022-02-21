@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { colors } from "@/theme/colors";
 import { setConnectionError, userLogged } from "@/store/connection/connection.actions";
 import ButtonPrimary from "@/components/Layout/Buttons/Primary";
+import t from "@/t";
+import { MenuContent, menuContent } from "translate/menu";
 
 const LoginWrapper = styled.div`
     height: 50px;
@@ -54,6 +56,7 @@ const Login = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const connectionError = useSelector(select.connection.connectionError);
+    const locale = useSelector(select.app.locale);
 
     const submit = async () => {
         const userName = inputRef.current?.value || null;
@@ -79,7 +82,7 @@ const Login = () => {
 
     return (
         <LoginWrapper>
-            <InputLabel>Как ваше имя?</InputLabel>
+            <InputLabel>{t.menu(locale, MenuContent.yourName)}</InputLabel>
             <LoginInput
                 id="login-input"
                 name="login"

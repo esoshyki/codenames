@@ -7,7 +7,7 @@ import { startGameRequest } from "@/store/game/game.actions";
 import t from '@/t';
 import { getLocale } from "translate/locales";
 import { useRouter } from "next/router";
-import { MenuContent } from "translate/menu";
+import { menuContent, MenuContent } from "translate/menu";
 
 const MenuWrapper = styled.nav`
     position: fixed;
@@ -28,9 +28,10 @@ const MenuWrapper = styled.nav`
 const Menu = () => {
 
     const dispatch = useDispatch();
-    const locale = getLocale(useRouter().locale);
-
     const currentUser = useSelector(select.connection.currentUser);
+    const locale = useSelector(select.app.locale);
+
+    const content = menuContent[locale];
 
     const startGame = () => {
         dispatch(startGameRequest())
@@ -43,7 +44,7 @@ const Menu = () => {
 
             {currentUser.userName && (
                 <MenuItem onClick={startGame}>
-                    {t.menu(locale, MenuContent.beginGame)}
+                    {content.beginGame}
                 </MenuItem>
             )}
 

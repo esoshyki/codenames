@@ -7,6 +7,7 @@ export enum Locales {
 const locales = [Locales.ru, Locales.be, Locales.en];
 
 export const getLocale = (locale: string | undefined) : Locales => {
+
     const foundLocal = locales.find(el => el === locale);
     if (foundLocal) {
         return foundLocal

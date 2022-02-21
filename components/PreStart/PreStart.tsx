@@ -4,10 +4,8 @@ import PreStartHeader from "./PreStartHeader";
 import PreStartGameMembers from "./PreStartGameMembers";
 import { select } from "@/store/select";
 import Teams from "./Teams";
-import { useRouter } from "next/router";
-import { PrestartContent, preStartContent } from "translate/prestart";
-import { getLocale, Locales } from "translate/locales";
-import { t } from '../../translate';
+import t from "@/t";
+import { PrestartContent } from "../../translate/prestart";
 
 const PreStartWrapper = styled.div`
     width: 100vw;
@@ -22,9 +20,8 @@ const PreStartWrapper = styled.div`
 
 const PreStart = () => {
 
-    const locale = getLocale(useRouter().locale);
-
     const gameMembers = useSelector(select.game.gameMembers);
+    const locale = useSelector(select.app.locale);
 
     const getHeaderContent = () : string => {
 
@@ -35,7 +32,7 @@ const PreStart = () => {
         <PreStartWrapper>
             {gameMembers.length < 4 && (
                 <PreStartHeader>
-                    {t.prestart(locale, PrestartContent.waitingForPlayers)}
+                    {t.preStart(locale, PrestartContent.waitingForPlayers)}
                 </PreStartHeader>
             )}
 

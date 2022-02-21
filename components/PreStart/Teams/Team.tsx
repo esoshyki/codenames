@@ -4,10 +4,14 @@ import { IState } from "@/types";
 import { Sides } from "@/types/game";
 import { colors } from "@/theme/colors";
 import { select } from "@/store/select";
+import { Locales } from "translate/locales";
+import t from "@/t";
+import { PrestartContent } from "translate/prestart";
 
 const TeamWrapper = styled.div<{
     red: boolean,
-    leave: boolean
+    leave: boolean,
+    locale: Locales
 }>`
     position: relative;;
     width: 50%;
@@ -22,8 +26,8 @@ const TeamWrapper = styled.div<{
         cursor: pointer;
         filter: hue-rotate(20deg);
         &::after {
-            content: "${props => `${props.leave ? "Leave" : "Join"} ${props.red ? "red" : "blue"} team`}";
             position: absolute;
+            box-sizing: border-box;
             top: 0;
             left: 0;
             width: 100%;
@@ -33,9 +37,20 @@ const TeamWrapper = styled.div<{
             align-items: center;
             justify-content: center;
             font-size: 2rem;
+            text-align: center;
+            padding: 20px;
+            content: "${props => {
+                if (props.red) {
+                    return props.leave ? 
+                        t.preStart(props.locale, PrestartContent.leaveRedTeam) :
+                        t.preStart(props.locale, PrestartContent.joinRedTeam)
+                } else {
+                    return props.leave ? 
+                        t.preStart(props.locale, PrestartContent.leaveBlueTeam) :
+                        t.preStart(props.locale, PrestartContent.joinBlueTeam);                
+                }}}";
         }
-    }
-`;
+    }`
 
 
 const UserWrapper = styled.div<{
@@ -96,6 +111,7 @@ const Team = ({ side } : TeamProps ) => {
     const currentUser = useSelector(select.connection.currentUser);
     const team = useSelector(side === Sides.blue ? select.game.blueTeam : select.game.redTeam);
     const teamUsers = team.members;
+    const locale = useSelector(select.app.locale);
 
     const isUserInTeam = () => Boolean(teamUsers.find(user => user.userName === currentUser?.userName));
 
@@ -104,6 +120,7 @@ const Team = ({ side } : TeamProps ) => {
             red={team.side === Sides.red} 
             leave={isUserInTeam()}
             onClick={handleClick}
+            locale={locale}
             >
 
             {teamUsers && teamUsers.map((user, idx) => (
