@@ -19,6 +19,17 @@ export const addGameEmitters =
             console.log("Server/Update-Game-Member", (user));
             serverData.game.updateGameMember(user);
             io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
+            if (serverData.game.isAllReady()) {
+                io.emit(SServer.allReady);
+                io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
+            };
+
+            if (serverData.game.allCollectionVotesDone()) {
+                const field = serverData.game.getField();
+                if (field) {
+                    io.emit(SServer.SetField, field)
+                }
+            }
         })
 
 } 

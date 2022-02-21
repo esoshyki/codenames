@@ -1,3 +1,4 @@
+import { IField } from "@/types/game";
 import { IUser } from "@/types/users";
 
 
@@ -6,6 +7,8 @@ export enum SServer {
     updateOnlineUsers = "updateOnlineUsers",
     UpdateGameMembers = "updateGameMembers",
     ResetServerResponse = "ResetServerResponse",
+    allReady = "AllReady",
+    SetField = "SetField",
 }
 
 export enum SClient {
@@ -20,6 +23,8 @@ export interface ServerToClient {
     [SServer.updateOnlineUsers]: (users: IUser[]) => void;
     [SServer.UpdateGameMembers]: (gameMembers: IUser[]) => void;
     [SServer.ResetServerResponse]: () => void;
+    [SServer.allReady]: () => void;
+    [SServer.SetField] : (field: IField) => void;
 };
 
 export interface ClientToServer {

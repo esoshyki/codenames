@@ -7,6 +7,7 @@ import { setConnectionError, userLogged } from "@/store/connection/connection.ac
 import ButtonPrimary from "@/components/Layout/Buttons/Primary";
 import t from "@/t";
 import { MenuContent, menuContent } from "translate/menu";
+import { ErrorsContent } from "translate/errors";
 
 const LoginWrapper = styled.div`
     height: 50px;
@@ -56,6 +57,7 @@ const Login = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const connectionError = useSelector(select.connection.connectionError);
+    const onlineUsers = useSelector(select.connection.onlineUsers);
     const locale = useSelector(select.app.locale);
 
     const submit = async () => {
@@ -65,7 +67,13 @@ const Login = () => {
             return;
         }
 
-        dispatch(userLogged(userName));
+        console.log(onlineUsers);
+
+        if (onlineUsers.some(user => user.userName === userName)) {
+            dispatch(setConnectionError(t.errors(locale, ErrorsContent.userExists)))
+        } else {
+            dispatch(userLogged(userName));
+        }
     };
 
     const handleClick = (e: KeyboardEvent) => {
@@ -76,7 +84,7 @@ const Login = () => {
 
     const handleChange = () => {
         if (connectionError) {
-            dispatch(setConnectionError(connectionError));
+            dispatch(setConnectionError(undefined));
         }
     };
 

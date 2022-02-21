@@ -54,3 +54,13 @@ export const SetCurrentUserLeader = (payload?: true) : IAction => ({
     type: Actions.connection.SetCurrentUserLeader,
     payload
 })
+
+export const setCurrentUserReady = (payload?: true) : IAction => ({
+    type: Actions.connection.SetCurrentUserReady,
+    payload
+})
+
+export const setCurrentUserCollectionVote = (payload?: number) : IAction => ({
+    type: Actions.connection.SetCurrentUserCollectionVote,
+    payload
+})

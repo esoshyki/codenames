@@ -1,6 +1,6 @@
 import { ReduxAction } from "@/types";
 import { Actions, IAction } from "@/types/actions";
-import { Sides } from "@/types/game";
+import { IField, Sides } from "@/types/game";
 import { IUser } from "@/types/users";
 
 export const gameReset = () : ReduxAction => ({
@@ -38,6 +38,29 @@ export const toggleTeamRequest = (side?: Sides) : IAction => ({
 
 export const toggleLeaderRequest = () : IAction => ({
     type: Actions.game.ToggleLeaderRequest
+})
+
+export const toggleReadyRequest = () : IAction => ({
+    type: Actions.game.ToggleReadyRequest
+})
+
+export const toggleCollectionVoteRequest = (collectionId: number) : IAction => ({
+    type: Actions.game.ToggleCollectionVoteRequest,
+    payload: collectionId
+});
+
+export const allReadyRequest = () : IAction => ({
+    type: Actions.game.AllReadyRequest
+})
+
+export const setFieldRequest = (field: IField) : IAction => ({
+    type: Actions.game.SetFieldRequest,
+    payload: field
+})
+
+export const setField = (field: IField) : IAction => ({
+    type: Actions.game.SetField,
+    payload: field
 })
 
 

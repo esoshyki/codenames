@@ -5,7 +5,7 @@ import { IState } from "@/store/types";
 import Field from "./Field";
 import PreStart from "../PreStart";
 import { GameStages } from "@/store/game/game.types";
-import SelectCollection from "./SelectCollection";
+import SelectCollection from "../SelectCollection";
 import Panel from "./Panel";
 import Mystery from "./Mystery";
 

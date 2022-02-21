@@ -3,6 +3,7 @@ import { Locales } from "translate/locales";
 export enum AppStages {
     nogame = "nogame",
     prestart = "prestart",
+    CollectionVote = "collectionVote",
     game = "game",
     finished = "finished"
 };

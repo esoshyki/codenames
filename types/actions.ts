@@ -8,7 +8,9 @@ enum ConnectionActions {
     setError = "Connection/Set-Error",
     Reset = "Connection/Reset",
     SetCurrentUserTeam = "Connection/Set-Current-User-Team",
-    SetCurrentUserLeader = "Connection/Set-Current-User-Leader"
+    SetCurrentUserLeader = "Connection/Set-Current-User-Leader",
+    SetCurrentUserReady = "Connection/Set-Current-User-Ready",
+    SetCurrentUserCollectionVote = "Connection/Set-Current-User-Collection-Vote",
 };
 
 enum AppActions {
@@ -35,8 +37,13 @@ enum GameActions {
     UpdateGameMembersRequest = "Game/Update-Game-Members-Request",
     ToggleTeamRequest = "Game/Toggle-Team-Request",
     ToggleLeaderRequest = "Game/Toggle-Leader-Request",
+    ToggleReadyRequest = "Game/Toggle-Ready-Request",
+    ToggleCollectionVoteRequest = "Game/Toggle-Collection-Vote-Request",
     SetRedTeam = "Game/Set-Red-Team",
     SetBlueTeam = "Game/Set-Blue-Team",
+    AllReadyRequest = "Game/All-Ready-Request",
+    SetField = "Game/Set-Field",
+    SetFieldRequest = "Game/Set-Field-Request",
 }
 
 export const Actions = {

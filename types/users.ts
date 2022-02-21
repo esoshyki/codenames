@@ -6,6 +6,7 @@ export type IUser = {
     leader?: true,
     socketId?: string,
     ready?: true,
+    collectionVote?: number
 };
 
 export interface ITeam {

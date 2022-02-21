@@ -71,6 +71,24 @@ export const connectionReducer =
                 }
             }
 
+        case Actions.connection.SetCurrentUserReady:
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    ready: payload
+                }
+            }
+
+        case Actions.connection.SetCurrentUserCollectionVote:
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    collectionVote: payload
+                }
+            }
+
         default: 
             return {
                 ...state

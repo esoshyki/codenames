@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { wordCollections } from "@/utils/wordCollections";
 import { useDispatch, useSelector } from "react-redux";
-import { IState } from "@/store/types";
+import { IState } from "@/types";
 import { toggleCollectionVoteRequest } from "@/store/game/game.actions";
+import { select } from "@/store/select";
 
 const SelectCollectionWrapper = styled.div`
     width: 100%;
@@ -66,14 +67,17 @@ const SelectCollection = () => {
 
     const dispatch = useDispatch();
 
-    const collectionVotes = useSelector((state:IState) => state.game.gameData.collectionVotes);
+    const gameMembers = useSelector(select.game.gameMembers);
+
+    const collectionVotes = gameMembers
+        .filter(member => member.collectionVote)
+        .map(member => ({
+        voter: member.userName,
+        collectionIdx: member.collectionVote
+    }));
 
     const togglePickCollection = (idx: number) => {
         dispatch(toggleCollectionVoteRequest(idx))
-    };
-
-    const getVotedContent = (idx: number) => {
-        return collectionVotes.filter(vote => vote.collectionIdx === idx);
     };
 
     return (
@@ -93,8 +97,8 @@ const SelectCollection = () => {
                         >
                         {collection.title}
                         <VotedUsers>
-                            {getVotedContent(collection.idx) && getVotedContent(collection.idx).map((vote, id) => (
-                                <Voter key={"voter" + id}>{vote.userName}</Voter>
+                            {collectionVotes && collectionVotes.map((vote, id) => (
+                                <Voter key={"voter" + id}>{vote?.voter}</Voter>
                             ))}
                         </VotedUsers>
                     </SelectCollectionItem>

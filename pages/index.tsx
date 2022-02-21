@@ -7,6 +7,7 @@ import { connectSocket } from "@/socket/client";
 import { AppStages } from "@/types/app";
 import { select } from "@/store/select";
 import PreStart from "@/components/PreStart";
+import SelectCollection from "@/components/SelectCollection";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
         <Layout>
             {stage === AppStages.nogame && <Menu />}
             {stage === AppStages.prestart && <PreStart />}
+            {stage === AppStages.CollectionVote && <SelectCollection />}
 
             {/* {stage !== GameStages.noGame && <Game />} */}
         </Layout>

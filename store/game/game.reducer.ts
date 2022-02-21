@@ -57,6 +57,12 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
                 }
             }
 
+        case Actions.game.SetField:
+            return {
+                ...state,
+                field: payload
+            }
+
         default:
             return state
     }

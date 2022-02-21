@@ -6,7 +6,7 @@ import { select } from "@/store/select";
 import { Sides } from "@/types/game";
 import t from "@/t";
 import { PrestartContent } from "translate/prestart";
-import { toggleLeaderRequest } from "@/store/game/game.actions";
+import { toggleLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -57,7 +57,7 @@ const Teams = () => {
     };
 
     const toogleReady = () => {
-
+        dispatch(toggleReadyRequest())
     };
 
     const isUserALeader = () => gameMembers.find(user => user.userName === currentUser?.userName)?.leader;
@@ -79,8 +79,8 @@ const Teams = () => {
                 {teamsComplete(blueTeam, redTeam) && (
                     <TeamsButton onClick={toogleReady}>
                         {currentUser.ready ? 
-                    t.preStart(locale, PrestartContent.ready) :
-                    t.preStart(locale, PrestartContent.notReady)    
+                    t.preStart(locale, PrestartContent.notReady) :
+                    t.preStart(locale, PrestartContent.ready)    
                     }
                     </TeamsButton>
                 )}
