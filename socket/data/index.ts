@@ -1,8 +1,17 @@
-import { Connection } from "./connection";
+import { ConnectionData } from "./connection";
+import { GameData } from "./game";
 
-export class Server {
-    connection = new Connection();
+export class ServerData {
+    connection: ConnectionData;
+    game: GameData;
     constructor() {
+        this.connection = new ConnectionData();
+        this.game = new GameData();
+    }
 
-    };
+    reset = () => {
+        console.log("serverdata => reset")
+        this.connection.reset();
+        this.game.reset();
+    }
 }

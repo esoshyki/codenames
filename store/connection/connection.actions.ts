@@ -1,3 +1,4 @@
+import { ReduxAction } from "@/types";
 import { Actions, IAction } from "@/types/actions"
 import { IUser } from "@/types/users";
 
@@ -38,4 +39,8 @@ export const setConnectionError = (payload?: string) => ({
     type: Actions.connection.setError,
     payload
 });
+
+export const connectionReset = () : ReduxAction => ({
+    type: Actions.connection.Reset
+})
 

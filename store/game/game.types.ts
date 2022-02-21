@@ -3,7 +3,6 @@ import { Collection } from "utils/wordCollections";
 export enum GameActions {
     START_GAME_REQUEST = "Game/Start-Game-Request",
     SET_GAME_MEMBERS = "Game/Set-Game-Members",
-    SET_TEAM_REQUEST = "Game/Set-Team-Request",
     SET_LEADER_REQUEST = "Game/Set-Leader-Request",
     TOGGLE_READY_REQUEST = "Game/Toggle-Ready-Request",
     SET_STAGE = "Game/Set-Game-Stage",
@@ -15,7 +14,11 @@ export enum GameActions {
     SET_SERVER_DATA = "Game/Set-Server-Data",
     MAKE_MYSTERY_REQUEST = "Game/Make-Mystery-Request",
     SET_MISTERY = "Game/Set-Mystery",
-    SET_ROUND_VOTES = "Game/Set-Round-Votes"
+    SET_ROUND_VOTES = "Game/Set-Round-Votes",
+
+    StartGameRequest = "Game/Start-Game-Request",
+    UpdateGameMembersRequest = "Game/Update-Game-Members-Request",
+    SetGameMembers = "Game/Set-Game-Members",
 
 };
 

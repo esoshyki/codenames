@@ -25,13 +25,17 @@ const Menu = () => {
     const dispatch = useDispatch();
 
     const currentUser = useSelector(select.connection.currentUser);
+
+    const startGame = () => {
+        
+    };
    
     return (
         <MenuWrapper>
 
             {!currentUser.userName && <Login />}
 
-            {currentUser.userName && <MenuItem>Начать игру</MenuItem>}
+            {currentUser.userName && <MenuItem onClick={startGame}>Начать игру</MenuItem>}
 
         </MenuWrapper>
     );

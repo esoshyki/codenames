@@ -1,6 +1,5 @@
 import { IConnectionState } from "@/types/connection";
 import { Actions, IAction } from "@/types/actions";
-import { IUser } from "@/types/users";
 
 const initialState: IConnectionState = {
     onlineUsers: [],
@@ -44,6 +43,14 @@ export const connectionReducer =
             return {
                 ...state,
                 connectionError: payload
+            }
+
+        case Actions.connection.Reset:
+            return {
+                onlineUsers: [],
+                currentUser: {
+
+                }
             }
 
         default: 

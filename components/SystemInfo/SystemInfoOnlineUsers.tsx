@@ -9,6 +9,7 @@ const OnlineUsersWrapper = styled.div`
     left: 0;
     display: flex;
     flex-direction: row;
+    z-index: 5000;
 `
 
 const Title = styled.span`

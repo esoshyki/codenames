@@ -1,6 +1,6 @@
 import { IUser } from "@/types/users";
 
-export class Connection {
+export class ConnectionData {
     private users: IUser[];
 
     constructor() {
@@ -28,7 +28,6 @@ export class Connection {
     }
 
     disconnectUser = (socketId: string) => {
-        console.log(`this.users before disconnected`, this.users)
         const user = this.users.find(user => user.socketId === socketId);
         if (user) {
             if (!user.userName) {
@@ -37,18 +36,20 @@ export class Connection {
                 user.socketId = undefined;
             }
         };
-        console.log(`this.users after disconnected`, this.users)
     };
 
     setUserName = (user: IUser) => {
         const onlineUser = this.users.find(ouser => ouser.socketId === user.socketId);
-        console.log(onlineUser);
         if (onlineUser) {
             onlineUser.userName = user.userName;
         };
         console.log(this.users);
     };
 
+    reset = () => {
+        this.users = [];
+        console.log("ServerData.connection.reset");
+    }
 
 };
 

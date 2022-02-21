@@ -49,4 +49,5 @@ export interface IGame {
     results?: IResults;
     redTeam: ITeam;
     blueTeam: ITeam;
+    gameMembers: IUser[];
 };

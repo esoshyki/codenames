@@ -3,22 +3,29 @@ import { IUser } from "@/types/users";
 
 export enum SServer {
     connected = "connected",
-    updateOnlineUsers = "updateOnlineUsers"
+    updateOnlineUsers = "updateOnlineUsers",
+    UpdateGameMembers = "updateGameMembers",
+    ResetServerResponse = "ResetServerResponse",
 }
 
 export enum SClient {
     setSocketRequest = "setSocketRequest",
     setUserNameRequest = "setUserNameRequest",
+    StartGameRequest = "startGameRequest",
+    ResetServerData = "ResetServerData"
 };
 
 export interface ServerToClient {
     [SServer.updateOnlineUsers]: (users: IUser[]) => void;
+    [SServer.UpdateGameMembers]: (gameMembers: IUser[]) => void;
+    [SServer.ResetServerResponse]: () => void;
 };
 
 export interface ClientToServer {
     [SClient.setSocketRequest]: (user: IUser) => void;
     [SClient.setUserNameRequest]: (userName?: string) => void;
-
+    [SClient.StartGameRequest]: (user: IUser) => void;
+    [SClient.ResetServerData]: () => void;
 };
 
 export interface InterServerEvents {

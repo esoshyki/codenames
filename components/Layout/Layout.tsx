@@ -6,6 +6,8 @@ import Head from "next/head";
 // import Loading from "../Loading";
 import Menu from "../Menu";
 import SystemInfo from "../SystemInfo";
+import { isDevelop } from "@/utils/isDevelop";
+import Reset from "./Reset";
 
 interface LayoutProps {
     children: ReactNode;
@@ -13,13 +15,6 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, pageName }: LayoutProps) => {
-    // const processing = useSelector((state: IState) => state.app.processing);
-    // const currentUser = useSelector((state: IState) => state.users.currentUser);
-    // const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-
-    // const isInGame = () => {
-    //     return gameMembers.some(member => member.userName === currentUser?.userName);
-    // }
 
     return (
         <div className={classes.page_container}>
@@ -32,7 +27,8 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                {/* <Info /> */}
+
+                {isDevelop() && <Reset />}
                 <Menu />
                 {children}
                 <SystemInfo />

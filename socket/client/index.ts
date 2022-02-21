@@ -5,6 +5,10 @@ import { socketConnected, socketDisconnected, updateOnlineUsers } from "@/store/
 import { connectionEmitters } from "./emitters/connection";
 import { SServer } from "../socket.types";
 import { IUser } from "@/types/users";
+import { gameEmitters } from "./emitters/game";
+import { appEmitters } from "./emitters/app";
+import { setAppListeners } from "./listeners/app";
+import { setGameListeners } from "./listeners/game";
 
 
 export const socket = io(
@@ -27,10 +31,17 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
         console.log("users", users);
         dispatch(updateOnlineUsers(users))
     })
+
+    setAppListeners(dispatch);
+    setGameListeners(dispatch);
+
+    
 };
 
 const clientSocket = {
-    connection: connectionEmitters
+    connection: connectionEmitters,
+    game: gameEmitters,
+    app: appEmitters
 }
 
 export default clientSocket;
