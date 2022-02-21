@@ -48,4 +48,9 @@ export const connectionReset = () : ReduxAction => ({
 export const setCurrentUserTeam = (payload?: Sides) : IAction => ({
     type: Actions.connection.SetCurrentUserTeam,
     payload
+});
+
+export const SetCurrentUserLeader = (payload?: true) : IAction => ({
+    type: Actions.connection.SetCurrentUserLeader,
+    payload
 })

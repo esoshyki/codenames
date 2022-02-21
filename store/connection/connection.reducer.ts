@@ -62,6 +62,15 @@ export const connectionReducer =
                 }
             }
 
+        case Actions.connection.SetCurrentUserLeader:
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    leader: payload
+                }
+            }
+
         default: 
             return {
                 ...state

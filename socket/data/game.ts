@@ -22,8 +22,19 @@ export class GameData {
         console.log("ServerData.gameData.reset");
     };
 
+    resetTeamLeader = (user: IUser) => {
+        this.gameMembers.forEach(member => {
+            if (user.team === member.team) {
+                member.leader = undefined
+            }
+        })
+    }
+
     updateGameMember = (user: IUser) => {
         const index = this.gameMembers.findIndex(usr => usr.userName === user.userName);
+        if (user.leader) {
+            this.resetTeamLeader(user)
+        }
         if (index >= 0) {
         this.gameMembers[index] = user; 
         }

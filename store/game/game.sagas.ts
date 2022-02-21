@@ -6,7 +6,7 @@ import { IUser } from "@/types/users";
 import { getCurrentUser, getGameMembers } from "@/utils/sagas";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { changeAppStageRequest } from "../app/app.actions";
-import { setCurrentUserTeam } from "../connection/connection.actions";
+import { SetCurrentUserLeader, setCurrentUserTeam } from "../connection/connection.actions";
 import { setBlueTeam, setGameMembers, setRedTeam } from "./game.actions";
 
 function* startGameRequestWorker() {
@@ -22,6 +22,13 @@ function* updateGameMembersRequestWorker(action: IAction) {
     const newMembers : IUser[] = action.payload;
     const redTeam = newMembers.filter(user => user.team === Sides.red);
     const blueTeam = newMembers.filter(user => user.team === Sides.blue);
+    const currentUser : IUser = yield getCurrentUser();
+    const currentMember = newMembers.find(member => member.userName === currentUser.userName);
+
+    if (currentMember) {
+        yield put(setCurrentUserTeam(currentMember.team));
+        yield put(SetCurrentUserLeader(currentMember.leader));
+    }
     yield put(setGameMembers(newMembers));
     yield put(setRedTeam(redTeam));
     yield put(setBlueTeam(blueTeam));
@@ -35,11 +42,20 @@ function* toggleTeamRequestWorker(action: IAction) {
         ...currentUser,
         team: side  
     });
-    yield put(setCurrentUserTeam(side));
 };
+
+function* toggleLeaderRequestWorker(action: IAction) {
+    const currentUser: IUser = yield getCurrentUser();
+    const isLeader = currentUser.leader ? undefined : true;
+    yield call(clientSocket.game.updateGameMember, {
+        ...currentUser,
+        leader: isLeader
+    });
+}
 
 export default function* gameSagas() {
     yield takeEvery(Actions.game.StartGameRequest, startGameRequestWorker);
     yield takeEvery(Actions.game.UpdateGameMembersRequest, updateGameMembersRequestWorker);
     yield takeEvery(Actions.game.ToggleTeamRequest, toggleTeamRequestWorker);
+    yield takeEvery(Actions.game.ToggleLeaderRequest, toggleLeaderRequestWorker)
 }

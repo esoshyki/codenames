@@ -34,7 +34,11 @@ export const updateGameMembersRequest = (gameMembers: IUser[]) : IAction => ({
 export const toggleTeamRequest = (side?: Sides) : IAction => ({
     type: Actions.game.ToggleTeamRequest,
     payload: side
-});
+})
+
+export const toggleLeaderRequest = () : IAction => ({
+    type: Actions.game.ToggleLeaderRequest
+})
 
 
 

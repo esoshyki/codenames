@@ -6,6 +6,7 @@ import { select } from "@/store/select";
 import { Sides } from "@/types/game";
 import t from "@/t";
 import { PrestartContent } from "translate/prestart";
+import { toggleLeaderRequest } from "@/store/game/game.actions";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -52,7 +53,7 @@ const Teams = () => {
     const locale = useSelector(select.app.locale);
 
     const makeMeALeader = () => {
-
+        dispatch(toggleLeaderRequest())
     };
 
     const toogleReady = () => {

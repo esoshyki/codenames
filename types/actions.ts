@@ -8,6 +8,7 @@ enum ConnectionActions {
     setError = "Connection/Set-Error",
     Reset = "Connection/Reset",
     SetCurrentUserTeam = "Connection/Set-Current-User-Team",
+    SetCurrentUserLeader = "Connection/Set-Current-User-Leader"
 };
 
 enum AppActions {
@@ -33,6 +34,7 @@ enum GameActions {
     SetGameMembers = "Game/Set-Game-Members",
     UpdateGameMembersRequest = "Game/Update-Game-Members-Request",
     ToggleTeamRequest = "Game/Toggle-Team-Request",
+    ToggleLeaderRequest = "Game/Toggle-Leader-Request",
     SetRedTeam = "Game/Set-Red-Team",
     SetBlueTeam = "Game/Set-Blue-Team",
 }
