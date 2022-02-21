@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { IState } from "@/types";
 import { toggleCollectionVoteRequest } from "@/store/game/game.actions";
 import { select } from "@/store/select";
+import t from "@/t";
+import { SelectCollectionContent } from "translate/selectCollection";
 
 const SelectCollectionWrapper = styled.div`
     width: 100%;
@@ -68,6 +70,7 @@ const SelectCollection = () => {
     const dispatch = useDispatch();
 
     const gameMembers = useSelector(select.game.gameMembers);
+    const locale = useSelector(select.app.locale);
 
     const collectionVotes = gameMembers
         .filter(member => member.collectionVote)
@@ -84,7 +87,7 @@ const SelectCollection = () => {
         <SelectCollectionWrapper>
 
             <SelectCollectionTitle>
-                Sellect Collection
+                {t.selectCollection(locale, SelectCollectionContent.selectCollection)}
             </SelectCollectionTitle>
 
             <SelectCollectionConteiner>
