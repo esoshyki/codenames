@@ -10,7 +10,6 @@ export class ServerData {
     }
 
     reset = () => {
-        console.log("serverdata => reset")
         this.connection.reset();
         this.game.reset();
     }

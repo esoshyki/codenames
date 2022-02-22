@@ -1,13 +1,10 @@
 import styled from "styled-components";
 import Guesser from "./Guesser";
 import { useSelector } from "react-redux";
-import { IState } from "@/store/types";
 import Field from "./Field";
-import PreStart from "../PreStart";
-import { GameStages } from "@/store/game/game.types";
-import SelectCollection from "../SelectCollection";
 import Panel from "./Panel";
 import Mystery from "./Mystery";
+import { select } from "@/store/select";
 
 const GameWrapper = styled.div`
     position: relative;
@@ -20,47 +17,26 @@ const GameWrapper = styled.div`
 
 const Game = () => {
 
-
-    const { stage } = useSelector((state: IState) => state.game.gameData);
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-
-    const isLeader = () => {
-        const user = gameMembers.find(user => user.userName === currentUser?.userName);
-
-        return user?.leader
-    };
-
-    const showField = () => {
-        if (stage === GameStages.prepareField) return true;
-        if (stage === GameStages.started) return true;
-        return false;
-    };
-
-    const showGuesser = () => {
-        if (!isLeader()) return false;
-        if (stage === GameStages.prepareField) return true;
-        if (stage === GameStages.started) return true;
-        return false;
-    };
-
-    const showPanel = () => {
-        if (stage === GameStages.prepareField) return true;
-        if (stage === GameStages.started) return true;
-        return false;
-    };
+    const currentUser = useSelector(select.connection.currentUser);
+    const round = useSelector(select.game.round);
+    const field = useSelector(select.game.field);
 
     return (
         <GameWrapper>
 
-            {stage === GameStages.preStart && <PreStart />}
+            {!!(field && round) && (
+                <Field field={field} round={round} currentUser={currentUser}/>
+            )}
 
-            {stage === GameStages.selectCollection && <SelectCollection />}
- 
-            {showField() && <Field />}
-            {showGuesser() && <Guesser />}
-            {showPanel() && <Panel />}
-            <Mystery />
+            {!!(currentUser.leader && field) && <Guesser field={field}/>}
+
+            {!!(currentUser && field && round) && (
+                <Panel currentUser={currentUser} field={field} round={round} />
+            )}
+
+            {!!(round && field) && (
+                <Mystery round={round} field={field} />
+            )}
 
         </GameWrapper>
     );

@@ -18,8 +18,6 @@ function* userLoggedWorker({ payload } : IAction) {
     const state : IState = yield select();
     const currentUser = state.connection.currentUser;
 
-    console.log(currentUser);
-
     yield call(clientSocket.connection.setUserNameRequest, {
         ...currentUser,
         userName

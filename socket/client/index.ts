@@ -28,7 +28,6 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     })
 
     socket.on(SServer.updateOnlineUsers, (users: IUser[]) => {
-        console.log("users", users);
         dispatch(updateOnlineUsers(users))
     })
 

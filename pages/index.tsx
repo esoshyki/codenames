@@ -8,6 +8,7 @@ import { AppStages } from "@/types/app";
 import { select } from "@/store/select";
 import PreStart from "@/components/PreStart";
 import SelectCollection from "@/components/SelectCollection";
+import Game from "@/components/Game";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Home: NextPage = () => {
             {stage === AppStages.prestart && <PreStart />}
             {stage === AppStages.CollectionVote && <SelectCollection />}
 
-            {/* {stage !== GameStages.noGame && <Game />} */}
+            {stage === AppStages.game && <Game />}
         </Layout>
     );
 };

@@ -43,7 +43,14 @@ enum GameActions {
     SetBlueTeam = "Game/Set-Blue-Team",
     AllReadyRequest = "Game/All-Ready-Request",
     SetField = "Game/Set-Field",
+    SetRound = "Game/Set-Round",
     SetFieldRequest = "Game/Set-Field-Request",
+    MakeMysteryRequest = "Game/Make-Mystery-Request",
+    SetSelectedCards = "Game/Set-Selected-Cards",
+    SetMystery = "Game/Set-Mystery",
+    MakeVoteRequest = "Game/Make-Vote-Request",
+    AllVotesDoneRequest = "Game/All-Votes-Done-Request",
+    SetWinnerVote = "Game/Set-Winner-Vote",
 }
 
 export const Actions = {

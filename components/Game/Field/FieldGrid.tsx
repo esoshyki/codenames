@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { IState } from "@/store/types";
 import FieldCard from "./FieldCard";
-import { Fragment } from "react";
-import { isLeader } from "@/utils/user.ingame";
-import { setSelectedCards } from "@/store/app/app.actions";
-import { getRoundVotes } from "@/store/game/game.selectors";
+import { Fragment, useState } from "react";
+import { IField, IRound } from "@/types/game";
+import { IUser } from "@/types/users";
+import { FieldProps } from "./Field";
+import { select } from "@/store/select";
+import { makeVoteRequest, setSelectedCards } from "@/store/game/game.actions";
 
 const FieldGridWrapper = styled.div`
     position: fixed;
@@ -18,67 +19,68 @@ const FieldGridWrapper = styled.div`
     max-width: 800px;
 `;
 
-const FieldGrid = () => {
+const VoteButton = styled.button`
+    padding: 20px;
+    grid-column: 3;
+`
+
+const FieldGrid = ({ field, round, currentUser } : FieldProps) => {
+
+    const selectedCards = useSelector(select.game.selectedCards);
 
     const dispatch = useDispatch();
 
-    const fieldData = useSelector((state: IState) => state.game.gameData.fieldData);
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-    const selectedCards = useSelector((state: IState) => state.app.selectedCards);
-    const votes = useSelector(getRoundVotes);
-
-    const data = fieldData || new Array(25).fill("");
+    const cards = field.cards;
 
     const leaderSelect = (idx: number) => {
-        if (selectedCards.includes(idx)) {
-            dispatch(setSelectedCards(selectedCards.filter(el => el !== idx)));
-        } else {
-            dispatch(setSelectedCards([...selectedCards, idx]));
-        }
+        const newSelected = selectedCards.includes(idx) ? 
+            selectedCards.filter(el => el !== idx) :
+            [...selectedCards, idx];
+        dispatch(setSelectedCards(newSelected))
     };
 
     const customSelect = (idx: number) => {
-        if (selectedCards.includes(idx)) {
-            dispatch(setSelectedCards([]));
-        } else {
-            dispatch(setSelectedCards([idx]));
-        }
+        const newSelected = selectedCards.includes(idx) ? 
+            selectedCards.filter(el => el !== idx) :
+            [idx];
+            dispatch(setSelectedCards(newSelected))      
     };
 
     const onClick = (idx: number) => {
-
-        if (isLeader(gameMembers, currentUser)) {
-            console.log("leader");
-            leaderSelect(idx)
-        } else {
-            customSelect(idx)
-        }
+        currentUser.leader ? leaderSelect(idx) : customSelect(idx)
     };
 
-    const getVotedBy = (idx: number) : string[] | null => {
-        const users = votes.filter(vote => vote.cardIdx === idx);
-        if (users.length) {
-            return users.map(user => user.userName);
-        };
+    const makeVote = () => {
+        dispatch(makeVoteRequest(selectedCards[0]))
+    };
 
-        return null
+    const showVotedButton = () => {
+        if (currentUser.leader) return false;
+        if (selectedCards.length === 0) return false;
+        if (round.check !== currentUser.team) return false;
+        if (field.cards[selectedCards[0]].covered) return false;
+        return true
     }
 
     return (
         <FieldGridWrapper>
-            {data &&
-                data.map((el, idx) => {
-                    return (
-                        <Fragment key={idx}>
-                            <FieldCard 
-                                votedBy={getVotedBy(idx)}
-                                setSelected={() => onClick(idx)}
-                                selected={selectedCards.includes(idx)} 
-                                word={el} />
-                        </Fragment>
-                    );
-                })}
+            {cards.map((card, idx) => {
+                return (
+                    <Fragment key={idx}>
+                        <FieldCard 
+                            votes={card.votes}
+                            setSelected={() => onClick(idx)}
+                            selected={selectedCards.includes(idx)} 
+                            word={card.text} 
+                            covered={card.covered}
+                            type={card.type}
+                            id={card.id}
+                            />
+                    </Fragment>
+                );
+            })}
+
+            {showVotedButton() && <VoteButton onClick={makeVote}>Голосовать</VoteButton>}
 
         </FieldGridWrapper>
     );

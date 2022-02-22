@@ -20,6 +20,5 @@ export const getSelectoCollectionContent = (
     locale: Locales,
     key: SelectCollectionContent
     ) => {
-        console.log('locale => ', locale);
         return selectCollectionContent[locale][key]
     }

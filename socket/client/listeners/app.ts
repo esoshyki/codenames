@@ -6,7 +6,6 @@ import { socket } from "..";
 
 export const setAppListeners = (dispatch: Dispatch<AnyAction>) => {
     socket.on(SServer.ResetServerResponse, () => {
-        console.log("RESET SERVER");
         dispatch(appRestart());
     })
 }

@@ -7,4 +7,16 @@ export const RollAnimation = keyframes`
     100% {
         transform: rotate(360deg)
     }
+`;
+
+export const WinnerVoteAnimation = keyframes`
+    0% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(0.95)
+    }
+    100% {
+        transform: scale(1)
+    }
 `

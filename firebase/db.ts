@@ -30,9 +30,6 @@ const getData = async (target: string) => {
 };
 
 const writeData = async (target: string, data: any) => {
-    console.log(target);
-
-    console.log(data);
 
     return await set(ref(database, target), data);
 };

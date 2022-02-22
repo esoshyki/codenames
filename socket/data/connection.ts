@@ -43,12 +43,10 @@ export class ConnectionData {
         if (onlineUser) {
             onlineUser.userName = user.userName;
         };
-        console.log(this.users);
     };
 
     reset = () => {
         this.users = [];
-        console.log("ServerData.connection.reset");
     }
 
 };

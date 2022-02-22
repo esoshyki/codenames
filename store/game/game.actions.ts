@@ -1,6 +1,6 @@
 import { ReduxAction } from "@/types";
 import { Actions, IAction } from "@/types/actions";
-import { IField, Sides } from "@/types/game";
+import { IField, IMystery, IRound, Sides } from "@/types/game";
 import { IUser } from "@/types/users";
 
 export const gameReset = () : ReduxAction => ({
@@ -63,5 +63,37 @@ export const setField = (field: IField) : IAction => ({
     payload: field
 })
 
+export const setRound = (round?: IRound) : IAction => ({
+    type: Actions.game.SetRound,
+    payload: round
+})
 
+export const setSelectedCards = (payload: number[]) : IAction => ({
+    type: Actions.game.SetSelectedCards,
+    payload
+})
 
+export const makeMysteryRequest = (payload: { keyword: string, selectedItems: number[]}) => ({
+    type: Actions.game.MakeMysteryRequest,
+    payload
+})
+
+export const setMystery = (payload?: IMystery) => ({
+    type: Actions.game.SetMystery,
+    payload
+})
+
+export const makeVoteRequest = (cardNumber: number) => ({
+    type: Actions.game.MakeVoteRequest,
+    payload: cardNumber
+})
+
+export const allVotesDoneRequest = (winner: number) => ({
+    type: Actions.game.AllVotesDoneRequest,
+    payload: winner
+});
+
+export const setWinnerVote = (winner?: number) => ({
+    type: Actions.game.SetWinnerVote,
+    payload: winner
+})

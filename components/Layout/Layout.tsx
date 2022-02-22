@@ -25,7 +25,6 @@ const Layout = ({ children, pageName }: LayoutProps) => {
 
 
     useEffect(() => {
-        console.log(locale);
         dispatch(setLocale(getLocale(locale)))
     }, [dispatch, locale])
 

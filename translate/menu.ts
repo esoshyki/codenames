@@ -24,6 +24,5 @@ export const getMenuContent = (
     locale: Locales,
     key: MenuContent
     ) => {
-        console.log('locale => ', locale);
         return menuContent[locale][key]
     }

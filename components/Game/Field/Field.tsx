@@ -1,3 +1,5 @@
+import { IField, IRound } from "@/types/game";
+import { IUser } from "@/types/users";
 import styled, { keyframes } from "styled-components";
 import FieldGrid from "./FieldGrid";
 
@@ -19,10 +21,16 @@ const FieldWrapper = styled.div`
     animation: ${animation} 3s linear 0s;
 `;
 
-const Field = () => {
+export interface FieldProps {
+    field: IField,
+    round: IRound,
+    currentUser: IUser
+}
+
+const Field = (props : FieldProps) => {
     return (
         <FieldWrapper>
-            <FieldGrid />
+            <FieldGrid {...props} />
         </FieldWrapper>
     );
 };

@@ -37,7 +37,6 @@ const UserAd = () => {
     const info = useSelector((state: IState) => state.app.info);
 
     const onAnimationEnd = () => {
-        console.log("animation ended")
         dispatch(hideInfo())
     };
 

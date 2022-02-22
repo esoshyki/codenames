@@ -1,18 +1,18 @@
-import { IState } from "@/store/types";
-import { getOppositeCardsRest, getOppositeTeam } from "@/utils/user.ingame";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PanelDescriptionSpan from "./PanelDescriptionSpan";
 import UserPanelCards from "./UserPanelCards";
 import { colors } from "@/theme/colors";
+import { PanelProps } from "./Panel";
+import { Sides } from "@/types/game";
 
 const PaneylEnemyWrapper = styled.div`
     display: flex;
     height: 100%;
-    width: 40%;
-    position: relative;
+    width: 30%;
+    position: absolute;
+    right: 20px;
     padding: 0px 20px;
-    justify-self: flex-end;
+    justify-self: flex-start;
 `;
 
 
@@ -24,19 +24,13 @@ const UserPanelSpan = styled.span`
 `;
 
 
-const PanelEnemy = () => {
+const PanelEnemy = ({ currentUser, field, round } : PanelProps) => {
 
-    const currentUser= useSelector((state: IState) => state.users.currentUser);
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-    const { fieldPicks, guesserData } = useSelector((state: IState) => state.game.gameData);
+    const team = currentUser.team === Sides.blue ? Sides.red : Sides.blue;
 
-    const team = getOppositeTeam(gameMembers, currentUser);
+    const restCards = field.cards.filter(card => card.type === team && !card.covered).length
 
     const getCards = () => {
-        if (guesserData?.data && team) {
-            return getOppositeCardsRest(fieldPicks, guesserData.data, team);
-        };
-
         return "";
     }
 
@@ -45,7 +39,7 @@ const PanelEnemy = () => {
             <PanelDescriptionSpan>Противник</PanelDescriptionSpan>
             {team && <UserPanelCards team={team} />}
             <UserPanelSpan>X</UserPanelSpan>
-            <UserPanelSpan>{getCards()}</UserPanelSpan>
+            <UserPanelSpan>{restCards}</UserPanelSpan>
         </PaneylEnemyWrapper>
     )
 };

@@ -2,9 +2,8 @@ import { Fragment, useRef, useState, DragEvent, MouseEvent } from "react";
 import styled from "styled-components";
 import GuesserLamp from "./GuesserLamp";
 import { LampPos } from "./GuesserLamp";
-import { useSelector } from "react-redux";
-import { IState } from "@/store/types";
 import GuessItem from "./GuessItem";
+import { IField, Sides } from "@/types/game";
 
 const GuesserWrapper = styled.div<{
     right: number, bottom: number
@@ -22,7 +21,11 @@ const GuesserWrapper = styled.div<{
 const startBottom = 140;
 const startRight = 420;
 
-const Guesser = () => {
+interface GuesserProps {
+    field: IField
+}
+
+const Guesser = ({ field } : GuesserProps) => {
 
     const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -48,10 +51,11 @@ const Guesser = () => {
         const deltaY = e.pageY - startPos.y;
 
         setPosition({right: startRight - deltaX, bottom: startBottom - deltaY});
+    } 
 
-    }    
-
-    const guesserData = useSelector((state: IState) => state.game.gameData.guesserData);
+    const start = field.cards
+        .filter(el => el.type === Sides.blue).length === 9 ? 
+        Sides.blue : Sides.red; 
 
     return (
         <GuesserWrapper 
@@ -62,21 +66,17 @@ const Guesser = () => {
             onMouseUp={onMouseUp}
             onMouseMove={(e) => mouseDown ? onMouseMove(e) : null}
             >
-            {guesserData &&
-                guesserData.data && guesserData.data.map((el, idx) => (
+            {field.cards.map((card, idx) => (
                     <Fragment key={idx}>
-                        <GuessItem type={el} idx={idx} />
+                        <GuessItem type={card.type} idx={idx} />
                     </Fragment>
                 ))}
 
-            {guesserData?.start && (
-                <Fragment>
-                    <GuesserLamp position={LampPos.left} />
-                    <GuesserLamp position={LampPos.top} />
-                    <GuesserLamp position={LampPos.right} />
-                    <GuesserLamp position={LampPos.bottom} />
-                </Fragment>
-            )}
+                <GuesserLamp start={start} position={LampPos.left} />
+                <GuesserLamp start={start}  position={LampPos.top} />
+                <GuesserLamp start={start}  position={LampPos.right} />
+                <GuesserLamp start={start}  position={LampPos.bottom} />
+
         </GuesserWrapper>
     );
 };

@@ -13,7 +13,19 @@ const updateGameMember = (user: IUser) => {
     socket.emit(SClient.UpdateGameMember, user)
 }
 
+const makeMysteryRequest = (keyword: string, selectedItems: number[]) => {
+    isDevelop() && console.log("Socket-Client/makeMysteryRequest, data: ", keyword, selectedItems);
+    socket.emit(SClient.MakeMysteryRequest, keyword, selectedItems)
+}
+
+const makeVoteRequest = (cardId: number) => {
+    isDevelop() && console.log("Socket-Client/makeVoteRequest, cardId: ", cardId);
+    socket.emit(SClient.MakeVoteRequest, cardId);
+}
+
 export const gameEmitters = {
     startGameRequest,
-    updateGameMember
+    updateGameMember,
+    makeMysteryRequest,
+    makeVoteRequest
 }

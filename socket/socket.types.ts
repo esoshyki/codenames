@@ -1,4 +1,4 @@
-import { IField } from "@/types/game";
+import { IField, IMystery, IRound } from "@/types/game";
 import { IUser } from "@/types/users";
 
 
@@ -9,6 +9,10 @@ export enum SServer {
     ResetServerResponse = "ResetServerResponse",
     allReady = "AllReady",
     SetField = "SetField",
+    SetRound = "SetRound",
+    MakeMysteryResponse = "MakeMysteryResponse",
+    MakeVoteResponse = "MakeVoteResponse",
+    AllVotesDoneResponse = "AllVotesDoneResponse"
 }
 
 export enum SClient {
@@ -17,6 +21,8 @@ export enum SClient {
     StartGameRequest = "startGameRequest",
     ResetServerData = "ResetServerData",
     UpdateGameMember = "UpdateGameMember",
+    MakeMysteryRequest = "MakeMysteryRequest",
+    MakeVoteRequest = "MakeVoteRequest",
 };
 
 export interface ServerToClient {
@@ -25,6 +31,10 @@ export interface ServerToClient {
     [SServer.ResetServerResponse]: () => void;
     [SServer.allReady]: () => void;
     [SServer.SetField] : (field: IField) => void;
+    [SServer.SetRound] : (round: IRound) => void;
+    [SServer.MakeMysteryResponse] : (mystery?: IMystery) => void;
+    [SServer.MakeVoteResponse] : (votes: number[]) => void;
+    [SServer.AllVotesDoneResponse] : (winnerVote: number) => void;
 };
 
 export interface ClientToServer {
@@ -33,6 +43,7 @@ export interface ClientToServer {
     [SClient.StartGameRequest]: (user: IUser) => void;
     [SClient.ResetServerData]: () => void;
     [SClient.UpdateGameMember] : (user: IUser) => void;
+    [SClient.MakeMysteryRequest] : (keyword: string, selectedItems: number) => void;
 };
 
 export interface InterServerEvents {

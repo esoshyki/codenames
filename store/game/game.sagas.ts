@@ -1,10 +1,11 @@
 import clientSocket from "@/socket/client";
+import { IState } from "@/types";
 import { Actions, IAction } from "@/types/actions";
 import { AppStages } from "@/types/app";
 import { IField, Sides } from "@/types/game";
 import { IUser } from "@/types/users";
 import { getCurrentUser, getGameMembers } from "@/utils/sagas";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { changeAppStageRequest } from "../app/app.actions";
 import { SetCurrentUserLeader, setCurrentUserReady, setCurrentUserTeam } from "../connection/connection.actions";
 import { setBlueTeam, setField, setGameMembers, setRedTeam } from "./game.actions";
@@ -12,7 +13,7 @@ import { setBlueTeam, setField, setGameMembers, setRedTeam } from "./game.action
 function* startGameRequestWorker() {
     const currentUser: IUser = yield getCurrentUser();
     yield call(clientSocket.game.startGameRequest, currentUser);
-};
+}
 
 function* updateGameMembersRequestWorker(action: IAction) {
     const gameMembers: IUser[] = yield getGameMembers();
@@ -34,7 +35,7 @@ function* updateGameMembersRequestWorker(action: IAction) {
     yield put(setGameMembers(newMembers));
     yield put(setRedTeam(redTeam));
     yield put(setBlueTeam(blueTeam));
-};
+}
 
 function* toggleTeamRequestWorker(action: IAction) {
 
@@ -44,7 +45,7 @@ function* toggleTeamRequestWorker(action: IAction) {
         ...currentUser,
         team: side  
     });
-};
+}
 
 function* toggleLeaderRequestWorker() {
     const currentUser: IUser = yield getCurrentUser();
@@ -53,7 +54,7 @@ function* toggleLeaderRequestWorker() {
         ...currentUser,
         leader: isLeader
     });
-};
+}
 
 function* toggleReadyRequestWorker() {
     const currentUser: IUser = yield getCurrentUser();
@@ -63,7 +64,7 @@ function* toggleReadyRequestWorker() {
             ...currentUser,
             ready: isReady
         })
-};
+}
 
 function* toggleCollectionVoteRequestWorker(action: IAction) {
     const currentUser: IUser = yield getCurrentUser();
@@ -77,15 +78,30 @@ function* toggleCollectionVoteRequestWorker(action: IAction) {
 
 function* allReadyRequestWorker() {
     yield put(changeAppStageRequest(AppStages.CollectionVote))
-};
+}
 
 function* setFieldRequestWorker(action: IAction) {
     const field : IField = action.payload;
+    const state : IState = yield select();
+    const stage = state.app.stage;
 
     yield put(setField(field));
-    yield put(changeAppStageRequest(AppStages.game))
+
+    if (stage !== AppStages.game) {
+        yield put(changeAppStageRequest(AppStages.game))
+    }
 }
 
+function* makeMysteryRequestWorker(action: IAction) {
+    const payload : { keyword: string, selectedItems : number[] } = action.payload;
+    const { keyword, selectedItems } = payload;
+    yield call(clientSocket.game.makeMysteryRequest, keyword, selectedItems)
+}
+
+function* makeVoteRequestWorker(action: IAction) {
+    const cardId : number = action.payload;
+    yield call(clientSocket.game.makeVoteRequest, cardId);
+}
 
 export default function* gameSagas() {
     yield takeEvery(Actions.game.StartGameRequest, startGameRequestWorker);
@@ -95,5 +111,7 @@ export default function* gameSagas() {
     yield takeEvery(Actions.game.ToggleReadyRequest, toggleReadyRequestWorker);
     yield takeEvery(Actions.game.AllReadyRequest, allReadyRequestWorker);
     yield takeEvery(Actions.game.ToggleCollectionVoteRequest, toggleCollectionVoteRequestWorker);
-    yield takeEvery(Actions.game.SetFieldRequest, setFieldRequestWorker)
+    yield takeEvery(Actions.game.SetFieldRequest, setFieldRequestWorker);
+    yield takeEvery(Actions.game.MakeMysteryRequest, makeMysteryRequestWorker);
+    yield takeEvery(Actions.game.MakeVoteRequest, makeVoteRequestWorker);
 }

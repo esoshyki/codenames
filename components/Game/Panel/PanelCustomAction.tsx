@@ -1,37 +1,31 @@
 import ActionWrapper from "./PanelActionWrapper";
 import PanelActionButton from "./PanelActionButton";
 import { useDispatch, useSelector } from "react-redux";
-import { IState } from "@/store/types";
 import PanelDescriptionSpan from "./PanelDescriptionSpan";
 import { Fragment } from "react";
 import PanelSelectedSpan from "./PanelSelectedSpan";
-import { getUserTeam, isMyCheck } from "@/utils/user.ingame";
-import { getCurrentUser } from "@/store/users/users.selectors";
-import { getGameMembers } from "@/store/game/game.selectors";
-import { customCardVoteRequest } from "@/store/app/app.actions";
+import { IField, IRound } from "@/types/game";
+import { select } from "@/store/select";
+import { getCheck } from "@/utils/game.get.check";
+import { PanelProps } from "./Panel";
 
-const CustomAction = () => {
+const CustomAction = ({ field, round, currentUser } : PanelProps) => {
 
     const dispatch = useDispatch();
+    
+    const selectedCards = useSelector(select.game.selectedCards);
+    const myTeam = currentUser.team;
 
-    const selectedCards = useSelector((state: IState) => state.app.selectedCards);
-    const guesserData = useSelector((state: IState) => state.game.gameData.fieldData);
-    const roundNumber = useSelector((state: IState) => state.game.gameData.round.number);
-    const start = useSelector((state: IState) => state.game.gameData.guesserData?.start);
-    const currentUser = useSelector(getCurrentUser);
-    const gameMembers = useSelector(getGameMembers);
-
-    const myTeam = getUserTeam(gameMembers, currentUser);
-
-    const myCheck = isMyCheck(roundNumber, myTeam, start);
+    const check = getCheck(round, field.start);
+    const myCheck = check === myTeam;
 
 
-    const selectedWord = guesserData ? guesserData[selectedCards[0]] : null;
+    const selectedWord = null;
 
     const vote = () => {
-        dispatch(customCardVoteRequest(selectedCards[0]))
+
     };
-    
+
     return (
         <ActionWrapper>
 

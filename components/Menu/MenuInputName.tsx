@@ -58,8 +58,6 @@ const MenuInputName = () => {
 
     const content = menuContent[locale];
 
-    console.log(content);
-
     return (
         <InputWrapper>
             <InputLabel>

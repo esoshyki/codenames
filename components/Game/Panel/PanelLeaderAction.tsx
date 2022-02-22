@@ -1,18 +1,18 @@
-import { makeMysteryRequest } from "@/store/game/game.actions";
-import { getMystery } from "@/store/game/game.selectors";
-import {  Mystery, Sides } from "@/store/game/game.types";
-import { IState } from "@/store/types";
+import { makeMysteryRequest, setFieldRequest } from "@/store/game/game.actions";
+import { select } from "@/store/select";
 import { colors } from "@/theme/colors";
-import { getUserTeam } from "@/utils/user.ingame";
-import { Fragment, useEffect, useRef } from "react";
+import { ICard } from "@/types/game";
+import { getCheck } from "@/utils/game.get.check";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { PanelProps } from "./Panel";
 import PanelActionButton from "./PanelActionButton";
 import PanelActionWrapper from "./PanelActionWrapper";
 import PanelDescriptionSpan from "./PanelDescriptionSpan";
 import PanelSelectedSpan from "./PanelSelectedSpan";
 
-const WrordsContainer = styled.div`
+const WordsContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -35,27 +35,19 @@ const KeyWordInput = styled.input`
     }
 `;
 
-const LeaderAction = () => {
+const LeaderAction = ({ field, round, currentUser } : PanelProps) => {
 
     const dispatch = useDispatch();
 
-    const selectedCards = useSelector((state: IState) => state.app.selectedCards);
-    const fieldData = useSelector((state: IState) => state.game.gameData.fieldData);
-    const currentUser = useSelector((state: IState) => state.users.currentUser);
-    const gameMembers = useSelector((state: IState) => state.game.gameMembers);
-    const roundNumber= useSelector((state: IState) => state.game.gameData.round.number);
-    const startTeam = useSelector((state: IState) => state.game.gameData.guesserData?.start);
-    const mystery = useSelector(getMystery);
+    const selectedCards = useSelector(select.game.selectedCards);
+    const mystery = useSelector(select.game.mystery);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     const isMyCheck = () => {
-        const team = getUserTeam(gameMembers, currentUser);
-        const secondTeam = startTeam === Sides.blue ? Sides.red : Sides.blue;
-        const activeTeam = roundNumber % 2 ? startTeam : secondTeam;
-        return activeTeam === team;
+        console.log(round.check === currentUser.team)
+        return round.check === currentUser.team
     }
-
 
     useEffect(() => {
         if (!!selectedCards.length && inputRef.current) {
@@ -64,34 +56,45 @@ const LeaderAction = () => {
     }, [selectedCards]);
 
     const makeMystery = () => {
-        if (!inputRef.current) return;
-        const mystery : Mystery = {
-            words: [...selectedCards],
-            keyWord: inputRef.current.value
+        const cards : ICard[] = field.cards.map((card, idx) => {
+            if (selectedCards.includes(idx)) {
+                return {
+                    ...card,
+                    selected: true
+                }
+            } else {
+                return card
+            }
+        });
+
+        if (inputRef.current?.value) {
+            dispatch(makeMysteryRequest({
+                keyword: inputRef.current.value,
+                selectedItems: selectedCards 
+            }))
         }
-        dispatch(makeMysteryRequest(mystery));
     };
 
     return (
         <PanelActionWrapper>
 
-            {!mystery && <Fragment>
-                <WrordsContainer>
-                    <div>
-                        <PanelDescriptionSpan>
-                            {"Связать слова "}
-                        </PanelDescriptionSpan>
-                        <PanelSelectedSpan>
-                            {fieldData && selectedCards.map((idx) => fieldData[idx]).join(", ")}
-                        </PanelSelectedSpan>
-                    </div>
-                    <KeyWordInput ref={inputRef} />
-                </WrordsContainer>
+            <WordsContainer>
+                {!mystery && <div>
+                    <PanelDescriptionSpan>
+                        {"Связать слова "}
+                    </PanelDescriptionSpan>
+                    <PanelSelectedSpan>
 
-                {isMyCheck() ? <PanelActionButton onClick={makeMystery}>
+                    </PanelSelectedSpan>
+                </div>}
+                
+                {!mystery && <KeyWordInput ref={inputRef} />}
+                </WordsContainer>
+
+                {(isMyCheck() && !mystery && selectedCards.length > 0) && <PanelActionButton onClick={makeMystery}>
                     Загадать
-                </PanelActionButton> : <PanelDescriptionSpan>Очередь соперника</PanelDescriptionSpan>}
-            </Fragment>}
+                </PanelActionButton>}
+
         </PanelActionWrapper>
     )
 

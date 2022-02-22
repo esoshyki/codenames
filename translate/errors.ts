@@ -20,6 +20,5 @@ export const getErrorContent = (
     locale: Locales,
     key: ErrorsContent
     ) => {
-        console.log('locale => ', locale);
         return errorsContent[locale][key]
     }

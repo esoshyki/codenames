@@ -1,5 +1,5 @@
-import { Sides } from "@/store/game/game.types";
 import styled from "styled-components";
+import { Sides } from '@/types/game';
 
 interface UserPanelCardsProps {
     team: Sides;

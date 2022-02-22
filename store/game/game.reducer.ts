@@ -1,18 +1,17 @@
 import { ReduxAction } from "@/types";
 import { Actions } from "@/types/actions";
-import { IGame, Sides } from "@/types/game";
+import { IGame } from "@/types/game";
 
 const initialState: IGame = {
-    field: {
-        cards: []
-    },
     redTeam: {
         members: [],
     },
     blueTeam: {
         members: [],
     },
-    gameMembers: []
+    gameMembers: [],
+    selectedCards: [],
+    cardVotes: [],
 };
 
 const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IGame => {
@@ -21,16 +20,15 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
 
         case Actions.game.Reset:
             return {
-                field: {
-                    cards: []
-                },
                 redTeam: {
                     members: [],
                 },
                 blueTeam: {
                     members: [],
                 },
-                gameMembers: []
+                gameMembers: [],
+                selectedCards: [],
+                cardVotes: []
             }
 
         case Actions.game.SetGameMembers:
@@ -61,6 +59,30 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
             return {
                 ...state,
                 field: payload
+            }
+
+        case Actions.game.SetRound:
+            return {
+                ...state,
+                round: payload
+            }
+
+        case Actions.game.SetSelectedCards:
+            return {
+                ...state,
+                selectedCards: payload
+            }
+
+        case Actions.game.SetMystery:
+            return {
+                ...state,
+                mystery: payload
+            }
+
+        case Actions.game.SetWinnerVote:
+            return {
+                ...state,
+                winnerVote: payload
             }
 
         default:

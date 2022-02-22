@@ -1,35 +1,44 @@
-import { SClient, SServer } from "../../socket.types";
-import { Server as ServerIO } from "socket.io";
 import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../../socket.types";
+import { Server as ServerIO } from "socket.io";
 import { IUser } from "@/types/users";
-import { ServerData } from "@/socket/data";
+import { SServer } from "../../socket.types";
+import { IField, IMystery, IRound } from "@/types/game";
 
-export const addGameEmitters = 
-    (
-        socket: any, io: ServerIO<ClientToServer, ServerToClient, InterServerEvents, SocketData>,
-        serverData: ServerData
-    ) => {
+export const createGameEmitter = (
+    io: ServerIO<ClientToServer, ServerToClient, InterServerEvents, SocketData>
+) => {
 
-        socket.on(SClient.StartGameRequest, (user: IUser) => {
-            serverData.game.addGameMember(user);
-            io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
-        });
+    return ({
+        updateGameMembers: (gameMembers: IUser[]) => {
+            io.emit(SServer.UpdateGameMembers, gameMembers)
+        },
 
-        socket.on(SClient.UpdateGameMember, (user: IUser) => {
-            console.log("Server/Update-Game-Member", (user));
-            serverData.game.updateGameMember(user);
-            io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
-            if (serverData.game.isAllReady()) {
-                io.emit(SServer.allReady);
-                io.emit(SServer.UpdateGameMembers, serverData.game.getGameMembers());
-            };
-
-            if (serverData.game.allCollectionVotesDone()) {
-                const field = serverData.game.getField();
-                if (field) {
-                    io.emit(SServer.SetField, field)
-                }
+        updateField: (field?: IField) => {
+            if (field) {
+                io.emit(SServer.SetField, field)
             }
-        })
+        },
 
-} 
+        updateRound: (round?: IRound) => {
+            if (round) {
+                io.emit(SServer.SetRound, round)
+            }
+        },
+
+        allReady: () => {
+            io.emit(SServer.allReady)
+        },
+
+        makeMysteryResponse: (mystery?: IMystery) => {
+            io.emit(SServer.MakeMysteryResponse, mystery)
+        },
+
+        makeVoteResponse: (votes: number[]) => {
+            io.emit(SServer.MakeVoteResponse, votes)
+        },
+
+        allVotesDoneResponse: (winnerVote: number) => {
+            io.emit(SServer.AllVotesDoneResponse, winnerVote)
+        }
+    })
+}

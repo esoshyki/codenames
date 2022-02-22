@@ -67,8 +67,6 @@ const Login = () => {
             return;
         }
 
-        console.log(onlineUsers);
-
         if (onlineUsers.some(user => user.userName === userName)) {
             dispatch(setConnectionError(t.errors(locale, ErrorsContent.userExists)))
         } else {

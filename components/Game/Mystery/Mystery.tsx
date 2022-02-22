@@ -1,18 +1,17 @@
-import { Sides } from "@/store/game/game.types";
-import { IState } from "@/store/types";
+import { select } from "@/store/select";
 import { colors } from "@/theme/colors";
-import { whosCheck } from "@/utils/user.ingame";
+import { IField, IRound, Sides } from "@/types/game";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const MysteryWrapper = styled.div<{team: Sides | null}>`
     
-    width: 500px;
-    height: 300px;
+    width: 300px;
+    height: 100px;
     position: absolute;
     left: 0;
-    bottom: 100px;
+    bottom: 90px;
     background-image: ${props => props.team === Sides.red ? "url(/images/red_wood.jpg)" : props.team === Sides.blue ? "url(/images/blue_wood.jpg)" : "none"};
     background-color: ${colors.yellow};
 `;
@@ -28,39 +27,41 @@ const MysteryHeader = styled.div`
 
 const MysteryKeyWord = styled.div`
     width: 100%;
-    height: 250px;
+    height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: ${colors.yellow}
+    color: ${colors.yellow};
 `
+interface MysteryProps {
+    field: IField,
+    round: IRound,
+};
 
+const Mystery = ({ field, round } : MysteryProps) => {
 
-const Mystery = () => {
+    const mystery = useSelector(select.game.mystery);
 
-    const roundNumber = useSelector((state: IState) => state.game.gameData.round.number);
-    const startTeam = useSelector((state: IState) => state.game.gameData.guesserData?.start);
-    const check = whosCheck(roundNumber, startTeam);
+    const startTeam = field.start;
+    const secondTeam = startTeam === Sides.blue ? Sides.red : Sides.blue;
 
-    const mystery = useSelector((state: IState) => state.game.gameData.round.mystery);
+    const currentTeam = round.number % 2 ? startTeam : secondTeam;
 
     return (
-            <MysteryWrapper team={check}>
-                {mystery && (
-                    <Fragment>
-                        <MysteryHeader>
-                            {`Загадоно слов - ${mystery.words.length}`}
-                        </MysteryHeader>
+        <Fragment>
+            {mystery && <MysteryWrapper team={currentTeam}>
+                <MysteryHeader>
+                    {`Загадоно слов - ${mystery.selectedCards.length}`}
+                </MysteryHeader>
 
-                        <MysteryKeyWord>
-                            {mystery.keyWord}
-                        </MysteryKeyWord>
-                    </Fragment>
-                )}
-            </MysteryWrapper>
+                <MysteryKeyWord>
+                    {mystery.keyword}
+                </MysteryKeyWord>
+            </MysteryWrapper>}
+        </Fragment>
         )
 };
 

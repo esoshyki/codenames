@@ -1,6 +1,6 @@
 import { SServer } from "@/socket/socket.types";
-import { allReadyRequest, setFieldRequest, updateGameMembersRequest } from "@/store/game/game.actions";
-import { IField } from "@/types/game";
+import { allReadyRequest, setFieldRequest, setMystery, setRound, setWinnerVote, updateGameMembersRequest } from "@/store/game/game.actions";
+import { IField, IMystery, IRound } from "@/types/game";
 import { IUser } from "@/types/users";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
@@ -13,9 +13,23 @@ export const setGameListeners = (dispatch: Dispatch<AnyAction>) => {
 
     socket.on(SServer.allReady, () => {
         dispatch(allReadyRequest());
-    });
+    })
 
     socket.on(SServer.SetField, (field: IField) => {
-        dispatch(setFieldRequest(field))
+        dispatch(setFieldRequest(field));
+        dispatch(setWinnerVote());
+    })
+
+    socket.on(SServer.SetRound, (round: IRound) => {
+        dispatch(setRound(round));
+    })
+
+    socket.on(SServer.MakeMysteryResponse, (mystery?: IMystery) => {
+        dispatch(setMystery(mystery))
+    })
+
+    socket.on(SServer.AllVotesDoneResponse, (winner: number) => {
+        dispatch(setWinnerVote(winner));
     });
+
 }

@@ -12,12 +12,16 @@ export enum Neutrals {
 
 export interface ICard {
     text: string;
+    id: number;
     type: Sides | Neutrals;
     covered: boolean;
-    votes: IUser[]
+    votes: number;
+    mystered?: true;
+    selected?: true;
 };
 
 export interface IField {
+    start: Sides,
     cards: ICard[]
 };
 
@@ -25,6 +29,7 @@ export interface IRound {
     check: Sides;
     time: number;
     number: number;
+    keyword?: string;
 };
 
 export interface IResults {
@@ -46,12 +51,22 @@ export interface ITeam {
     members: IUser[]
 }
 
+export interface IMystery {
+    selectedCards: number[];
+    answers: number;
+    keyword: string;
+}
+
 export interface IGame {
-    field: IField;
+    field?: IField;
     round?: IRound;
     statistic?: IStatistics;
     results?: IResults;
     redTeam: ITeam;
     blueTeam: ITeam;
     gameMembers: IUser[];
+    selectedCards: number[];
+    mystery?: IMystery;
+    cardVotes: number[];
+    winnerVote?: number;
 };
