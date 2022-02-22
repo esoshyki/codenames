@@ -1,7 +1,6 @@
 import { colors } from "@/theme/colors";
 import styled from "styled-components";
 import { PanelProps } from "./Panel";
-import CustomAction from "./PanelCustomAction";
 import LeaderAction from "./PanelLeaderAction";
 import UserPanelCards from "./UserPanelCards";
 
@@ -32,9 +31,7 @@ const UserPanel = (props: PanelProps) => {
             {team && <UserPanelCards team={team} />}
             <UserPanelSpan> x </UserPanelSpan>
             <UserPanelSpan>{cardRest}</UserPanelSpan>
-            {currentUser.leader ? 
-                <LeaderAction {...props}/> : 
-                <CustomAction {...props}/>}
+            {currentUser.leader && <LeaderAction {...props}/>}
           </UserPanelWrapper>
     )
 

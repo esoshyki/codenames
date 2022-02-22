@@ -1,8 +1,6 @@
-import { makeMysteryRequest, setFieldRequest } from "@/store/game/game.actions";
+import { makeMysteryRequest } from "@/store/game/game.actions";
 import { select } from "@/store/select";
 import { colors } from "@/theme/colors";
-import { ICard } from "@/types/game";
-import { getCheck } from "@/utils/game.get.check";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -35,7 +33,7 @@ const KeyWordInput = styled.input`
     }
 `;
 
-const LeaderAction = ({ field, round, currentUser } : PanelProps) => {
+const LeaderAction = ({ round, currentUser } : PanelProps) => {
 
     const dispatch = useDispatch();
 
@@ -56,16 +54,6 @@ const LeaderAction = ({ field, round, currentUser } : PanelProps) => {
     }, [selectedCards]);
 
     const makeMystery = () => {
-        const cards : ICard[] = field.cards.map((card, idx) => {
-            if (selectedCards.includes(idx)) {
-                return {
-                    ...card,
-                    selected: true
-                }
-            } else {
-                return card
-            }
-        });
 
         if (inputRef.current?.value) {
             dispatch(makeMysteryRequest({

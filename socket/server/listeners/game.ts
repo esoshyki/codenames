@@ -1,4 +1,4 @@
-import { SClient, SServer } from "../../socket.types";
+import { SClient } from "../../socket.types";
 import { Server as ServerIO } from "socket.io";
 import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../../socket.types";
 import { IUser } from "@/types/users";

@@ -1,4 +1,4 @@
-import { IField, IMystery, IRound, Sides } from "@/types/game";
+import { IField, IMystery, IRound } from "@/types/game";
 import { IUser } from "@/types/users";
 import { createField, nextRound } from "../socket.utils";
 

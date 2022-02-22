@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import FieldCard from "./FieldCard";
-import { Fragment, useState } from "react";
-import { IField, IRound } from "@/types/game";
-import { IUser } from "@/types/users";
+import { Fragment } from "react";
 import { FieldProps } from "./Field";
 import { select } from "@/store/select";
 import { makeVoteRequest, setSelectedCards } from "@/store/game/game.actions";
