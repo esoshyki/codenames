@@ -8,7 +8,7 @@ import { getCurrentUser, getGameMembers } from "@/utils/sagas";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { changeAppStageRequest } from "../app/app.actions";
 import { SetCurrentUserLeader, setCurrentUserReady, setCurrentUserTeam } from "../connection/connection.actions";
-import { setBlueTeam, setField, setGameMembers, setRedTeam } from "./game.actions";
+import { setBlueTeam, setField, setGameMembers, setRedTeam, setSelectedCards } from "./game.actions";
 
 function* startGameRequestWorker() {
     const currentUser: IUser = yield getCurrentUser();
@@ -103,6 +103,10 @@ function* makeVoteRequestWorker(action: IAction) {
     yield call(clientSocket.game.makeVoteRequest, cardId);
 }
 
+function* setWinnerVoteWorker() {
+    yield put(setSelectedCards([]));
+}
+
 export default function* gameSagas() {
     yield takeEvery(Actions.game.StartGameRequest, startGameRequestWorker);
     yield takeEvery(Actions.game.UpdateGameMembersRequest, updateGameMembersRequestWorker);
@@ -114,4 +118,5 @@ export default function* gameSagas() {
     yield takeEvery(Actions.game.SetFieldRequest, setFieldRequestWorker);
     yield takeEvery(Actions.game.MakeMysteryRequest, makeMysteryRequestWorker);
     yield takeEvery(Actions.game.MakeVoteRequest, makeVoteRequestWorker);
+    yield takeEvery(Actions.game.SetWinnerVote, setWinnerVoteWorker)
 }
