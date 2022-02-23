@@ -1,15 +1,21 @@
-import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../../socket.types";
-import { Server as ServerIO } from "socket.io";
+import { IO } from "../../socket.types";
 import { IUser } from "@/types/users";
-import { SServer } from "../../socket.types";
 
-export const createConnectionEmitters = (
-    io: ServerIO<ClientToServer, ServerToClient, InterServerEvents, SocketData>
-) => {
+export enum ConnectionServer {
+    UpdateOnlineUsers = "UpdateOnlineUsers"
+};
 
-    return ({
-        updateOnlineUsers: (onlineUser: IUser[]) => {
-            io.emit(SServer.updateOnlineUsers, onlineUser)
-        },
-    })
+export interface ConnectionServerEmitters {
+    [ConnectionServer.UpdateOnlineUsers]: (onlineUsers: IUser[]) => void;
+}
+
+export class ConnectionServerEmitter {
+    io: IO;
+    constructor(io: IO) {
+        this.io = io;
+    }
+
+    updateOnlineUsers = (onlineUsers: IUser[]) => {
+        this.io.emit(ConnectionServer.UpdateOnlineUsers, onlineUsers)
+    }
 }

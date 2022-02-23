@@ -16,10 +16,10 @@ const GuesserWrapper = styled.div<{
     background-image: url(/images/guesser.png);
     border-radius: 15px;
     z-index: 20000;
+    &:-webkit-user-drag {
+        user-select: none;
+    }
 `;
-
-const startBottom = 140;
-const startRight = 420;
 
 interface GuesserProps {
     field: IField
@@ -29,29 +29,6 @@ const Guesser = ({ field } : GuesserProps) => {
 
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const [position, setPosition] = useState({right: startRight, bottom: startBottom})
-    const [startPos, setStartPos] = useState({x: 0, y: 0});
-    const [mouseDown, setMouseDown] = useState(false);
-
-
-    const onMouseDown = (e: DragEvent<HTMLDivElement>) => {
-        setMouseDown(true)
-        setStartPos({
-            x: e.pageX,
-            y: e.pageY
-        });
-    };
-
-    const onMouseUp = () => {
-        setMouseDown(false)
-    }
-
-    const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        const deltaX = e.pageX - startPos.x;
-        const deltaY = e.pageY - startPos.y;
-
-        setPosition({right: startRight - deltaX, bottom: startBottom - deltaY});
-    } 
 
     const start = field.cards
         .filter(el => el.type === Sides.blue).length === 9 ? 
@@ -59,12 +36,9 @@ const Guesser = ({ field } : GuesserProps) => {
 
     return (
         <GuesserWrapper 
-            right={position.right}
-            bottom={position.bottom}
+            right={20}
+            bottom={100}
             ref={wrapperRef}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-            onMouseMove={(e) => mouseDown ? onMouseMove(e) : null}
             >
             {field.cards.map((card, idx) => (
                     <Fragment key={idx}>

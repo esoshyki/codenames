@@ -3,12 +3,12 @@ import { AnyAction } from "redux";
 import { io } from "socket.io-client";
 import { socketConnected, socketDisconnected, updateOnlineUsers } from "@/store/connection/connection.actions";
 import { connectionEmitters } from "./emitters/connection";
-import { SServer } from "../socket.types";
 import { IUser } from "@/types/users";
 import { gameEmitters } from "./emitters/game";
 import { appEmitters } from "./emitters/app";
 import { setAppListeners } from "./listeners/app";
 import { setGameListeners } from "./listeners/game";
+import { ConnectionServer } from "../server/emitters/connection";
 
 
 export const socket = io(
@@ -27,7 +27,7 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
         dispatch(socketDisconnected())
     })
 
-    socket.on(SServer.updateOnlineUsers, (users: IUser[]) => {
+    socket.on(ConnectionServer.UpdateOnlineUsers, (users: IUser[]) => {
         dispatch(updateOnlineUsers(users))
     })
 

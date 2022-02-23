@@ -20,7 +20,8 @@ enum AppActions {
     RestartRequest = "App/Restart-Request",
     Restart = "App/Restart",
     Reset = "App/Reset",
-    SetLocale = "App/Set-Locale"
+    SetLocale = "App/Set-Locale",
+    SetLayoutEffect = "App/Set-Layout-Effect",
 };
 
 enum ChatActions {
@@ -52,6 +53,7 @@ enum GameActions {
     MakePassRequest = "Game/Male-Pass-Request",
     AllVotesDoneRequest = "Game/All-Votes-Done-Request",
     SetWinnerVote = "Game/Set-Winner-Vote",
+    EneGameRequest = "Game/End-Game-Request"
 }
 
 export const Actions = {

@@ -1,26 +1,53 @@
-import { IField, IMystery, IRound } from "@/types/game";
+import { IO } from "@/socket/socket.types";
+import { IField, IMystery, IRound, Neutrals } from "@/types/game";
 import { IUser } from "@/types/users";
 import { createField, nextRound } from "../../socket.utils";
+import { GameEmitter } from "../emitters/game";
 
 export class GameData {
     private gameMembers: IUser[];
     private field?: IField;
     private round?: IRound;
     private mystery?: IMystery;
+    private emitter: GameEmitter
 
-    constructor () {
+    constructor (io: IO) {
         this.gameMembers = [];
+        this.emitter = new GameEmitter(io)
     }
+
+    // GAME MEMBERS
+
+    getGameMembers = () => this.gameMembers;
 
     addGameMember = (user: IUser) => {
         this.gameMembers.push(user);
+        this.emitter.updateGameMembers(this.getGameMembers());
     }
 
     removeGameMember = (user: IUser) => {
         this.gameMembers === this.gameMembers.filter(member => member.userName === user.userName);
+        this.emitter.updateGameMembers(this.getGameMembers());
     }
 
-    getGameMembers = () => this.gameMembers;
+    updateGameMember = (user: IUser) => {
+        const index = this.gameMembers.findIndex(usr => usr.userName === user.userName);
+        if (user.leader) {
+            this.resetTeamLeader(user)
+        }
+        if (index >= 0) {
+            this.gameMembers[index] = user; 
+        }
+        this.emitter.updateGameMembers(this.getGameMembers());
+        if (this.isAllReady()) {
+            this.emitter.allReady();
+        }
+
+        if (this.allCollectionVotesDone()) {
+            this.emitter.updateField(this.getField());
+            this.emitter.updateRound(this.getRound());
+        }
+    }
 
     reset = () => {
         this.gameMembers = [];
@@ -76,25 +103,20 @@ export class GameData {
             selectedCards,
             answers: 0
         }
+        this.emitter.makeMysteryResponse(this.getMystery());
     };
 
     getMystery = () => this.mystery;
 
-    resetMystery = () => this.mystery === undefined;
-
-    updateGameMember = (user: IUser) => {
-        const index = this.gameMembers.findIndex(usr => usr.userName === user.userName);
-        if (user.leader) {
-            this.resetTeamLeader(user)
-        }
-        if (index >= 0) {
-        this.gameMembers[index] = user; 
-        }
-    }
+    resetMystery = () => this.mystery = undefined;
 
     addMysteryAnswer = () => {
         if (this.mystery) {
             this.mystery.answers += 1;
+
+            if (this.mystery.answers - this.mystery.selectedCards.length === 1) {
+                this.nextRound();
+            }
         }
     }
 
@@ -128,9 +150,62 @@ export class GameData {
         }
     }
 
+    allCardsCovered = () => {
+        if (this.round && this.field) {
+            const check = this.round.check;
+            const rest = this.field.cards.filter(card => card.type === check);
+
+            if (rest) return false;
+
+            return true
+        }
+
+        return false
+    }
+
+    endGame = () => {
+        this.emitter.updateField();
+        this.emitter.engGame();
+        this.reset();
+    }
+
     addVote = (cardId: number) => {
         if (this.field?.cards) {
             this.field.cards[cardId].votes += 1;
+        }
+        if (this.allVotesDone()){
+            const winnerVote = this.getWinnerVote();
+            if (typeof winnerVote === "number") {
+                this.clearVote();
+                this.emitter.allVotesDoneResponse(winnerVote);
+                setTimeout(() => {
+                    const success = this.closeCard(winnerVote);
+
+                    if (this.allCardsCovered()) {
+
+                        return this.endGame();
+                    }
+
+                    if (success === true) {
+                        this.addMysteryAnswer();
+                        this.emitter.updateField(this.getField());
+                        this.emitter.makeMysteryResponse(this.getMystery())
+                    };
+
+                    if (success === false) {
+
+                        if (this.field?.cards[winnerVote].type === Neutrals.black) {
+                            return this.endGame()
+                        }
+                        this.emitter.updateField(this.getField());
+                        this.emitter.updateRound(this.getRound());
+                        this.emitter.makeMysteryResponse();
+                    }
+                
+                }, 3000)
+            }
+        } else {
+            this.emitter.updateField(this.getField());
         }
     }
 
@@ -144,7 +219,6 @@ export class GameData {
         if (!success) {
             this.nextRound();
         }
-        this.addMysteryAnswer()
         return success;
     }
 
@@ -152,8 +226,10 @@ export class GameData {
         if (this.round && this.field) {
             const number = this.round.number + 1;
             this.round = nextRound(number, this.field.start);
-            this.resetMystery();
         }
+        this.resetMystery();
+        this.emitter.updateRound(this.getRound());
+        this.emitter.makeMysteryResponse(this.getMystery());
     }
 
     getPassVotes = () => {

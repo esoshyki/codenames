@@ -1,8 +1,8 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
 import { ReduxAction } from "@/types";
 import { Actions } from "@/types/actions";
-import { AppStages } from "@/types/app";
-import { appReset, setAppStage } from "./app.actions";
+import { AppStages, LayoutEffects } from "@/types/app";
+import { appReset, setAppStage, setLayoutEffect } from "./app.actions";
 import clientSocket from "@/socket/client";
 import { connectionReset } from "../connection/connection.actions";
 import { gameReset } from '../game/game.actions'
@@ -15,8 +15,11 @@ function* setSocketIdWorker () {
 
 function* changeAppStageRequestWorker ({ payload } : ReduxAction ) {
     const appStage: AppStages = payload;
-
+    
+    yield put(setLayoutEffect(LayoutEffects.Hide));
+    yield delay(600);
     yield put(setAppStage(appStage));
+    yield put(setLayoutEffect(LayoutEffects.Show));
 };
 
 function* restartRequestWorker() {

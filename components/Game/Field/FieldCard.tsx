@@ -63,9 +63,9 @@ const CoveredCard = styled.div<{type: Sides | Neutrals}>`
             case Neutrals.white:
                 return "url(/images/white_card.jpeg)";
             case Neutrals.black:
-                return "url(/images/black_card.jpeg)";
+                return "url(/images/black_card.jpg)";
             default:
-                return "url(/images/black_card.jpeg)";              
+                return "url(/images/black_card.jpg)";              
         }
     }};
     &:hover {

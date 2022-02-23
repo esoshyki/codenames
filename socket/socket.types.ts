@@ -1,32 +1,16 @@
-import { IField, IMystery, IRound } from "@/types/game";
-import { IUser } from "@/types/users";
 import { GameClientEmitters } from "./client/emitters/game";
 import { Server as ServerIO } from "socket.io";
 import { ConnectionClientEmitters } from "./client/emitters/connection";
+import { GameServerEmitters } from "./server/emitters/game";
+import { ConnectionServerEmitters } from "./server/emitters/connection";
 
 export enum SServer {
-    connected = "connected",
-    updateOnlineUsers = "updateOnlineUsers",
-    UpdateGameMembers = "updateGameMembers",
     ResetServerResponse = "ResetServerResponse",
-    allReady = "AllReady",
-    SetField = "SetField",
-    SetRound = "SetRound",
-    MakeMysteryResponse = "MakeMysteryResponse",
-    MakeVoteResponse = "MakeVoteResponse",
-    AllVotesDoneResponse = "AllVotesDoneResponse"
 }
 
-export interface ServerToClient {
-    [SServer.updateOnlineUsers]: (users: IUser[]) => void;
-    [SServer.UpdateGameMembers]: (gameMembers: IUser[]) => void;
+export interface ServerToClient 
+    extends GameServerEmitters, ConnectionServerEmitters {
     [SServer.ResetServerResponse]: () => void;
-    [SServer.allReady]: () => void;
-    [SServer.SetField] : (field: IField) => void;
-    [SServer.SetRound] : (round: IRound) => void;
-    [SServer.MakeMysteryResponse] : (mystery?: IMystery) => void;
-    [SServer.MakeVoteResponse] : (votes: number[]) => void;
-    [SServer.AllVotesDoneResponse] : (winnerVote: number) => void;
 };
 
 export interface ClientToServer 

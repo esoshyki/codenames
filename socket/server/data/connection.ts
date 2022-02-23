@@ -1,10 +1,14 @@
+import { IO } from "@/socket/socket.types";
 import { IUser } from "@/types/users";
+import { ConnectionServerEmitter } from "../emitters/connection";
 
 export class ConnectionData {
     private users: IUser[];
+    private emitter: ConnectionServerEmitter;
 
-    constructor() {
+    constructor(io: IO) {
         this.users = [];
+        this.emitter = new ConnectionServerEmitter(io);
     }
 
     findUser = (user: IUser) => this.users.find(u => u.userName === user.userName);
@@ -21,10 +25,12 @@ export class ConnectionData {
 
     setSocketId = (user: IUser) => {
        this.addUser(user);
+       this.emitter.updateOnlineUsers(this.getAllUsers());
     };
 
     removeUserBySocketId = (socketId: string) => {
         this.users = this.users.filter(user => user.socketId !== socketId);
+        this.emitter.updateOnlineUsers(this.getAllUsers());
     }
 
     disconnectUser = (socketId: string) => {
@@ -36,6 +42,7 @@ export class ConnectionData {
                 user.socketId = undefined;
             }
         };
+        this.emitter.updateOnlineUsers(this.getAllUsers());
     };
 
     setUserName = (user: IUser) => {
@@ -43,10 +50,12 @@ export class ConnectionData {
         if (onlineUser) {
             onlineUser.userName = user.userName;
         };
+        this.emitter.updateOnlineUsers(this.getAllUsers());
     };
 
     reset = () => {
         this.users = [];
+        this.emitter.updateOnlineUsers(this.getAllUsers());
     }
 
 };

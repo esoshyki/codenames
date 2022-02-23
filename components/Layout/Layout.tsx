@@ -5,16 +5,43 @@ import SystemInfo from "../SystemInfo";
 import { isDevelop } from "@/utils/isDevelop";
 import Reset from "./Reset";
 import { useDispatch, useSelector } from "react-redux";
-import { select } from "@/store/select";
 import { useRouter } from "next/router";
 import { setLocale } from "@/store/app/app.actions";
 import { getLocale } from "translate/locales";
 import Language from "./Language";
+import styled from "styled-components";
+import { LayoutEffects } from "@/types/app";
+import { select } from "@/store/select";
 
 interface LayoutProps {
     children: ReactNode;
     pageName?: string;
 }
+
+const ContentWrapper = styled.div<{
+    layoutEffect?: LayoutEffects
+}>`
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: 500ms ease-in;
+    left: ${props => {
+        switch (props.layoutEffect) {
+            case LayoutEffects.Hide:
+                return "-100%"
+            case LayoutEffects.Show:
+                return 0
+            default:
+                return 0
+        }
+    }};
+`;
 
 const Layout = ({ children, pageName }: LayoutProps) => {
 
@@ -22,6 +49,8 @@ const Layout = ({ children, pageName }: LayoutProps) => {
     const dispatch = useDispatch();
 
     const locale = router.locale;
+
+    const layoutEffect = useSelector(select.app.layoutEffect)
 
 
     useEffect(() => {
@@ -39,11 +68,12 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-
-                {isDevelop() && <Reset />}
-                {children}
+                <ContentWrapper layoutEffect={layoutEffect}>
+                    {isDevelop() && <Reset />}
+                    {children}
+                    <Language />
+                </ContentWrapper>
                 <SystemInfo />
-                <Language />
             </main>
             {/* {processing && <Loading />} */}
         </div>

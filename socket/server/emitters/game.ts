@@ -1,43 +1,69 @@
 import { IO } from "../../socket.types";
 import { IUser } from "@/types/users";
-import { SServer } from "../../socket.types";
 import { IField, IMystery, IRound } from "@/types/game";
 
-export const createGameEmitter = (
-    io: IO
-) => {
+export enum GameServer {
+    UpdateGameMembers = "UpdateGameMembers",
+    SetField = "SetField",
+    SetRound = "SetRound",
+    AllReady = "AllReady",
+    MakeMysteryResponse = "MakeMysteryResponse",
+    MakeVoteResponse = "MakeVoteResponse",
+    AllVotesDoneResponse = "AllVotesDoneResponse",
+    EndGame = "EndGame",
+};
 
-    return ({
-        updateGameMembers: (gameMembers: IUser[]) => {
-            io.emit(SServer.UpdateGameMembers, gameMembers)
-        },
+export interface GameServerEmitters {
+    [GameServer.UpdateGameMembers] : (gameMembers: IUser[]) => void;
+    [GameServer.SetField] : (field?: IField) => void;
+    [GameServer.SetRound] : (round?: IRound) => void;
+    [GameServer.AllReady] : () => void;
+    [GameServer.MakeMysteryResponse] : (mystery?: IMystery) => void;
+    [GameServer.MakeVoteResponse] : (votes: number[]) => void;
+    [GameServer.AllVotesDoneResponse] : (winVote: number) => void;
+    [GameServer.EndGame] : () => void;
+}
 
-        updateField: (field?: IField) => {
-            if (field) {
-                io.emit(SServer.SetField, field)
-            }
-        },
+export class GameEmitter {
+    io: IO;
+    constructor(io: IO) {
+        this.io = io;
+    }
 
-        updateRound: (round?: IRound) => {
-            if (round) {
-                io.emit(SServer.SetRound, round)
-            }
-        },
+    updateGameMembers = (gameMembers: IUser[]) => {
+        this.io.emit(GameServer.UpdateGameMembers, gameMembers)
+    }
 
-        allReady: () => {
-            io.emit(SServer.allReady)
-        },
-
-        makeMysteryResponse: (mystery?: IMystery) => {
-            io.emit(SServer.MakeMysteryResponse, mystery)
-        },
-
-        makeVoteResponse: (votes: number[]) => {
-            io.emit(SServer.MakeVoteResponse, votes)
-        },
-
-        allVotesDoneResponse: (winnerVote: number) => {
-            io.emit(SServer.AllVotesDoneResponse, winnerVote)
+    updateField = (field?: IField) => {
+        if (field) {
+            this.io.emit(GameServer.SetField, field)
         }
-    })
+    }
+
+    updateRound = (round?: IRound) => {
+        if (round) {
+            this.io.emit(GameServer.SetRound, round)
+        }
+    }
+
+    allReady = () => {
+        this.io.emit(GameServer.AllReady)
+    }
+
+    makeMysteryResponse = (mystery?: IMystery) => {
+        this.io.emit(GameServer.MakeMysteryResponse, mystery)
+    }
+
+    makeVoteResponse = (votes: number[]) => {
+        this.io.emit(GameServer.MakeVoteResponse, votes)
+    }
+
+    allVotesDoneResponse = (winnerVote: number) => {
+        this.io.emit(GameServer.AllVotesDoneResponse, winnerVote)
+    }
+
+    engGame = () => {
+        this.io.emit(GameServer.EndGame);
+    }
+
 }

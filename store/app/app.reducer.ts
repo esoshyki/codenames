@@ -8,7 +8,7 @@ const initialState: IApp = {
         version: "1.1",
         connectionStatus: "disconnected",
     },
-    locale: Locales.be
+    locale: Locales.be,
 };
 
 const actions = Actions.app;
@@ -35,6 +35,12 @@ export const appReducer = (state = initialState, action : IAction): IApp => {
             return {
                 ...state,
                 locale: payload
+            }
+
+        case actions.SetLayoutEffect:
+            return {
+                ...state,
+                layoutEffect: payload
             }
  
         default:

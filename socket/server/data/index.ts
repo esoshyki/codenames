@@ -1,12 +1,13 @@
+import { IO } from "@/socket/socket.types";
 import { ConnectionData } from "./connection";
 import { GameData } from "./game";
 
 export class ServerData {
     connection: ConnectionData;
     game: GameData;
-    constructor() {
-        this.connection = new ConnectionData();
-        this.game = new GameData();
+    constructor(io: IO) {
+        this.connection = new ConnectionData(io);
+        this.game = new GameData(io);
     }
 
     reset = () => {

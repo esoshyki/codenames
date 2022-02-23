@@ -101,3 +101,7 @@ export const setWinnerVote = (winner?: number) => ({
 export const makePassVotes = () => ({
     type: Actions.game.MakePassRequest
 })
+
+export const engGameRequest = () => ({
+    type: Actions.game.EneGameRequest
+})

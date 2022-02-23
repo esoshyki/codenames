@@ -5,7 +5,7 @@ import { AppStages } from "@/types/app";
 import { IField, Sides } from "@/types/game";
 import { IUser } from "@/types/users";
 import { getCurrentUser, getGameMembers } from "@/utils/sagas";
-import { call, put, select, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery, delay } from "redux-saga/effects";
 import { changeAppStageRequest } from "../app/app.actions";
 import { SetCurrentUserLeader, setCurrentUserReady, setCurrentUserTeam } from "../connection/connection.actions";
 import { setBlueTeam, setField, setGameMembers, setRedTeam, setSelectedCards } from "./game.actions";
@@ -111,6 +111,11 @@ function* makePassVoteWorker() {
     yield call(clientSocket.game.makePassRequest)
 }
 
+function* engGameRequestWorker() {
+    yield delay(5000);
+    yield put(changeAppStageRequest(AppStages.finished))
+}
+
 export default function* gameSagas() {
     yield takeEvery(Actions.game.StartGameRequest, startGameRequestWorker);
     yield takeEvery(Actions.game.UpdateGameMembersRequest, updateGameMembersRequestWorker);
@@ -123,5 +128,6 @@ export default function* gameSagas() {
     yield takeEvery(Actions.game.MakeMysteryRequest, makeMysteryRequestWorker);
     yield takeEvery(Actions.game.MakeVoteRequest, makeVoteRequestWorker);
     yield takeEvery(Actions.game.SetWinnerVote, setWinnerVoteWorker);
-    yield takeEvery(Actions.game.MakePassRequest, makePassVoteWorker)
+    yield takeEvery(Actions.game.MakePassRequest, makePassVoteWorker);
+    yield takeEvery(Actions.game.EneGameRequest, engGameRequestWorker)
 }

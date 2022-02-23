@@ -9,6 +9,7 @@ import { select } from "@/store/select";
 import PreStart from "@/components/PreStart";
 import SelectCollection from "@/components/SelectCollection";
 import Game from "@/components/Game";
+import Finish from "@/components/Game/Finish";
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const Home: NextPage = () => {
     const stage = useSelector(select.app.stage);
     const currentUser = useSelector(select.connection.currentUser);
     const gameMembers = useSelector(select.game.gameMembers);
-
 
     const showMenu = () => !(gameMembers.some(member => member.userName === currentUser.userName));
 
@@ -31,6 +31,7 @@ const Home: NextPage = () => {
             {stage === AppStages.CollectionVote && <SelectCollection />}
 
             {stage === AppStages.game && <Game />}
+            {stage === AppStages.finished && <Finish />}
         </Layout>
     );
 };

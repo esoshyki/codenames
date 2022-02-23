@@ -5,7 +5,7 @@ export enum AppStages {
     prestart = "prestart",
     CollectionVote = "collectionVote",
     game = "game",
-    finished = "finished"
+    finished = "finished",
 };
 
 export interface IError {
@@ -17,9 +17,15 @@ export interface ISystemInfo {
     connectionStatus: "connected" | "disconnected";
 }
 
+export enum LayoutEffects {
+    Hide = "Hide",
+    Show = "Show",
+}
+
 export interface IApp {
     locale: Locales,
     stage: AppStages;
     error?: IError;
     systemInfo: ISystemInfo;
+    layoutEffect?: LayoutEffects
 }

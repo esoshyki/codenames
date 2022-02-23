@@ -1,6 +1,6 @@
 import { ReduxAction } from "@/types";
 import { Actions } from "@/types/actions";
-import { AppStages } from "@/types/app";
+import { AppStages, LayoutEffects } from "@/types/app";
 import { Locales } from "translate/locales";
 
 const actions = Actions.app;
@@ -34,5 +34,10 @@ export const appReset = () : ReduxAction => ({
 
 export const setLocale = (payload: Locales) => ({
     type: actions.SetLocale,
+    payload
+})
+
+export const setLayoutEffect = (payload?: LayoutEffects) => ({
+    type: actions.SetLayoutEffect,
     payload
 })
