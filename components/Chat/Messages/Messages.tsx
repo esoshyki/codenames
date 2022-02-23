@@ -1,22 +1,20 @@
 import AddMessage from "../AddMessage";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { IState } from "@/store/types";
 import MessagesWrapper from "./MessagesWrapper";
 import MessagesList from "./MessagesList";
 import MessagesContainer from "./MessagesContainer";
 import Message from './Message';
 import MessageHeader from "./MessageHeader";
 import MessageBody from "./MessageBody";
+import { select } from "@/store/select";
 
 const Messages = () => {
 
-    const messages = useSelector((state: IState) => state.chat.messages);
+    const messages = useSelector(select.chat.chatMessages);
 
     const listRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-
-
 
     useEffect(() => {
         if (!listRef.current || !containerRef.current) return;
@@ -35,14 +33,14 @@ const Messages = () => {
                     {messages &&
                         messages.map((message, idx) => (
 
-                            <Message key={`message-${message.author.userName}-${idx}`}>
+                            <Message key={`message-${message.userName}-${idx}`}>
 
                                 <MessageHeader>
-                                    {message.author.userName}
+                                    {message.userName}
                                 </MessageHeader>
 
                                 <MessageBody>
-                                    {message.text}
+                                    {message.message}
                                 </MessageBody>
 
                             </Message>

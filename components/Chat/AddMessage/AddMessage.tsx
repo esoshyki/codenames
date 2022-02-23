@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import { IState } from "../../../store/types";
-import { ChatMessage } from "@/store/chat/chat.types";
+
+import { IMessage } from "@/types/chat";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { addMessageRequest } from "@/store/chat/chat.actions";
+import { addChatMessageRequest } from "@/store/chat/chat.actions";
 import { colors } from "@/theme/colors";
+import { select } from "@/store/select";
 
 const AddMessageWrapper = styled.div`
     position: absolute;
@@ -30,18 +31,20 @@ const AddMessage = () => {
     const dispatch = useDispatch();
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const { currentUser } = useSelector((state: IState) => state.users);
+    const currentUser = useSelector(select.connection.currentUser);
 
     const sendMessage = async () => {
-        if (!inputRef.current?.value || !currentUser) {
+        if (!inputRef.current?.value || !currentUser.userName) {
             return;
         }
-        const newMessage: ChatMessage = {
-            text: inputRef.current.value,
-            author: currentUser,
+        const newMessage: IMessage = {
+            message: inputRef.current.value,
+            userName: currentUser.userName,
         };
 
-        dispatch(addMessageRequest(newMessage));
+        console.log("addChatMessage");
+
+        dispatch(addChatMessageRequest(newMessage));
         inputRef.current.value = "";
 
     };

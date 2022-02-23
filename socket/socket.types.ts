@@ -3,14 +3,14 @@ import { Server as ServerIO } from "socket.io";
 import { ConnectionClientEmitters } from "./client/emitters/connection";
 import { GameServerEmitters } from "./server/emitters/game";
 import { ConnectionServerEmitters } from "./server/emitters/connection";
+import { AppServerEmitters } from "./server/emitters/app";
 
 export enum SServer {
     ResetServerResponse = "ResetServerResponse",
 }
 
 export interface ServerToClient 
-    extends GameServerEmitters, ConnectionServerEmitters {
-    [SServer.ResetServerResponse]: () => void;
+    extends GameServerEmitters, ConnectionServerEmitters, AppServerEmitters {
 };
 
 export interface ClientToServer 

@@ -12,6 +12,7 @@ import Language from "./Language";
 import styled from "styled-components";
 import { LayoutEffects } from "@/types/app";
 import { select } from "@/store/select";
+import Chat from "../Chat";
 
 interface LayoutProps {
     children: ReactNode;
@@ -74,6 +75,7 @@ const Layout = ({ children, pageName }: LayoutProps) => {
                     <Language />
                 </ContentWrapper>
                 <SystemInfo />
+                <Chat />
             </main>
             {/* {processing && <Loading />} */}
         </div>

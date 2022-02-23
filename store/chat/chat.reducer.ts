@@ -1,6 +1,5 @@
-import { ReduxAction } from "@/types";
 import { IChat } from "@/types/chat";
-import { Actions } from "@/types/actions";
+import { Actions, IAction } from "@/types/actions";
 
 const initialState: IChat = {
     messages: [],
@@ -9,7 +8,7 @@ const initialState: IChat = {
 
 const actions = Actions.chat;
 
-const chatReducer = (state = initialState, { type, payload }: ReduxAction) : IChat => {
+const chatReducer = (state = initialState, { type, payload }: IAction) : IChat => {
 
     switch (type) {
         
@@ -19,11 +18,17 @@ const chatReducer = (state = initialState, { type, payload }: ReduxAction) : ICh
                 hidden: payload
             })
 
-        case actions.addChatMessageResponse:
+        case actions.AddMessage:
             return ({
                 ...state,
                 messages: [...state.messages, payload]
             });
+
+        case actions.RemoveMessage:
+            return ({
+                ...state,
+                messages: state.messages.filter(message => message.id !== payload)
+            })
 
         default:
             return state;

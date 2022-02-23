@@ -1,8 +1,7 @@
-import { IUser } from "./users";
-
 export interface IMessage {
-    author: IUser;
-    text: string;
+    userName: string;
+    message: string;
+    id?: string;
 };
 
 export interface IChat {

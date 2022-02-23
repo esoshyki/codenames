@@ -25,10 +25,12 @@ enum AppActions {
 };
 
 enum ChatActions {
-    addChatMessageRequest = "Chat/Add-Message-Response",
+    addChatMessageRequest = "Chat/Add-Message-Request",
     addChatMessageResponse = "Chat/Add-Message-Response",
     setChatHidden = "Chat/Set-Hidden",
     Reset = "Chat/Reset",
+    AddMessage = "Chat/Add-Message",
+    RemoveMessage = "Chat/Remove-Message"
 };
 
 enum GameActions {
