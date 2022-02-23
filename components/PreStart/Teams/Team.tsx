@@ -107,7 +107,6 @@ const Team = ({ side } : TeamProps ) => {
         dispatch(toggleTeamRequest(side))
     };
 
-    const gameMembers = useSelector(select.game.gameMembers);
     const currentUser = useSelector(select.connection.currentUser);
     const team = useSelector(side === Sides.blue ? select.game.blueTeam : select.game.redTeam);
     const teamUsers = team.members;

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import UserPanel from "./PanelUser";
-import Timer from "@/components/Timer";
 import PanelEnemy from "./PanelEnemy";
 import { IField, IRound } from "@/types/game";
 import { IUser } from "@/types/users";
@@ -32,7 +31,6 @@ const Panel = (props : PanelProps) => {
         <PanelWrapper>
            <UserPanel {...props}/>
            <PanelEnemy {...props}/>
-           <Timer />
            <PanelRoundInfo {...props} />
         </PanelWrapper>
     )

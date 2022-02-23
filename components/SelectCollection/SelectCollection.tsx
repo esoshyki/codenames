@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { wordCollections } from "@/utils/wordCollections";
 import { useDispatch, useSelector } from "react-redux";
-import { IState } from "@/types";
 import { toggleCollectionVoteRequest } from "@/store/game/game.actions";
 import { select } from "@/store/select";
 import t from "@/t";
