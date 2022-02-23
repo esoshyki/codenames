@@ -24,15 +24,11 @@ const UserPanelSpan = styled.span`
 `;
 
 
-const PanelEnemy = ({ currentUser, field, round } : PanelProps) => {
+const PanelEnemy = ({ currentUser, field } : PanelProps) => {
 
     const team = currentUser.team === Sides.blue ? Sides.red : Sides.blue;
 
     const restCards = field.cards.filter(card => card.type === team && !card.covered).length
-
-    const getCards = () => {
-        return "";
-    }
 
     return (
         <PaneylEnemyWrapper>
