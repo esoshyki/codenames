@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import { colors
  } from '@/theme/colors';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRef } from 'react';
-import { getLocale } from 'translate/locales';
-import { useRouter } from 'next/router';
-import t from '@/t';
-import { menuContent, MenuContent } from 'translate/menu';
+import { menuContent } from 'translate/menu';
 import { select } from '@/store/select';
 
 const InputWrapper = styled.div`

@@ -6,7 +6,7 @@ import { colors } from "@/theme/colors";
 import { setConnectionError, userLogged } from "@/store/connection/connection.actions";
 import ButtonPrimary from "@/components/Layout/Buttons/Primary";
 import t from "@/t";
-import { MenuContent, menuContent } from "translate/menu";
+import { MenuContent } from "translate/menu";
 import { ErrorsContent } from "translate/errors";
 
 const LoginWrapper = styled.div`

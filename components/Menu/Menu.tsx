@@ -4,10 +4,7 @@ import MenuItem from "./MenuItem";
 import styled from "styled-components";
 import { select } from '@/store/select';
 import { startGameRequest } from "@/store/game/game.actions";
-import t from '@/t';
-import { getLocale } from "translate/locales";
-import { useRouter } from "next/router";
-import { menuContent, MenuContent } from "translate/menu";
+import { menuContent } from "translate/menu";
 
 const MenuWrapper = styled.nav`
     position: fixed;
