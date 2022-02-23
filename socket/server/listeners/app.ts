@@ -1,18 +1,17 @@
-import { SClient, SServer } from "../../socket.types";
-import { Server as ServerIO } from "socket.io";
-import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../../socket.types";
-import { ServerData } from "@/socket/data";
+import { IO } from "../../socket.types";
+import { ServerData } from "@/socket/server/data";
 import { createAppEmitter } from "../emitters/app";
+import { AppClient } from "@/socket/client/emitters/app";
 
 export const addAppEmitters = 
     (
-        socket: any, io: ServerIO<ClientToServer, ServerToClient, InterServerEvents, SocketData>,
+        socket: any, io: IO,
         serverData: ServerData
     ) => {
 
         const emitter = createAppEmitter(io);
 
-        socket.on(SClient.ResetServerData, () => {
+        socket.on(AppClient.ResetServerData, () => {
             serverData.reset();
             emitter.resetServer();
         })

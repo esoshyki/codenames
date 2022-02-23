@@ -20,6 +20,11 @@ const FieldGridWrapper = styled.div`
 const VoteButton = styled.button`
     padding: 20px;
     grid-column: 3;
+`;
+
+const PassButton = styled.button`
+    padding: 20px;
+    grid-column: 5;
 `
 
 const FieldGrid = ({ field, round, currentUser } : FieldProps) => {
@@ -52,11 +57,21 @@ const FieldGrid = ({ field, round, currentUser } : FieldProps) => {
         dispatch(makeVoteRequest(selectedCards[0]))
     };
 
+    const passVote = () => {
+
+    }
+
     const showVotedButton = () => {
         if (currentUser.leader) return false;
         if (selectedCards.length === 0) return false;
         if (round.check !== currentUser.team) return false;
         if (field.cards[selectedCards[0]].covered) return false;
+        return true
+    }
+
+    const showPassButton = () => {
+        if (currentUser.leader) return false;
+        if (round.check !== currentUser.team) return false;
         return true
     }
 
@@ -79,6 +94,7 @@ const FieldGrid = ({ field, round, currentUser } : FieldProps) => {
             })}
 
             {showVotedButton() && <VoteButton onClick={makeVote}>Голосовать</VoteButton>}
+            {showPassButton() && <PassButton onClick={passVote}>Передать ход</PassButton>}
 
         </FieldGridWrapper>
     );

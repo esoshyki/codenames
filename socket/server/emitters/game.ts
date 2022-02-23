@@ -1,11 +1,10 @@
-import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../../socket.types";
-import { Server as ServerIO } from "socket.io";
+import { IO } from "../../socket.types";
 import { IUser } from "@/types/users";
 import { SServer } from "../../socket.types";
 import { IField, IMystery, IRound } from "@/types/game";
 
 export const createGameEmitter = (
-    io: ServerIO<ClientToServer, ServerToClient, InterServerEvents, SocketData>
+    io: IO
 ) => {
 
     return ({

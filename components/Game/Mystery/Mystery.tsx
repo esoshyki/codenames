@@ -23,6 +23,9 @@ const MysteryHeader = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-size: 14px;
+    line-height: 18px;
+    height: 25px;
 `;
 
 const MysteryKeyWord = styled.div`
@@ -55,6 +58,9 @@ const Mystery = ({ field, round } : MysteryProps) => {
             {mystery && <MysteryWrapper team={currentTeam}>
                 <MysteryHeader>
                     {`Загадоно слов - ${mystery.selectedCards.length}`}
+                </MysteryHeader>
+                <MysteryHeader>
+                    {`Отгадано - ${mystery.answers}`}
                 </MysteryHeader>
 
                 <MysteryKeyWord>

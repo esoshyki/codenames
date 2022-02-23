@@ -97,3 +97,7 @@ export const setWinnerVote = (winner?: number) => ({
     type: Actions.game.SetWinnerVote,
     payload: winner
 })
+
+export const makePassVotes = () => ({
+    type: Actions.game.MakePassRequest
+})

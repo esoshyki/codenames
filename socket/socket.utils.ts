@@ -37,6 +37,7 @@ export const nextRound = (number: number, start: Sides) : IRound => {
     return {
         number,
         time: 120,
-        check: number % 2 ? start : (start === Sides.blue ? Sides.red : Sides.blue)
+        check: number % 2 ? start : (start === Sides.blue ? Sides.red : Sides.blue),
+        passVotes: 0
     }
 }

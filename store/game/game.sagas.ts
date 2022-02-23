@@ -107,6 +107,10 @@ function* setWinnerVoteWorker() {
     yield put(setSelectedCards([]));
 }
 
+function* makePassVoteWorker() {
+    yield call(clientSocket.game.makePassRequest)
+}
+
 export default function* gameSagas() {
     yield takeEvery(Actions.game.StartGameRequest, startGameRequestWorker);
     yield takeEvery(Actions.game.UpdateGameMembersRequest, updateGameMembersRequestWorker);
@@ -118,5 +122,6 @@ export default function* gameSagas() {
     yield takeEvery(Actions.game.SetFieldRequest, setFieldRequestWorker);
     yield takeEvery(Actions.game.MakeMysteryRequest, makeMysteryRequestWorker);
     yield takeEvery(Actions.game.MakeVoteRequest, makeVoteRequestWorker);
-    yield takeEvery(Actions.game.SetWinnerVote, setWinnerVoteWorker)
+    yield takeEvery(Actions.game.SetWinnerVote, setWinnerVoteWorker);
+    yield takeEvery(Actions.game.MakePassRequest, makePassVoteWorker)
 }

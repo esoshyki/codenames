@@ -28,7 +28,7 @@ const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IG
                 },
                 gameMembers: [],
                 selectedCards: [],
-                cardVotes: []
+                cardVotes: [],
             }
 
         case Actions.game.SetGameMembers:

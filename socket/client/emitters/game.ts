@@ -1,31 +1,30 @@
 import { socket } from "..";
-import { SClient } from "@/socket/socket.types";
 import { IUser } from "@/types/users";
-import { isDevelop } from "@/utils/isDevelop";
 
-const startGameRequest = (user: IUser) => {
-    isDevelop() && console.log("Socket-Client/startGameRequest, data: ", user);
-    socket.emit(SClient.StartGameRequest, user);
-}
+export enum GameClient {
+    StartGameRequest = "StartGameRequest",
+    UpdateGameMember = "UpdateGameMember",
+    MakeMysteryRequest = "MakeMysteryRequest",
+    MakeVoteRequest = "MakeVoteRequest",
+    MakePassRequest = "MakePassRequest",
+};
 
-const updateGameMember = (user: IUser) => {
-    isDevelop() && console.log("Socket-Client/updateGameMember, data: ", user);
-    socket.emit(SClient.UpdateGameMember, user)
-}
-
-const makeMysteryRequest = (keyword: string, selectedItems: number[]) => {
-    isDevelop() && console.log("Socket-Client/makeMysteryRequest, data: ", keyword, selectedItems);
-    socket.emit(SClient.MakeMysteryRequest, keyword, selectedItems)
-}
-
-const makeVoteRequest = (cardId: number) => {
-    isDevelop() && console.log("Socket-Client/makeVoteRequest, cardId: ", cardId);
-    socket.emit(SClient.MakeVoteRequest, cardId);
+export interface GameClientEmitters {
+    [GameClient.StartGameRequest]: (user: IUser) => void;
+    [GameClient.UpdateGameMember]: (user: IUser) => void;
+    [GameClient.MakeMysteryRequest] : (keyword: string, selectedItems: number[]) => void;
+    [GameClient.MakeVoteRequest] : (cardId: number) => void;
 }
 
 export const gameEmitters = {
-    startGameRequest,
-    updateGameMember,
-    makeMysteryRequest,
-    makeVoteRequest
+    startGameRequest : (user: IUser) => socket.emit(GameClient.StartGameRequest, user),
+    
+    updateGameMember : (user: IUser) => socket.emit(GameClient.UpdateGameMember, user),
+    
+    makeMysteryRequest : (keyword: string, selectedItems: number[]) => socket.emit(GameClient.MakeMysteryRequest, keyword, selectedItems),
+    
+    makeVoteRequest : (cardId: number) => socket.emit(GameClient.MakeVoteRequest, cardId),
+    
+    makePassRequest : () => socket.emit(GameClient.MakePassRequest)
 }
+

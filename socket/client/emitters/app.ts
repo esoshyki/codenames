@@ -1,10 +1,17 @@
 import { socket } from "..";
-import { SClient } from "@/socket/socket.types";
 import { isDevelop } from "@/utils/isDevelop";
+
+export enum AppClient {
+    ResetServerData = "ResetServerData"
+}
+
+export interface AppClientEmitters {
+    [AppClient.ResetServerData]: () => void;
+}
 
 const resetServerData = () => {
     isDevelop() && console.log("Socket-Client/resetServerData");
-    socket.emit(SClient.ResetServerData);
+    socket.emit(AppClient.ResetServerData);
 };
 
 export const appEmitters = {

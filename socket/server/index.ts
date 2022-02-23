@@ -3,7 +3,7 @@ import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
 import { ClientToServer, ServerToClient, InterServerEvents, SocketData  } from "../socket.types";
 import { addConnectionsEmiters } from "./listeners/connection";
-import { ServerData } from "../data";
+import { ServerData } from "./data";
 import { addGameEmitters } from "./listeners/game";
 import { addAppEmitters } from "./listeners/app";
 

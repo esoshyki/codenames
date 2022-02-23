@@ -1,6 +1,8 @@
 import { IField, IMystery, IRound } from "@/types/game";
 import { IUser } from "@/types/users";
-
+import { GameClientEmitters } from "./client/emitters/game";
+import { Server as ServerIO } from "socket.io";
+import { ConnectionClientEmitters } from "./client/emitters/connection";
 
 export enum SServer {
     connected = "connected",
@@ -15,16 +17,6 @@ export enum SServer {
     AllVotesDoneResponse = "AllVotesDoneResponse"
 }
 
-export enum SClient {
-    setSocketRequest = "setSocketRequest",
-    setUserNameRequest = "setUserNameRequest",
-    StartGameRequest = "startGameRequest",
-    ResetServerData = "ResetServerData",
-    UpdateGameMember = "UpdateGameMember",
-    MakeMysteryRequest = "MakeMysteryRequest",
-    MakeVoteRequest = "MakeVoteRequest",
-};
-
 export interface ServerToClient {
     [SServer.updateOnlineUsers]: (users: IUser[]) => void;
     [SServer.UpdateGameMembers]: (gameMembers: IUser[]) => void;
@@ -37,13 +29,8 @@ export interface ServerToClient {
     [SServer.AllVotesDoneResponse] : (winnerVote: number) => void;
 };
 
-export interface ClientToServer {
-    [SClient.setSocketRequest]: (user: IUser) => void;
-    [SClient.setUserNameRequest]: (userName?: string) => void;
-    [SClient.StartGameRequest]: (user: IUser) => void;
-    [SClient.ResetServerData]: () => void;
-    [SClient.UpdateGameMember] : (user: IUser) => void;
-    [SClient.MakeMysteryRequest] : (keyword: string, selectedItems: number) => void;
+export interface ClientToServer 
+    extends GameClientEmitters, ConnectionClientEmitters {
 };
 
 export interface InterServerEvents {
@@ -55,4 +42,6 @@ export interface SocketData {
     age: number;
     userName: string;
 };
+
+export type IO = ServerIO<ClientToServer, ServerToClient, InterServerEvents, SocketData>
 

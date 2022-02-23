@@ -49,6 +49,7 @@ enum GameActions {
     SetSelectedCards = "Game/Set-Selected-Cards",
     SetMystery = "Game/Set-Mystery",
     MakeVoteRequest = "Game/Make-Vote-Request",
+    MakePassRequest = "Game/Male-Pass-Request",
     AllVotesDoneRequest = "Game/All-Votes-Done-Request",
     SetWinnerVote = "Game/Set-Winner-Vote",
 }

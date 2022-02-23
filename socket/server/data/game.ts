@@ -1,6 +1,6 @@
 import { IField, IMystery, IRound } from "@/types/game";
 import { IUser } from "@/types/users";
-import { createField, nextRound } from "../socket.utils";
+import { createField, nextRound } from "../../socket.utils";
 
 export class GameData {
     private gameMembers: IUser[];
@@ -154,6 +154,29 @@ export class GameData {
             this.round = nextRound(number, this.field.start);
             this.resetMystery();
         }
+    }
+
+    getPassVotes = () => {
+        if (this.round) {
+            return this.round.passVotes;
+        }
+    }
+
+    makePassVote = () => {
+        if (this.round) {
+            this.round.passVotes += 1;
+        };
+
+        const currentTeam = this.round?.check;
+        const votes = this.getPassVotes();
+        if (currentTeam && votes) {
+            const voters = this.gameMembers
+                .filter(member => member.team === currentTeam && !member.leader).length;
+
+            if (votes === voters) {
+                this.nextRound()
+            }
+        };
     }
 
 }

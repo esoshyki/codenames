@@ -30,6 +30,7 @@ export interface IRound {
     time: number;
     number: number;
     keyword?: string;
+    passVotes: number;
 };
 
 export interface IResults {
