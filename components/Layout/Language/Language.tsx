@@ -1,9 +1,9 @@
 import { setLocale } from "@/store/app/app.actions";
 import { select } from "@/store/select";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getLocale, Locales } from "translate/locales";
+import { Locales } from "translate/locales";
 import { RollAnimation } from "@/styles/animations";
 
 
