@@ -1,5 +1,4 @@
-import { ReduxAction } from "@/types";
-import { Actions } from "@/types/actions";
+import { Actions, IAction } from "@/types/actions";
 import { IGame } from "@/types/game";
 
 const initialState: IGame = {
@@ -14,7 +13,7 @@ const initialState: IGame = {
     cardVotes: [],
 };
 
-const gameReducer = (state = initialState, { type, payload } : ReduxAction) : IGame => {
+const gameReducer = (state = initialState, { type, payload } : IAction) : IGame => {
 
     switch (type) {
 

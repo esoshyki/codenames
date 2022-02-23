@@ -7,12 +7,6 @@ import clientSocket from "@/socket/client";
 import { connectionReset } from "../connection/connection.actions";
 import { gameReset } from '../game/game.actions'
 
-const actions = Actions.app;
-
-function* setSocketIdWorker () {
-
-};
-
 function* changeAppStageRequestWorker ({ payload } : ReduxAction ) {
     const appStage: AppStages = payload;
     
