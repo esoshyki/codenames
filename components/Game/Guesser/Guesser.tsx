@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState, DragEvent, MouseEvent } from "react";
+import { Fragment, useRef } from "react";
 import styled from "styled-components";
 import GuesserLamp from "./GuesserLamp";
 import { LampPos } from "./GuesserLamp";
