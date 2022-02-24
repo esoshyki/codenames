@@ -2,14 +2,13 @@ import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { io } from "socket.io-client";
 import { socketConnected, socketDisconnected, updateOnlineUsers } from "@/store/connection/connection.actions";
-import { connectionEmitters } from "./emitters/connection";
 import { IUser } from "@/types/users";
 import { gameEmitters } from "./emitters/game";
 import { appEmitters } from "./emitters/app";
 import { setAppListeners } from "./listeners/app";
 import { setGameListeners } from "./listeners/game";
 import { ConnectionServer } from "../server/emitters/connection";
-
+import { connectuinEmmitters } from "./emitters/connection";
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
@@ -38,9 +37,9 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
 };
 
 const clientSocket = {
-    connection: connectionEmitters,
     game: gameEmitters,
-    app: appEmitters
+    app: appEmitters,
+    connection: connectuinEmmitters,
 }
 
 export default clientSocket;

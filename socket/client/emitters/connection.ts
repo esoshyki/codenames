@@ -12,19 +12,16 @@ export interface ConnectionClientEmitters {
     [ConnectionClient.SetUserNameRequest]: (user: IUser) => void;
 }
 
-const setSocketIdRequest = (user: IUser) => {
-    isDevelop() && console.log("Socket-Client/setSocketIdRequest, data: ", user);
-    socket.emit(ConnectionClient.SetSocketRequest, user);
-};
+export const connectuinEmmitters = {
+    setSocketIdRequest: (user: IUser) => {
+        isDevelop() && console.log("Socket-Client/setSocketIdRequest, data: ", user);
+        socket.emit(ConnectionClient.SetSocketRequest, user);
+    },
 
-const setUserNameRequest = (user: IUser) => {
-    isDevelop() && console.log("Socket-Client/setUserNameRequest, data: ", user);
-    socket.emit(ConnectionClient.SetUserNameRequest, user)
-};
-
-export const connectionEmitters = {
-    setSocketIdRequest,
-    setUserNameRequest
+    setUserNameRequest: (user: IUser) => {
+        isDevelop() && console.log("Socket-Client/setUserNameRequest, data: ", user);
+        socket.emit(ConnectionClient.SetUserNameRequest, user)
+    }
 };
 
 

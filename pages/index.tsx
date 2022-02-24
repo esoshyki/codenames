@@ -22,7 +22,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         connectSocket(dispatch);
-    }, [dispatch]);
+    }, []);
 
     return (
         <Layout>
