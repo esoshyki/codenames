@@ -1,4 +1,3 @@
-import { socket } from "..";
 import { isDevelop } from "@/utils/isDevelop";
 import { IMessage } from "@/types/chat";
 
