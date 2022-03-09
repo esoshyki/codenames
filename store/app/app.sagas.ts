@@ -3,7 +3,7 @@ import { ReduxAction } from "@/types";
 import { Actions } from "@/types/actions";
 import { AppStages, LayoutEffects } from "@/types/app";
 import { appReset, setAppStage, setLayoutEffect } from "./app.actions";
-import clientSocket from "@/socket/client";
+import { clientSocket } from "@/socket/client";
 import { connectionReset } from "../connection/connection.actions";
 import { gameReset } from '../game/game.actions'
 

@@ -1,6 +1,6 @@
 import { call, delay, put, takeEvery } from "redux-saga/effects";
 import { Actions, IAction } from "@/types/actions";
-import clientSocket from "@/socket/client";
+import { clientSocket } from "@/socket/client";
 import { getCurrentUser } from "@/utils/sagas";
 import { IUser } from "@/types/users";
 import { addMessage, removeMessage } from "./chat.actions";

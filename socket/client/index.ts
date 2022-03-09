@@ -1,3 +1,4 @@
+import { connectionEmitters } from "./emitters/connection";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { io } from "socket.io-client";
@@ -8,7 +9,7 @@ import { appEmitters } from "./emitters/app";
 import { setAppListeners } from "./listeners/app";
 import { setGameListeners } from "./listeners/game";
 import { ConnectionServer } from "../server/emitters/connection";
-import { connectuinEmmitters } from "./emitters/connection";
+
 
 export const socket = io(
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000",
@@ -31,15 +32,13 @@ export const connectSocket = (dispatch: Dispatch<AnyAction>) => {
     })
 
     setAppListeners(dispatch);
-    setGameListeners(dispatch);
-    
-    
+    setGameListeners(dispatch); 
 };
 
-const clientSocket = {
-    game: gameEmitters,
-    app: appEmitters,
-    connection: connectuinEmmitters,
+export const clientSocket = {
+    connection: connectionEmitters(socket),
+    game: gameEmitters(socket),
+    app: appEmitters(socket),
 }
 
-export default clientSocket;
+

@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select } from "redux-saga/effects";
 import { Actions, IAction } from "@/types/actions";
-import clientSocket from "@/socket/client";
+import { clientSocket } from "@/socket/client";
 import { setSocketId, setUserName } from "./connection.actions";
 import { IState } from "@/types";
 

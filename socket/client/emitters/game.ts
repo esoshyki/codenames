@@ -16,7 +16,7 @@ export interface GameClientEmitters {
     [GameClient.MakeVoteRequest] : (cardId: number) => void;
 }
 
-export const gameEmitters = {
+export const gameEmitters = (socket: any) => ({
     startGameRequest : (user: IUser) => socket.emit(GameClient.StartGameRequest, user),
     
     updateGameMember : (user: IUser) => socket.emit(GameClient.UpdateGameMember, user),
@@ -26,5 +26,5 @@ export const gameEmitters = {
     makeVoteRequest : (cardId: number) => socket.emit(GameClient.MakeVoteRequest, cardId),
     
     makePassRequest : () => socket.emit(GameClient.MakePassRequest)
-}
+})
 

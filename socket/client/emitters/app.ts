@@ -12,7 +12,7 @@ export interface AppClientEmitters {
     [AppClient.SendMessage] : (message: IMessage) => void;
 }
 
-export const appEmitters = {
+export const appEmitters =  (socket: any) => ({
     resetServerData: () => {
         isDevelop() && console.log("Socket-Client/resetServerData");
         socket.emit(AppClient.ResetServerData);
@@ -21,4 +21,4 @@ export const appEmitters = {
     sendMessage: (message: IMessage) => {
         socket.emit(AppClient.SendMessage, message)
     }
-}
+})

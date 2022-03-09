@@ -1,4 +1,4 @@
-import clientSocket from "@/socket/client";
+import { clientSocket } from "@/socket/client";
 import { IState } from "@/types";
 import { Actions, IAction } from "@/types/actions";
 import { AppStages } from "@/types/app";
