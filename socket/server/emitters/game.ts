@@ -1,6 +1,7 @@
 import { IO } from "../../socket.types";
 import { IUser } from "@/types/users";
 import { IField, IMystery, IRound } from "@/types/game";
+import { isGameFinished } from "@/socket/socket.utils";
 
 export enum GameServer {
     UpdateGameMembers = "UpdateGameMembers",
@@ -36,7 +37,10 @@ export class GameEmitter {
 
     updateField = (field?: IField) => {
         if (field) {
-            this.io.emit(GameServer.SetField, field)
+            this.io.emit(GameServer.SetField, field);
+            if (isGameFinished(field)) {
+                this.io.emit(GameServer.EndGame)
+            }
         }
     }
 

@@ -7,6 +7,8 @@ import { Sides } from "@/types/game";
 import t from "@/t";
 import { PrestartContent } from "translate/prestart";
 import { toggleLeaderRequest, toggleReadyRequest } from "@/store/game/game.actions";
+import { changeAppStageRequest } from "@/store/app/app.actions";
+import { AppStages } from "@/types/app";
 
 const TeamsWrapper = styled.div`
     max-width: 1000px;
@@ -24,7 +26,9 @@ const TeamsButtonsWrapper = styled.div`
     align-items: center;
 `
 
-const TeamsButton = styled.button`
+const TeamsButton = styled.button<{
+    disabled: boolean
+}>`
     width: calc(100% - 40px);
     max-width: 300px;
     margin: 20px;
@@ -35,9 +39,10 @@ const TeamsButton = styled.button`
     color: #fff;
     font-weight: 900;
     transition: 0.3s ease-in;
+    opacity: ${props => props.disabled ? 0.5 : 1};
     &:hover {
-        cursor: pointer;
-        background: rgba(0, 0, 0, 0.3);
+        cursor: ${props => props.disabled ? "initial" : "pointer"};
+        background: ${props => props.disabled ? "none" : "rgba(0, 0, 0, 0.3)"};
     }
 `;
 
@@ -51,6 +56,8 @@ const Teams = () => {
     const redTeam = useSelector(select.game.redTeam);
     const blueTeam = useSelector(select.game.blueTeam);
     const locale = useSelector(select.app.locale);
+    const field = useSelector(select.game.field);
+    const round = useSelector(select.game.round);
 
     const makeMeALeader = () => {
         dispatch(toggleLeaderRequest())
@@ -62,6 +69,14 @@ const Teams = () => {
 
     const isUserALeader = () => gameMembers.find(user => user.userName === currentUser?.userName)?.leader;
 
+    const isStarted = () => !!field || !!round;
+
+    const join = () => {
+        if (currentUser.team) {
+            dispatch(changeAppStageRequest(AppStages.game));
+        }
+    }
+
     return (
         <TeamsWrapper>
 
@@ -70,18 +85,24 @@ const Teams = () => {
 
             <TeamsButtonsWrapper>
 
-                <TeamsButton onClick={makeMeALeader}>
+                {!isStarted() && <TeamsButton onClick={makeMeALeader} disabled={false}>
                     {isUserALeader() ? 
                         t.preStart(locale, PrestartContent.dontBeALeader) :
                         t.preStart(locale, PrestartContent.makeMeALeader)}
-                </TeamsButton>
+                </TeamsButton>}
 
-                {teamsComplete(blueTeam, redTeam) && (
-                    <TeamsButton onClick={toogleReady}>
+                {teamsComplete(blueTeam, redTeam) && !isStarted() && (
+                    <TeamsButton onClick={toogleReady} disabled={false}>
                         {currentUser.ready ? 
                     t.preStart(locale, PrestartContent.notReady) :
                     t.preStart(locale, PrestartContent.ready)    
                     }
+                    </TeamsButton>
+                )}
+
+                {isStarted() && (
+                    <TeamsButton onClick={join} disabled={!currentUser.team}>
+                        {t.preStart(locale, PrestartContent.JoinGame)}
                     </TeamsButton>
                 )}
 

@@ -1,13 +1,15 @@
 import { getErrorContent } from "./errors";
+import { getFinishContent } from "./finish";
 import { getMenuContent } from "./menu";
 import { getPreStartContent } from "./prestart";
-import { getSelectoCollectionContent } from "./selectCollection";
+import { getSelectCollectionContent } from "./selectCollection";
 
 const t = {
     preStart: getPreStartContent,
     menu: getMenuContent,
     errors: getErrorContent,
-    selectCollection: getSelectoCollectionContent
+    selectCollection: getSelectCollectionContent,
+    finish: getFinishContent
 };
 
 export default t;

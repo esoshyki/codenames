@@ -16,7 +16,7 @@ export const selectCollectionContent = {
     },  
 };
 
-export const getSelectoCollectionContent = (
+export const getSelectCollectionContent = (
     locale: Locales,
     key: SelectCollectionContent
     ) => {

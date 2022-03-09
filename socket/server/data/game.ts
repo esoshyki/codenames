@@ -9,11 +9,13 @@ export class GameData {
     private field?: IField;
     private round?: IRound;
     private mystery?: IMystery;
-    private emitter: GameEmitter
+    private emitter: GameEmitter;
+    private started: boolean;
 
     constructor (io: IO) {
         this.gameMembers = [];
-        this.emitter = new GameEmitter(io)
+        this.emitter = new GameEmitter(io);
+        this.started = false;
     }
 
     // GAME MEMBERS
@@ -23,6 +25,8 @@ export class GameData {
     addGameMember = (user: IUser) => {
         this.gameMembers.push(user);
         this.emitter.updateGameMembers(this.getGameMembers());
+        this.emitter.updateField(this.getField());
+        this.emitter.updateRound(this.getRound());
     }
 
     removeGameMember = (user: IUser) => {
@@ -51,6 +55,7 @@ export class GameData {
 
     reset = () => {
         this.gameMembers = [];
+        this.started = false;
     }
 
     resetTeamLeader = (user: IUser) => {
@@ -91,6 +96,8 @@ export class GameData {
         return allDone;
     }
 
+    getStarted = () => this.started;
+
     getField = () => this.field;
 
     getRound = () => this.round;
@@ -129,8 +136,9 @@ export class GameData {
             const voters = this.gameMembers
                 .filter(member => member.team === currentTeam && !member.leader).length;
 
-            const votes = this.field.cards
-                .filter(card => card.votes > 0).length;
+            const votes = this.field.cards.reduce((acc, next) => {
+                return acc + next.votes
+            }, 0);
 
             return voters === votes
         };
@@ -167,6 +175,7 @@ export class GameData {
         this.emitter.updateField();
         this.emitter.engGame();
         this.reset();
+        this.emitter.updateGameMembers(this.getGameMembers())
     }
 
     addVote = (cardId: number) => {
@@ -195,6 +204,7 @@ export class GameData {
                     if (success === false) {
 
                         if (this.field?.cards[winnerVote].type === Neutrals.black) {
+                            this.emitter.updateField(this.getField());
                             return this.endGame()
                         }
                         this.emitter.updateField(this.getField());
@@ -230,6 +240,7 @@ export class GameData {
         this.resetMystery();
         this.emitter.updateRound(this.getRound());
         this.emitter.makeMysteryResponse(this.getMystery());
+        this.started = true;
     }
 
     getPassVotes = () => {

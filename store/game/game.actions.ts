@@ -58,7 +58,7 @@ export const setFieldRequest = (field: IField) : IAction => ({
     payload: field
 })
 
-export const setField = (field: IField) : IAction => ({
+export const setField = (field?: IField) : IAction => ({
     type: Actions.game.SetField,
     payload: field
 })

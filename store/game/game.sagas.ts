@@ -87,7 +87,7 @@ function* setFieldRequestWorker(action: IAction) {
 
     yield put(setField(field));
 
-    if (stage !== AppStages.game) {
+    if (stage !== AppStages.game && state.connection.currentUser.team) {
         yield put(changeAppStageRequest(AppStages.game))
     }
 }

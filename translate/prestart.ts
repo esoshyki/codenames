@@ -13,7 +13,7 @@ export enum PrestartContent {
     leaveRedTeam = "leaveRedTeam",
     joinBlueTeam = "joinBlueTeam",
     leaveBlueTeam = "leaveBlueTeam",
-
+    JoinGame = "joinGame"
 }
 
 export const preStartContent = {
@@ -29,7 +29,8 @@ export const preStartContent = {
         [PrestartContent.joinRedTeam] : "Присоеденится к красной команде",
         [PrestartContent.joinBlueTeam] : "Присоеденится к синей команде",  
         [PrestartContent.leaveRedTeam] : "Покинуть красную команду",
-        [PrestartContent.leaveBlueTeam] : "Покинуть синюю команду",       
+        [PrestartContent.leaveBlueTeam] : "Покинуть синюю команду",
+        [PrestartContent.JoinGame] : "Присоединиться к игре",
     },
     [Locales.en] : {
         [PrestartContent.waitingForPlayers]: "Waitin for players",
@@ -43,7 +44,8 @@ export const preStartContent = {
         [PrestartContent.joinRedTeam] : "Join red team",
         [PrestartContent.joinBlueTeam] : "Join blue team",
         [PrestartContent.leaveRedTeam] : "Leave red team",
-        [PrestartContent.leaveBlueTeam] : "Leave blue team",  
+        [PrestartContent.leaveBlueTeam] : "Leave blue team",
+        [PrestartContent.JoinGame] : "Join game",
     },
     [Locales.be] : {
         [PrestartContent.waitingForPlayers]: "Чаканне гульцов",
@@ -57,7 +59,8 @@ export const preStartContent = {
         [PrestartContent.joinRedTeam] : "Далучыцца да чырвонай каманды",
         [PrestartContent.joinBlueTeam] : "Далучыцца да сiняй каманды",
         [PrestartContent.leaveRedTeam] : "Пакінуць чырвоную каманду",
-        [PrestartContent.leaveBlueTeam] : "Пакінуць сiнюю каманду",  
+        [PrestartContent.leaveBlueTeam] : "Пакінуць сiнюю каманду",
+        [PrestartContent.JoinGame] : "Далучыцца да гульнi"
     },  
 };
 

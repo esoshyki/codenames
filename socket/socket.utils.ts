@@ -41,3 +41,20 @@ export const nextRound = (number: number, start: Sides) : IRound => {
         passVotes: 0
     }
 }
+
+export const isGameFinished = (field: IField) => {
+    if (field.cards) {
+        const redCards = field.cards.filter(card => card.type === Sides.red);
+        const blueCards = field.cards.filter(card => card.type === Sides.blue);
+        const blackCard = field.cards.find(card => card.type === Neutrals.black);
+
+        if (
+            redCards.every(card => card.covered) || 
+            blueCards.every(card => card.covered) ||
+            blackCard?.covered
+            ) {
+            return true
+        } 
+    }
+    return false;
+}

@@ -24,7 +24,7 @@ const Game = () => {
     return (
         <GameWrapper>
 
-            {!!(field && round) && (
+            {!!(field && round && currentUser.team) && (
                 <Field field={field} round={round} currentUser={currentUser}/>
             )}
 
