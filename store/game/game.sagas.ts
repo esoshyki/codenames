@@ -116,6 +116,10 @@ function* engGameRequestWorker() {
     yield put(changeAppStageRequest(AppStages.finished))
 }
 
+function* exitGameWorker() {
+    yield call(clientSocket.game.exitGameRequest);
+}
+
 export default function* gameSagas() {
     yield takeEvery(Actions.game.StartGameRequest, startGameRequestWorker);
     yield takeEvery(Actions.game.UpdateGameMembersRequest, updateGameMembersRequestWorker);
@@ -129,5 +133,6 @@ export default function* gameSagas() {
     yield takeEvery(Actions.game.MakeVoteRequest, makeVoteRequestWorker);
     yield takeEvery(Actions.game.SetWinnerVote, setWinnerVoteWorker);
     yield takeEvery(Actions.game.MakePassRequest, makePassVoteWorker);
-    yield takeEvery(Actions.game.EneGameRequest, engGameRequestWorker)
+    yield takeEvery(Actions.game.EneGameRequest, engGameRequestWorker);
+    yield takeEvery(Actions.game.ExitGameRequest, exitGameWorker)
 }

@@ -6,6 +6,7 @@ export enum GameClient {
     MakeMysteryRequest = "MakeMysteryRequest",
     MakeVoteRequest = "MakeVoteRequest",
     MakePassRequest = "MakePassRequest",
+    ExitGameRequest = "ExitGameRequest"
 };
 
 export interface GameClientEmitters {
@@ -13,6 +14,7 @@ export interface GameClientEmitters {
     [GameClient.UpdateGameMember]: (user: IUser) => void;
     [GameClient.MakeMysteryRequest] : (keyword: string, selectedItems: number[]) => void;
     [GameClient.MakeVoteRequest] : (cardId: number) => void;
+    [GameClient.ExitGameRequest] : () => void;
 }
 
 export const gameEmitters = (socket: any) => ({
@@ -24,6 +26,8 @@ export const gameEmitters = (socket: any) => ({
     
     makeVoteRequest : (cardId: number) => socket.emit(GameClient.MakeVoteRequest, cardId),
     
-    makePassRequest : () => socket.emit(GameClient.MakePassRequest)
+    makePassRequest : () => socket.emit(GameClient.MakePassRequest),
+
+    exitGameRequest: () => socket.emit(GameClient.ExitGameRequest)
 })
 

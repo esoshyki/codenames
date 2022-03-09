@@ -66,7 +66,7 @@ export class GameEmitter {
         this.io.emit(GameServer.AllVotesDoneResponse, winnerVote)
     }
 
-    engGame = () => {
+    endGame = () => {
         this.io.emit(GameServer.EndGame);
     }
 

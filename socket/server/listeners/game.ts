@@ -23,4 +23,8 @@ export const addGameListeners = (socket: any, serverData: ServerData) => {
         socket.on(GameClient.MakePassRequest, () => {
             serverData.game.makePassVote();
         })
+
+        socket.on(GameClient.ExitGameRequest, () => {
+            serverData.game.exitGame();
+        })
 } 

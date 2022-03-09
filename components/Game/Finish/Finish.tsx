@@ -1,6 +1,4 @@
-import { changeAppStageRequest } from "@/store/app/app.actions";
 import { select } from "@/store/select";
-import { AppStages } from "@/types/app";
 import { Neutrals, Sides } from "@/types/game";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -10,7 +8,10 @@ import { FinishContent } from "translate/finish";
 import { FinishScoreSpan } from "./FinishScoreSpan";
 import { FinishScore } from "./FinishScore";
 import ButtonPrimary from "@/components/Layout/Buttons/Primary";
-import { setField, setRound } from "@/store/game/game.actions";
+import { setField, setGameMembers, setMystery, setRound } from "@/store/game/game.actions";
+import { setAppStage } from "@/store/app/app.actions";
+import { AppStages } from "@/types/app";
+import { setCurrentUserReady, setCurrentUserTeam } from "@/store/connection/connection.actions";
 
 const FinishWrapper = styled.div`
     width: 100%;
@@ -30,10 +31,14 @@ const Finish = () => {
     const locale = useSelector(select.app.locale);
 
     const exit = () => {
+        dispatch(setCurrentUserTeam());
+        dispatch(setCurrentUserReady());
+        dispatch(setGameMembers([]));
         dispatch(setField());
         dispatch(setRound());
-        dispatch(changeAppStageRequest(AppStages.nogame));
-    };
+        dispatch(setMystery());
+        dispatch(setAppStage(AppStages.nogame));
+    }
 
     const isBlack = () => {
         if (!field) return false;

@@ -55,7 +55,8 @@ enum GameActions {
     MakePassRequest = "Game/Male-Pass-Request",
     AllVotesDoneRequest = "Game/All-Votes-Done-Request",
     SetWinnerVote = "Game/Set-Winner-Vote",
-    EneGameRequest = "Game/End-Game-Request"
+    EneGameRequest = "Game/End-Game-Request",
+    ExitGameRequest = "Game/Exit-Game-Request"
 }
 
 export const Actions = {

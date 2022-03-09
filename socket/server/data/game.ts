@@ -22,6 +22,8 @@ export class GameData {
 
     getGameMembers = () => this.gameMembers;
 
+    setGameMembers = (users: IUser[]) => this.gameMembers = users;
+
     addGameMember = (user: IUser) => {
         this.gameMembers.push(user);
         this.emitter.updateGameMembers(this.getGameMembers());
@@ -54,7 +56,9 @@ export class GameData {
     }
 
     reset = () => {
-        this.gameMembers = [];
+        this.setGameMembers([]);
+        this.field = undefined;
+        this.round = undefined;
         this.started = false;
     }
 
@@ -163,19 +167,18 @@ export class GameData {
             const check = this.round.check;
             const rest = this.field.cards.filter(card => card.type === check);
 
-            if (rest) return false;
+            if (rest.every(card => card.covered)) return true;
 
-            return true
+            return false
         }
 
         return false
     }
 
     endGame = () => {
-        this.emitter.updateField();
-        this.emitter.engGame();
         this.reset();
-        this.emitter.updateGameMembers(this.getGameMembers())
+        this.emitter.updateField();
+        this.emitter.endGame();
     }
 
     addVote = (cardId: number) => {
@@ -189,9 +192,8 @@ export class GameData {
                 this.emitter.allVotesDoneResponse(winnerVote);
                 setTimeout(() => {
                     const success = this.closeCard(winnerVote);
-
                     if (this.allCardsCovered()) {
-
+                        this.emitter.updateField(this.getField());
                         return this.endGame();
                     }
 
@@ -264,6 +266,13 @@ export class GameData {
                 this.nextRound()
             }
         };
+    }
+
+    exitGame = () => {
+        this.reset();
+        this.emitter.updateField();
+        this.emitter.updateRound();
+        this.emitter.updateGameMembers(this.getGameMembers());
     }
 
 }

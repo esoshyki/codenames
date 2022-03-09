@@ -105,3 +105,7 @@ export const makePassVotes = () => ({
 export const engGameRequest = () => ({
     type: Actions.game.EneGameRequest
 })
+
+export const exitGameRequest = () => ({
+    type: Actions.game.ExitGameRequest
+})
